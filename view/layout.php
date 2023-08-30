@@ -10,8 +10,8 @@
     <title>FORUM</title>
 </head>
 <body>
-    <div id="wrapper"> 
-       
+    <div id="wrapper">
+        
         <div id="mainpage">
             <!-- c'est ici que les messages (erreur ou succès) s'affichent-->
             <h3 class="message" style="color: red"><?= App\Session::getFlash("error") ?></h3>
@@ -43,6 +43,7 @@
                             <a href="./view/security/login.php">Connexion</a>
                             <a href="/security/register.html">Inscription</a>
                             <a href="index.php?ctrl=forum&action=listTopics">la liste des topics</a>
+                            <a href="index.php?ctrl=home&action=listUsers">List Users</a>
                         <?php
                         }
                    

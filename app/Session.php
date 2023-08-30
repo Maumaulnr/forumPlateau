@@ -1,4 +1,5 @@
 <?php
+// message d'erreur, ... (rapport avec la session de php)
     namespace App;
 
     class Session{

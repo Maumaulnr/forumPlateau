@@ -1,4 +1,5 @@
 <?php
+//  voit si clé étrangère et si c'est le cas hydrate
     namespace App;
 
     abstract class Entity{

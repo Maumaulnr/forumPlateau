@@ -15,25 +15,26 @@
             
            
                 return [
-                    "view" => VIEW_DIR."home.php"
+                    "view" => VIEW_DIR."security/test.php"
                 ];
             }
             
-        
-   
-        public function users(){
-            $this->restrictTo("ROLE_USER");
-
+        public function listUsers() {
+            
             $manager = new UserManager();
-            $users = $manager->findAll(['registerdate', 'DESC']);
+
+            // findAll(['dateCreationUser', 'DESC']) -> on peut cibler ce que l'on veut afficher
+            $users = $manager->findAll();
 
             return [
-                "view" => VIEW_DIR."security/users.php",
+                "view" =>  VIEW_DIR."security/listUsers.php",
                 "data" => [
                     "users" => $users
                 ]
             ];
+
         }
+   
 
         public function forumRules(){
             

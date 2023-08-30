@@ -1,5 +1,6 @@
 <?php
     namespace App;
+// ne pas à avoir de redirection to à chaque fichier
 
     abstract class AbstractController{
 

@@ -13,7 +13,7 @@
     abstract class DAO{
 
         private static $host   = 'mysql:host=127.0.0.1;port=3306';
-        private static $dbname = 'forum_dwwm3';
+        private static $dbname = 'forumml';
         private static $dbuser = 'root';
         private static $dbpass = '';
 
@@ -36,6 +36,7 @@
             );
         }
 
+        // Appeler à chaque fois pour éviter de le réécrire à chaque fois
         public static function insert($sql){
             try{
                 $stmt = self::$bdd->prepare($sql);
