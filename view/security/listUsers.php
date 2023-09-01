@@ -4,8 +4,12 @@
 
 // return de la fonction listUsers() donc bien écrire dans le même ordre que dans la fonction
 $users = $result["data"]["users"];
+?>
 
+<?php
 foreach ($users as $value) {
-    echo $value->getUserName(). " ". $value->getUserEmail();
+    ?>
+    <p><?= $value->getUserName(). " ". $value->getUserEmail(); ?></p>
+    <?php
 }
 ?>

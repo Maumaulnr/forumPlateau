@@ -1,0 +1,63 @@
+/* GENERAL */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* HEADER */
+header {
+    background-color: #000000;
+    background-image: url("../image/metiers.png");
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#nav-left {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    padding: 20px 10px;
+}
+
+#nav-left > a {
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 6px;
+    text-decoration: none;
+    color: black;
+    font-size: 1.1em;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#nav-left > a:hover {
+    background-color: black;
+    color: white;
+}
+
+/* MAIN */
+#forum {
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+/* FOOTER */
+footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}

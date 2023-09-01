@@ -19,12 +19,13 @@
             <header>
                 <nav>
                     <div id="nav-left">
-                        <a href="/">Accueil</a>
+                        <a href="index.php?ctrl=home&action">Home</a>
+                        <a href="./view/security/login.php">Log In</a>
+                        <a href="/security/register.html">Sign Up</a>
                         <?php
                         if(App\Session::isAdmin()){
                             ?>
-                            <a href="index.php?ctrl=home&action=users">Voir la liste des gens</a>
-                          
+                            <a href="index.php?ctrl=home&action=users">List members</a>
                             <?php
                         }
                         ?>
@@ -35,15 +36,14 @@
                         if(App\Session::getUser()){
                             ?>
                             <a href="/security/viewProfile.html"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()?></a>
-                            <a href="/security/logout.html">Déconnexion</a>
+                            <a href="/security/logout.html">Log Out</a>
                             <?php
                         }
                         else{
                             ?>
-                            <a href="./view/security/login.php">Connexion</a>
-                            <a href="/security/register.html">Inscription</a>
-                            <a href="index.php?ctrl=forum&action=listTopics">la liste des topics</a>
+                            <!-- <a href="index.php?ctrl=forum&action=listTopics">la liste des topics</a> -->
                             <a href="index.php?ctrl=home&action=listUsers">List Users</a>
+                            <a href="index.php?ctrl=home&action=listCategories">List Categories</a>
                         <?php
                         }
                    
@@ -58,7 +58,7 @@
             </main>
         </div>
         <footer>
-            <p>&copy; 2020 - Forum CDA - <a href="/home/forumRules.html">Règlement du forum</a> - <a href="">Mentions légales</a></p>
+            <p>&copy; 2023 - Forum CDA - <a href="/home/forumRules.html">Forum Rules</a> - <a href="">Terms & Conditions</a></p>
             <!--<button id="ajaxbtn">Surprise en Ajax !</button> -> cliqué <span id="nbajax">0</span> fois-->
         </footer>
     </div>

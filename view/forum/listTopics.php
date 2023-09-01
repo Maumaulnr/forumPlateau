@@ -4,15 +4,17 @@ $topics = $result["data"]['topics'];
     
 ?>
 
-<h1>liste topics</h1>
+<h1>List Topics</h1>
 
 <?php
-foreach($topics as $topic ){
-
-    ?>
-    <p><?=$topic->getTitle()?></p>
-    <?php
+foreach($topics as $topic){
+?>
+    <p><?= $topic->getNameTopic(). " ". $topic->getDateCreationTopic()?></p>
+<?php
 }
+?>
+
+
 
 
   

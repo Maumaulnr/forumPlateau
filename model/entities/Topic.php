@@ -47,9 +47,9 @@
         }
 
         /**
-         * Get the value of title
+         * Get the value of NameTopic
          */ 
-        public function getTitle()
+        public function getNameTopic()
         {
                 return $this->nameTopic;
         }
