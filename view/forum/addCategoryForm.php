@@ -1,9 +1,3 @@
-<?php
-// session_start() crée une session ou restaure celle trouvée sur le serveur, via l'identifiant de session passé dans une requête GET, POST ou par un cookie.
-// session_start();
-
-?>
-
 <h1>Add Category</h1>
 
 <?php
@@ -39,9 +33,3 @@
     </form>
 
 </div>
-
-<?php
-
-// header("Location: view/forum/listCategories.php");
-
-?>

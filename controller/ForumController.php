@@ -133,10 +133,17 @@
             }
         }
 
+        // On fait en sorte de pouvoir choisir la catégorie a associé au topic que l'on pourra choisir dans le fichier addTopicForm.php en retournant le tableau categories.
+        // Grâce à cette fonction on peut récupérer getNameCategory dans addTopicForm.php pour choisir le nom de la catégorie.
         public function addTopicForm() {
 
+            $categoryManager = new CategoryManager();
+
             return [
-                "view" => VIEW_DIR. "forum/addTopicForm.php"
+                "view" => VIEW_DIR. "forum/addTopicForm.php",
+                "data" => [
+                    "categories" => $categoryManager->findAll()
+                ]
             ];
         }
 
@@ -145,14 +152,29 @@
             // filtrer ce qui arrive en POST
         // "nameTopic" : vient du name="nameTopic" du fichier addActorForm.php
         $nameTopic = filter_input(INPUT_POST, "nameTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $userId = filter_input(INPUT_POST, "userId", FILTER_SANITIZE_NUMBER_INT);
+        $message = filter_input(INPUT_POST, "commentText", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $categoryId = filter_input(INPUT_POST, "categoryId", FILTER_SANITIZE_NUMBER_INT);
-        $dateCreationTopic = filter_input(INPUT_POST, "dateCreationTopic", FILTER_SANITIZE_NUMBER_INT);
-        $subjectLock = filter_input(INPUT_POST, "subjectLock", FILTER_SANITIZE_NUMBER_INT);
+        // $dateCreationTopic = filter_input(INPUT_POST, "dateCreationTopic", FILTER_SANITIZE_NUMBER_INT);
 
         $topicManager = new CategoryManager();
+        $messageManager = new MessageManager();
 
-        $topicManager->add(["nameTopic" => $nameTopic, "user_id" => $userId, "category_id" => $categoryId, "dateCreationTopic" => $dateCreationTopic, "subjectLock" => $subjectLock]);
+        // validation des règles du formulaire
+        $isFormValid = true;
+        $errorMessages = [];
+
+        // si les règles de validation du formulaire sont respectées
+        if ($isFormValid) {
+
+            $topicManager->add(["nameTopic" => $nameTopic, "commentText" => $message, "category_id" => $categoryId]);
+
+            $this->redirectTo("forum", "listCategories");
+
+            } else {
+
+                return $this->addTopicForm();
+                
+            }
 
         }
 

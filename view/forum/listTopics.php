@@ -14,7 +14,7 @@ foreach($topics as $topic){
 }
 ?>
 
-<a class="btn btn-primary btn-add" href="index.php?ctrl=forum&action=addCategoryForm" role="button">
+<a class="btn btn-primary btn-add" href="index.php?ctrl=forum&action=addTopicForm" role="button">
     Add Topic
 </a>
 
