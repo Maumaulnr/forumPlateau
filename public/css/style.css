@@ -5,6 +5,11 @@
     box-sizing: border-box;
 }
 
+:root {
+    --color-success: rgb(34, 211, 93);
+    --color-error: rgb(236, 121, 110);
+}
+
 /* HEADER */
 header {
     background-color: #000000;

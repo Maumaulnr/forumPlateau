@@ -47,7 +47,7 @@
                             ?>
                             <!-- <a href="index.php?ctrl=forum&action=listTopics">la liste des topics</a> -->
                             <a href="index.php?ctrl=home&action=listUsers">List Users</a>
-                            <a href="index.php?ctrl=home&action=listCategories">List Categories</a>
+                            <a href="index.php?ctrl=forum&action=listCategories">List Categories</a>
                         <?php
                         }   
                     ?>

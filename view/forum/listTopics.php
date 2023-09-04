@@ -14,7 +14,11 @@ foreach($topics as $topic){
 }
 ?>
 
-<a class="btn btn-primary btn-return" href="index.php?ctrl=home&action=listCategories" role="button">
+<a class="btn btn-primary btn-add" href="index.php?ctrl=forum&action=addCategoryForm" role="button">
+    Add Topic
+</a>
+
+<a class="btn btn-primary btn-return" href="index.php?ctrl=forum&action=listCategories" role="button">
     Return
     <span class="icon-return">
         <i class="fa-solid fa-rotate-left"></i>
