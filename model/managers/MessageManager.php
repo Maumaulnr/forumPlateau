@@ -14,6 +14,21 @@
             parent::connect();
         }
 
+        // We retrieve all messages associated with a particular topic.
+        public function findMessageByTopicId($id)
+        {
+
+            $sql= "SELECT *
+                    FROM ".$this->tableName." m
+                    WHERE m.topic_id = :id
+                    ";
+
+            return $this->getMultipleResults(
+                DAO::select($sql, ['id' => $id]), 
+                $this->className
+            );
+           
+        }
 
     }
 

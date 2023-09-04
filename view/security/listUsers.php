@@ -7,9 +7,9 @@ $users = $result["data"]["users"];
 ?>
 
 <?php
-foreach ($users as $value) {
+foreach ($users as $user) {
     ?>
-    <p><?= $value->getUserName(). " ". $value->getUserEmail(); ?></p>
+    <p><?= $user->getUserName(). " ". $user->getUserEmail(); ?></p>
     <?php
 }
 ?>

@@ -14,7 +14,7 @@
             parent::connect();
         }
 
-
+        // We retrieve all topics associated with a particular category.
         public function findTopicByCategoryId($id)
         {
 

@@ -9,10 +9,17 @@ $topics = $result["data"]['topics'];
 <?php
 foreach($topics as $topic){
 ?>
-    <p><?= $topic->getNameTopic(). " ". $topic->getDateCreationTopic()?></p>
+    <p><a href="index.php?ctrl=forum&action=findMessageByTopicId&id=<?=$topic->getId();?>"><?= $topic->getNameTopic(). " ". $topic->getDateCreationTopic()?></a></p>
 <?php
 }
 ?>
+
+<a class="btn btn-primary btn-return" href="index.php?ctrl=home&action=listCategories" role="button">
+    Return
+    <span class="icon-return">
+        <i class="fa-solid fa-rotate-left"></i>
+    </span>
+</a>
 
 
 

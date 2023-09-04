@@ -5,10 +5,10 @@
     use App\Session;
     use App\AbstractController;
     use App\ControllerInterface;
-use Model\Managers\CategoryManager;
-use Model\Managers\UserManager;
+    use Model\Managers\CategoryManager;
+    use Model\Managers\UserManager;
     use Model\Managers\TopicManager;
-    use Model\Managers\PostManager;
+    use Model\Managers\MessageManager;
     
     class HomeController extends AbstractController implements ControllerInterface{
 
@@ -22,10 +22,10 @@ use Model\Managers\UserManager;
             
         public function listUsers() {
             
-            $manager = new UserManager();
+            $userManager = new UserManager();
 
             // findAll(['dateCreationUser', 'DESC']) -> on peut cibler ce que l'on veut afficher
-            $users = $manager->findAll();
+            $users = $userManager->findAll();
 
             return [
                 "view" =>  VIEW_DIR."security/listUsers.php",
@@ -37,14 +37,16 @@ use Model\Managers\UserManager;
         }
 
         public function listCategories() {
-            $manager = new CategoryManager();
+            $categoryManager = new CategoryManager();
+            $topicManager = new TopicManager();
 
-            $categories = $manager->findAll();
+            $categories = $categoryManager->findAll();
 
             return [
-                "view" => VIEW_DIR. "forum/listCategories.php",
+                "view" => VIEW_DIR. "home.php",
                 "data" => [
-                    "categories" => $categories
+                    "categories" => $categories,
+                    "topics" => $topicManager
                 ]
             ];
         }
