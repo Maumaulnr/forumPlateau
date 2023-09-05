@@ -58,9 +58,10 @@ $topics = $result["data"]['topics'];
 		            </ul>
 		            <ul class="topic-item-2">
 		                <li>
-		                    <a class="badge badge-primary" href="">
+		                    <a class="badge badge-primary" href="index.php?ctrl=forum&action=addTopicForm&id=<?= $value->getId(); ?>" role="button">
+							Add Topic
                             </a>
-	                    </li>
+	                    </li> 
 	                    <li>2</li>
 	                    <li>4</li>
 	                    <li>
@@ -77,7 +78,7 @@ $topics = $result["data"]['topics'];
                                     </a>
 	                            </span>
                             </p>
-	                    </li>
+	                    </li> 
 		            </ul>
                     <?php
                     }

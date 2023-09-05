@@ -51,7 +51,8 @@
             return [
                 "view" => VIEW_DIR. "forum/listTopics.php",
                 "data" => [
-                    "topics" => $topicManager->findTopicByCategoryId($id)
+                    "topics" => $topicManager->findTopicByCategoryId($id),
+                    "categories" => $categoryManager->findAll()
                 ]
             ];
         }
@@ -112,7 +113,7 @@
             // label ne doit pas dépasser 30 caractères
             if(strlen($nameCategory) > 100) {
                 $isFormValid = false;
-                $errorMessages["label"] = "Ce champ est limité à 100 caractères";
+                $errorMessages["nameCategory"] = "Ce champ est limité à 100 caractères";
             }
 
             // si les règles de validation du formulaire sont respectées
@@ -128,52 +129,92 @@
                 $globalMessage = "Le formulaire est invalide";
     
                 $formValues = [
-                    "label" => $nameCategory
+                    "nameCategory" => $nameCategory
                 ];
             }
         }
 
         // On fait en sorte de pouvoir choisir la catégorie a associé au topic que l'on pourra choisir dans le fichier addTopicForm.php en retournant le tableau categories.
         // Grâce à cette fonction on peut récupérer getNameCategory dans addTopicForm.php pour choisir le nom de la catégorie.
-        public function addTopicForm() {
+        public function addTopicForm($id) {
 
             $categoryManager = new CategoryManager();
+            $topicManager = new TopicManager();
 
             return [
                 "view" => VIEW_DIR. "forum/addTopicForm.php",
                 "data" => [
-                    "categories" => $categoryManager->findAll()
+                    "categories" => $categoryManager->findAll(),
+                    "topics" => $topicManager->findTopicByCategoryId($id)
                 ]
             ];
         }
 
-        public function addTopic() {
+        // ajouter un topic en fonction de la catégorie sur laquelle on a cliqué
+        public function addTopic($id) {
 
             // filtrer ce qui arrive en POST
-        // "nameTopic" : vient du name="nameTopic" du fichier addActorForm.php
-        $nameTopic = filter_input(INPUT_POST, "nameTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $message = filter_input(INPUT_POST, "commentText", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $categoryId = filter_input(INPUT_POST, "categoryId", FILTER_SANITIZE_NUMBER_INT);
-        // $dateCreationTopic = filter_input(INPUT_POST, "dateCreationTopic", FILTER_SANITIZE_NUMBER_INT);
+            // "nameTopic" : vient du name="nameTopic" du fichier addActorForm.php
+            $nameTopic = filter_input(INPUT_POST, "nameTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $message = filter_input(INPUT_POST, "commentText", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            // $userId = filter_input(INPUT_POST, "user_id", FILTER_SANITIZE_NUMBER_INT);
+            $categoryId = filter_input(INPUT_POST, "categoryId", FILTER_SANITIZE_NUMBER_INT);
 
-        $topicManager = new CategoryManager();
-        $messageManager = new MessageManager();
+            $topicManager = new TopicManager();
+            $messageManager = new MessageManager();
 
-        // validation des règles du formulaire
-        $isFormValid = true;
-        $errorMessages = [];
+            // vars
+            $isAddTopicSuccess = false;
+            $globalMessage = "L'enregistrement a bien été effectué";
+            $formValues = null;
 
-        // si les règles de validation du formulaire sont respectées
-        if ($isFormValid) {
+            // validation des règles du formulaire
+            $isFormValid = true;
+            $errorMessages = [];
 
-            $topicManager->add(["nameTopic" => $nameTopic, "commentText" => $message, "category_id" => $categoryId]);
+            // nameCategory est obligatoire
+            // si nameCategory est vide
+            if($nameTopic && $message == "") {
+                $isFormValid = false;
+                $errorMessages["nameTopic"] = "Ce champ est obligatoire";
+                $errorMessages["message"] = "Ce champ est obligatoire";
+            }
 
-            $this->redirectTo("forum", "listCategories");
+            // si les règles de validation du formulaire sont respectées
+            if ($isFormValid) {
+                
+                $topicManager->add(["nameTopic" => $nameTopic, "category_id" => $categoryId]);
+                $messageManager->add(["commentText" => $message]);
+
+
+                return $this->addTopicForm($id);
+
+            } else if (!$isAddTopicSuccess) {
+
+                    $globalMessage = "L'enregistrement a échoué";
 
             } else {
+                // le formulaire est invalide
+    
+                $globalMessage = "Le formulaire est invalide";
+    
+                return $this->addTopicForm($id);
+            }
 
-                return $this->addTopicForm();
-                
+                // si la mise à jour est un succès sinon on prérempli le formulaire et on modifie pour corriger l'erreur, dans tous les cas il y a une redirection
+            if ($isAddTopicSuccess) {
+
+                $this->redirectTo("forum", "listTopics");
+
+            } else {
+                // sinon peu importe pourquoi
+
+                $formValues = [
+                    "nameTopic" => $nameTopic,
+                    "message" => $message
+                ];
+
+                return $this->addTopicForm($id);
             }
 
         }

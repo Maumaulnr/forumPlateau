@@ -1,6 +1,7 @@
 <?php
 
 $topics = $result["data"]['topics'];
+$categories = $result["data"]['categories'];
     
 ?>
 
@@ -13,10 +14,6 @@ foreach($topics as $topic){
 <?php
 }
 ?>
-
-<a class="btn btn-primary btn-add" href="index.php?ctrl=forum&action=addTopicForm" role="button">
-    Add Topic
-</a>
 
 <a class="btn btn-primary btn-return" href="index.php?ctrl=forum&action=listCategories" role="button">
     Return
