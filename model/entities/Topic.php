@@ -17,7 +17,7 @@
         private $id; // id_topic
         private $nameTopic;
         private $user; // user_id
-        //private $category; // category_id
+        private $category; // category_id
         private $dateCreationTopic;
         private $subjectLock;
 
@@ -86,6 +86,26 @@
                 return $this;
         }
 
+        /**
+         * Get the value of category
+         */ 
+        public function getCategory()
+        {
+                return $this->category;
+        }
+
+        /**
+         * Set the value of category
+         *
+         * @return  self
+         */ 
+        public function setCategory($category)
+        {
+                $this->$category = $category;
+
+                return $this;
+        }
+
         public function getDateCreationTopic(){
             $formattedDate = $this->dateCreationTopic->format("d/m/Y, H:i:s");
             return $formattedDate;
@@ -119,6 +139,6 @@
         // A FAIRE : Method _toString
         public function __toString()
         {
-                return $this->nameTopic;
+                return $this->getNameTopic() . $this->getUser() . $this->getDateCreationTopic() . $this->getSubjectLock();
         }
     }

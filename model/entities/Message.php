@@ -108,6 +108,6 @@
         // A FAIRE : Method _toString
         public function __toString()
         {
-                return $this->commentText;
+                return $this->getUser() . $this->getTopic() . $this->getCommentText();
         }
     }

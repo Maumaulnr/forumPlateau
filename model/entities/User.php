@@ -112,7 +112,7 @@
         /**
          * Get the value of password
          */ 
-        public function getpassword()
+        public function getPassword()
         {
                 return $this->password;
         }
@@ -122,7 +122,7 @@
          *
          * @return  self
          */ 
-        public function setpassword($password)
+        public function setPassword($password)
         {
                 $this->password = $password;
 
@@ -132,7 +132,7 @@
         /**
          * Get the value of banUser
          */ 
-        public function getbanUser()
+        public function getBanUser()
         {
                 return $this->banUser;
         }
@@ -142,19 +142,27 @@
          *
          * @return  self
          */ 
-        public function setbanUser($banUser)
+        public function setBanUser($banUser)
         {
                 $this->banUser = $banUser;
 
                 return $this;
         }
 
+        
+        // Method _toString
+        public function __toString()
+        {
+                return $this->getUserName() . $this->getUserEmail() . $this->getPassword() . $this->getDateCreationUser() . $this->getBanUser();
+        }
+
+
         /**
          * Get the value of userRole
          */ 
-        public function getuserRole()
+        public function getUserRole()
         {
-                return $this->userRole;
+                return json_decode($this->userRole);
         }
 
         /**
@@ -162,16 +170,18 @@
          *
          * @return  self
          */ 
-        public function setuserRole($userRole)
-        {
-                $this->userRole = $userRole;
+        // public function setUserRole($userRole)
+        // {
+        //         $this->userRole = json_decode($userRole);
 
-                return $this;
-        }
+        //         return $this;
+        // }
 
-        // A FAIRE : Method _toString
-        public function __toString()
-        {
-                return $this->userName;
-        }
+        // public function hasRole($userRole) 
+        // {
+        //         $result = $this->getUserRole() == json_decode($userRole);
+
+        //         return $result;
+        // }
+
     }

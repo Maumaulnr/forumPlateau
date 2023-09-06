@@ -65,6 +65,6 @@
 
         public function __toString()
         {
-            return $this->nameCategory;
+            return $this->getNameCategory();
         }
     }

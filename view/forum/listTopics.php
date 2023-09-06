@@ -1,11 +1,13 @@
 <?php
 
 $topics = $result["data"]['topics'];
-$categories = $result["data"]['categories'];
+$category = $result["data"]['category'];
     
 ?>
 
-<h1>List Topics</h1>
+<h1><?= $category->getNameCategory() ?></h1>
+
+<h2>List Topics</h2>
 
 <?php
 foreach($topics as $topic){

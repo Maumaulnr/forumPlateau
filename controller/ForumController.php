@@ -6,6 +6,8 @@
     use App\Session;
     use App\AbstractController;
     use App\ControllerInterface;
+    use Model\Entities\Message;
+    use Model\Entities\Topic;
     use Model\Managers\CategoryManager;
     use Model\Managers\TopicManager;
     use Model\Managers\MessageManager;
@@ -48,11 +50,13 @@
             $topicManager = new TopicManager();
             $categoryManager = new CategoryManager();
 
+            $category = $categoryManager->findOneById($id);
+
             return [
                 "view" => VIEW_DIR. "forum/listTopics.php",
                 "data" => [
                     "topics" => $topicManager->findTopicByCategoryId($id),
-                    "categories" => $categoryManager->findAll()
+                    "category" => $category
                 ]
             ];
         }
@@ -64,7 +68,9 @@
             $topicManager = new TopicManager();
             $messageManager = new MessageManager();
             $userManager = new UserManager();
-            $topic = $topicManager->findTopicByCategoryId($id);
+
+            $topic = $topicManager->findOneById($id);
+            
 
             return [
                 "view" => VIEW_DIR. "forum/listMessages.php",
@@ -156,9 +162,10 @@
             // filtrer ce qui arrive en POST
             // "nameTopic" : vient du name="nameTopic" du fichier addActorForm.php
             $nameTopic = filter_input(INPUT_POST, "nameTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $message = filter_input(INPUT_POST, "commentText", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            // $userId = filter_input(INPUT_POST, "user_id", FILTER_SANITIZE_NUMBER_INT);
+            $commentText = filter_input(INPUT_POST, "commentText", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $userId = filter_input(INPUT_POST, "userId", FILTER_SANITIZE_NUMBER_INT);
             $categoryId = filter_input(INPUT_POST, "categoryId", FILTER_SANITIZE_NUMBER_INT);
+            $topicId = filter_input(INPUT_POST, "topicId", FILTER_SANITIZE_NUMBER_INT);
 
             $topicManager = new TopicManager();
             $messageManager = new MessageManager();
@@ -174,20 +181,20 @@
 
             // nameCategory est obligatoire
             // si nameCategory est vide
-            if($nameTopic && $message == "") {
+            if($nameTopic && $commentText == "") {
                 $isFormValid = false;
                 $errorMessages["nameTopic"] = "Ce champ est obligatoire";
-                $errorMessages["message"] = "Ce champ est obligatoire";
+                $errorMessages["commentText"] = "Ce champ est obligatoire";
             }
 
             // si les règles de validation du formulaire sont respectées
             if ($isFormValid) {
-                
-                $topicManager->add(["nameTopic" => $nameTopic, "category_id" => $categoryId]);
-                $messageManager->add(["commentText" => $message]);
+                // "nameTopic" = nameTopic de la BDD
+                $topicManager->add(["nameTopic" => $nameTopic, "user_id" => $userId, "category_id" => $categoryId]);
+                $messageManager->add(["commentText" => $commentText, "user_id" => $userId, "topic_id" => $topicId]);
 
 
-                return $this->addTopicForm($id);
+                $this->redirectTo("forum", "listCategories");
 
             } else if (!$isAddTopicSuccess) {
 
@@ -204,17 +211,54 @@
                 // si la mise à jour est un succès sinon on prérempli le formulaire et on modifie pour corriger l'erreur, dans tous les cas il y a une redirection
             if ($isAddTopicSuccess) {
 
-                $this->redirectTo("forum", "listTopics");
+                $this->redirectTo("forum", "listCategories");
 
             } else {
                 // sinon peu importe pourquoi
 
                 $formValues = [
                     "nameTopic" => $nameTopic,
-                    "message" => $message
+                    "commentText" => $commentText
                 ];
 
                 return $this->addTopicForm($id);
+            }
+
+        }
+
+        public function addMessageForm($id) 
+        {
+            $topicManager = new TopicManager();
+            $messageManager = new MessageManager();
+
+            $topic = $topicManager->findOneById($id);
+
+            return [
+                "view" => VIEW_DIR. "forum/addMessageForm.php",
+                "data" => [
+                    "topic" => $topic,
+                    "messages" => $messageManager->findMessageByTopicId($id)
+                ]
+            ];
+        }
+
+        public function addMessage($id) 
+        {
+            $topicId = filter_input(INPUT_POST, "topicId", FILTER_SANITIZE_NUMBER_INT, FILTER_VALIDATE_INT);
+            $commentText = filter_input(INPUT_POST, "commentText", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            if ($topicId && $commentText) {
+
+                $messageManager = new MessageManager();
+
+                // "commentText" = commentText de la BDD
+                $messageManager->add(["commentText" => $commentText, "user_id" => 1, "topic_id" => $topicId]);
+
+                $this->redirectTo("forum", "listCategories");
+
+            } else {
+
+                return $this->findTopicByCategoryId($topicId);
             }
 
         }
