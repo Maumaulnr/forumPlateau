@@ -30,6 +30,21 @@
            
         }
 
+        public function update($id) 
+        {
+
+            $sql = "UPDATE".$this->tableName."
+            SET commentText = :newCommentText
+            WHERE id_".$this->tableName." = :id
+            ;";
+
+            return $this->getOneOrNullResult(
+                DAO::select($sql, ['id' => $id], false), 
+                $this->className
+            );
+
+        }
+
     }
 
 ?>

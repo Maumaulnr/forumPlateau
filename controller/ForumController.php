@@ -263,4 +263,62 @@
 
         }
 
+
+            // UPDATE MESSAGE => commentText
+        // On veut les vrais données de la bdd
+        public function updateMessageForm($id) {
+
+            $messageManager = new MessageManager();
+
+            $message = $messageManager->findOneById($id);
+
+            return [
+                "view" => VIEW_DIR. "forum/updateMessageForm.php",
+                "data" => [
+                    "message" => $message
+                ]
+            ];
+
+        }
+
+        public function update($id) {
+
+            $messageManager = new MessageManager();
+
+            // filtrer ce qui arrive en POST
+            // "commentText" : vient du name="commentText" du fichier updateMessageForm.php
+            $commentText = filter_input(INPUT_POST, "commentText", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            // return [
+            //     "view" => VIEW_DIR. "forum/listMessages.php",
+            //     "data" => [
+            //         "message" => $messageManager->findMessageByTopicId($id)
+            //     ]
+            // ];
+
+            return $this->findMessageByTopicId($id);
+
+            // // vars
+            // $isUpdateMessageSuccess = false;
+
+            // // si la mise à jour est un succès sinon on prérempli le formulaire et on modifie pour corriger l'erreur, dans tous les cas il y a une redirection
+            // if ($isUpdateMessageSuccess) {
+            //     $this->findMessageByTopicId($id); // le require est inclus dans la méthode
+
+            // } else {
+            //     // sinon peu importe pourquoi
+
+            //     return $this->findMessageByTopicId($id);
+            // }
+        }
+
+        // DELETE MESSAGE => message_id
+        public function delete($id) 
+        {
+            $messageManager = new MessageManager();
+
+            $messageManager->delete(['id' => $id]);
+
+        }
+
     }

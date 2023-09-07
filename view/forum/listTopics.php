@@ -17,12 +17,10 @@ foreach($topics as $topic){
 }
 ?>
 
-<a class="btn btn-primary btn-return" href="index.php?ctrl=forum&action=listCategories" role="button">
-    Return
-    <span class="icon-return">
-        <i class="fa-solid fa-rotate-left"></i>
-    </span>
-</a>
+<?php 
+$go_back = htmlspecialchars($_SERVER['HTTP_REFERER']);
+?>
+<a href='<?= $go_back ?>'>Go Back</a>;
 
 
 
