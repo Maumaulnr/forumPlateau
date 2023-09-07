@@ -64,7 +64,7 @@
         //  We search the list of messages by topic id, because we want to display messages according to their topic.
         // request in MessageManager.php
         public function findMessageByTopicId($id) {
-
+            // var_dump($id);
             $topicManager = new TopicManager();
             $messageManager = new MessageManager();
             $userManager = new UserManager();
@@ -265,17 +265,22 @@
 
 
             // UPDATE MESSAGE => commentText
-        // On veut les vrais données de la bdd
+        // On veut les vraies données de la bdd
+        // "topidId" => $_GET['topicId'] => permet de récupérer topicId quand on veut changer un message (commentText) précis
         public function updateMessageForm($id) {
-
+            // var_dump($id);
             $messageManager = new MessageManager();
+            $topicManager = new TopicManager();
 
             $message = $messageManager->findOneById($id);
-
+            $topic = $topicManager->findOneById($id);
+            // var_dump($topic);
             return [
                 "view" => VIEW_DIR. "forum/updateMessageForm.php",
                 "data" => [
-                    "message" => $message
+                    "message" => $message,
+                    "topic" => $topic,
+                    "topidId" => $_GET['topicId']
                 ]
             ];
 
@@ -287,16 +292,21 @@
 
             // filtrer ce qui arrive en POST
             // "commentText" : vient du name="commentText" du fichier updateMessageForm.php
+            $idMessage = filter_input(INPUT_POST, "idMessage", FILTER_SANITIZE_NUMBER_INT);
             $commentText = filter_input(INPUT_POST, "commentText", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            // return [
-            //     "view" => VIEW_DIR. "forum/listMessages.php",
-            //     "data" => [
-            //         "message" => $messageManager->findMessageByTopicId($id)
-            //     ]
-            // ];
+            /** 
+             * id = :id de la requête
+             * newCommentText = :newCommentText
+             * donc bien écrire pareil dans la fonction update ici.
+            */
+            $messageManager->update(["id" => $idMessage, "newCommentText"=> $commentText]);
 
-            return $this->findMessageByTopicId($id);
+            // filtrer input topidId pour récupérer le bon id en fonction du topic
+            $topicId = filter_input(INPUT_POST, "topicId", FILTER_SANITIZE_NUMBER_INT);
+
+            // on retourne vers la liste des messages dans le bon topic grâce à $topidId
+            return $this->findMessageByTopicId($topicId);
 
             // // vars
             // $isUpdateMessageSuccess = false;
@@ -312,12 +322,21 @@
             // }
         }
 
-        // DELETE MESSAGE => message_id
+        // DELETE MESSAGE => id_message
         public function delete($id) 
         {
             $messageManager = new MessageManager();
 
+            /** 
+             * id = :id de la requête
+             * donc bien écrire pareil dans la fonction update ici.
+            */
             $messageManager->delete(['id' => $id]);
+
+            $topicId = $_GET['topicId'];
+
+            // on retourne vers la liste des messages dans le bon topic grâce à $topidId
+            return $this->findMessageByTopicId($topicId);
 
         }
 

@@ -35,7 +35,7 @@
                     FROM ".$this->tableName." a
                     WHERE a.id_".$this->tableName." = :id
                     ";
-
+            // var_dump($sql);
             return $this->getOneOrNullResult(
                 DAO::select($sql, ['id' => $id], false), 
                 $this->className

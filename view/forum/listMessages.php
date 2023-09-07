@@ -1,7 +1,6 @@
 <?php
 $topic = $result["data"]['topic'];
 $messages = $result["data"]['messages'];
-
 // var_dump();
 ?>
 
@@ -19,11 +18,14 @@ $messages = $result["data"]['messages'];
         ?>
             <p><?= $message->getCommentText()?></p>
             <!-- UPDATE -->
-            <a href="index.php?ctrl=forum&action=updateMessageForm&id=<?= $message->getId() ?>">
+            <!-- Quand on clique on récupère idMessage et topicId pour être sûr de changer le message dans le bon topic :
+            $message->getId() ?>&topicId=< $topic->getId() ?>
+            -->
+            <a href="index.php?ctrl=forum&action=updateMessageForm&id=<?= $message->getId() ?>&topicId=<?= $topic->getId() ?>">
                 <i class="fa-solid fa-pencil" title="Update"></i>
             </a>
             <!-- DELETE -->
-            <a href="index.php?ctrl=forum&action=delete&id=<?= $message->getId() ?>">
+            <a href="index.php?ctrl=forum&action=delete&id=<?= $message->getId() ?>&topicId=<?= $topic->getId() ?>">
                 <i class="fa-regular fa-trash-can" title="Delete"></i>
             </a>
         <?php

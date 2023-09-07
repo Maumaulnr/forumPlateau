@@ -30,19 +30,49 @@
            
         }
 
-        public function update($id) 
+        /** 
+         * $data = param
+         * 
+         * 
+         */  
+        public function update($data) 
         {
 
-            $sql = "UPDATE".$this->tableName."
+            $sql = "UPDATE ".$this->tableName."
             SET commentText = :newCommentText
             WHERE id_".$this->tableName." = :id
             ;";
 
-            return $this->getOneOrNullResult(
-                DAO::select($sql, ['id' => $id], false), 
-                $this->className
-            );
+            /**
+             * on essaie la fonction du DAO
+             * on renvoie l'état du statement après exécution (true ou false)
+             */
+           try {
 
+            return DAO::update($sql, $data);
+
+           } catch (\Throwable $th) {
+
+            //throw $th;
+
+           }
+
+        }
+
+        public function delete($data){
+            $sql = "DELETE FROM ".$this->tableName."
+                    WHERE id_".$this->tableName." = :id
+                    ";
+
+            try {
+
+                return DAO::delete($sql, $data);
+    
+                } catch (\Throwable $th) {
+    
+                //throw $th;
+    
+                }
         }
 
     }

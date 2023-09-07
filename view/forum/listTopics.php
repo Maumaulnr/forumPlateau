@@ -17,6 +17,9 @@ foreach($topics as $topic){
 }
 ?>
 
+<!--
+ * Returns a URL to the page where user was before this page
+ -->
 <?php 
 $go_back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 ?>
