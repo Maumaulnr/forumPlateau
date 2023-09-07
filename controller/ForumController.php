@@ -28,6 +28,19 @@
         
         }
 
+        /**
+         * ******************************
+         * 
+         * 
+         *          FUNCTION : LIST
+         * 
+         * 
+         * ******************************
+         */
+
+         /**
+          * List of categories
+          */
         public function listCategories() {
             $categoryManager = new CategoryManager();
             $topicManager = new TopicManager();
@@ -43,13 +56,23 @@
             ];
         }
 
-        // We search the list of topics by category id, because we want to display topics according to their category.
-        // request in TopicManager.php
+        /**
+         * 
+         * List of Topic by Category Id
+         * 
+         * We search the list of topics by category id, because we want to display topics according to their category.
+         * 
+         * request in TopicManager.php
+         * 
+        */
         public function findTopicByCategoryId($id) {
 
             $topicManager = new TopicManager();
             $categoryManager = new CategoryManager();
 
+            /**
+             * For title of the category 
+             */
             $category = $categoryManager->findOneById($id);
 
             return [
@@ -61,8 +84,14 @@
             ];
         }
 
-        //  We search the list of messages by topic id, because we want to display messages according to their topic.
-        // request in MessageManager.php
+        /**
+         * 
+         * List of Message by Topic Id
+         * 
+         *  We search the list of messages by topic id, because we want to display messages according to their topic.
+         * 
+         * request in MessageManager.php
+        */
         public function findMessageByTopicId($id) {
             // var_dump($id);
             $topicManager = new TopicManager();
@@ -82,6 +111,16 @@
             ];
         }
 
+        /**
+         * ******************************
+         * 
+         * 
+         *          FUNCTION : ADD
+         * 
+         * 
+         * *******************************
+         */
+
         /**  
          * public function addCategoryForm(): Cette ligne définit une méthode publique appelée addCategoryForm(). On peut appeler cette méthode depuis d'autres parties du programme pour effectuer une action spécifique.
          * @return: La déclaration return est utilisée pour renvoyer une valeur depuis une fonction. Dans ce cas, la fonction addCategoryForm() renvoie un tableau associatif.
@@ -94,20 +133,16 @@
             ];
         }
 
+        /**
+         * On reçoit le formulaire
+         * 
+         * On filtre le formulaire grâce aux FILTER
+         */
         public function addCategory() {
 
             $nameCategory = filter_input(INPUT_POST, 'nameCategory', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             $categoryManager = new CategoryManager();
-
-            // vars
-            $isAddCategorySuccess = false;
-            $globalMessage = "L'enregistrement a bien été effectué";
-            $formValues = null;
-
-            // validation des règles du formulaire
-            $isFormValid = true;
-            $errorMessages = [];
 
             // nameCategory est obligatoire
             // si nameCategory est vide
@@ -147,11 +182,16 @@
             $categoryManager = new CategoryManager();
             $topicManager = new TopicManager();
 
+            /**
+             * App/Session::getFlash()
+            */
             return [
                 "view" => VIEW_DIR. "forum/addTopicForm.php",
                 "data" => [
-                    "categories" => $categoryManager->findAll(),
-                    "topics" => $topicManager->findTopicByCategoryId($id)
+                    "category" => $categoryManager->findOneById($id),
+                    "topics" => $topicManager->findTopicByCategoryId($id),
+                    "successMessage" => Session::getFlash('success'),
+                    "errorMessage" => Session::getFlash('error')
                 ]
             ];
         }
@@ -170,61 +210,36 @@
             $topicManager = new TopicManager();
             $messageManager = new MessageManager();
 
-            // vars
-            $isAddTopicSuccess = false;
-            $globalMessage = "L'enregistrement a bien été effectué";
-            $formValues = null;
+            if($nameTopic && $categoryId && $commentText) 
+            {
+                $topicManager = new TopicManager();
+                $messageManager = new MessageManager();
 
-            // validation des règles du formulaire
-            $isFormValid = true;
-            $errorMessages = [];
-
-            // nameCategory est obligatoire
-            // si nameCategory est vide
-            if($nameTopic && $commentText == "") {
-                $isFormValid = false;
-                $errorMessages["nameTopic"] = "Ce champ est obligatoire";
-                $errorMessages["commentText"] = "Ce champ est obligatoire";
-            }
-
-            // si les règles de validation du formulaire sont respectées
-            if ($isFormValid) {
-                // "nameTopic" = nameTopic de la BDD
+                /**
+                 * On ajoute un topic en fontion de la catégorie
+                 */
                 $topicManager->add(["nameTopic" => $nameTopic, "user_id" => $userId, "category_id" => $categoryId]);
+
+                /**
+                 * on ajoute le message
+                 */
                 $messageManager->add(["commentText" => $commentText, "user_id" => $userId, "topic_id" => $topicId]);
 
+                Session::addFlash('success', 'Le topic a été ajouté');
 
-                $this->redirectTo("forum", "listCategories");
-
-            } else if (!$isAddTopicSuccess) {
-
-                    $globalMessage = "L'enregistrement a échoué";
-
-            } else {
-                // le formulaire est invalide
-    
-                $globalMessage = "Le formulaire est invalide";
-    
-                return $this->addTopicForm($id);
-            }
-
-                // si la mise à jour est un succès sinon on prérempli le formulaire et on modifie pour corriger l'erreur, dans tous les cas il y a une redirection
-            if ($isAddTopicSuccess) {
-
-                $this->redirectTo("forum", "listCategories");
+                /**
+                 * On redirige vers layout pour voir le message s'afficher
+                 */
+                $this->redirectTo('view', 'layout');
 
             } else {
-                // sinon peu importe pourquoi
 
-                $formValues = [
-                    "nameTopic" => $nameTopic,
-                    "commentText" => $commentText
-                ];
+                return $this->addTopicForm($categoryId);
 
-                return $this->addTopicForm($id);
             }
 
         }
+
 
         public function addMessageForm($id) 
         {
@@ -264,9 +279,24 @@
         }
 
 
-            // UPDATE MESSAGE => commentText
-        // On veut les vraies données de la bdd
-        // "topidId" => $_GET['topicId'] => permet de récupérer topicId quand on veut changer un message (commentText) précis
+        /**
+         * ******************************
+         * 
+         * 
+         *          FUNCTION : UPDATE
+         * 
+         * 
+         * ******************************
+         **/
+
+
+        /**
+         *  UPDATE MESSAGE => commentText
+         * 
+         * On veut les vraies données de la bdd
+         * 
+         * "topidId" => $_GET['topicId'] => permet de récupérer topicId quand on veut changer un message (commentText) précis
+         */
         public function updateMessageForm($id) {
             // var_dump($id);
             $messageManager = new MessageManager();
@@ -280,7 +310,7 @@
                 "data" => [
                     "message" => $message,
                     "topic" => $topic,
-                    "topidId" => $_GET['topicId']
+                    "topicId" => $_GET['topicId']
                 ]
             ];
 
@@ -308,21 +338,24 @@
             // on retourne vers la liste des messages dans le bon topic grâce à $topidId
             return $this->findMessageByTopicId($topicId);
 
-            // // vars
-            // $isUpdateMessageSuccess = false;
-
-            // // si la mise à jour est un succès sinon on prérempli le formulaire et on modifie pour corriger l'erreur, dans tous les cas il y a une redirection
-            // if ($isUpdateMessageSuccess) {
-            //     $this->findMessageByTopicId($id); // le require est inclus dans la méthode
-
-            // } else {
-            //     // sinon peu importe pourquoi
-
-            //     return $this->findMessageByTopicId($id);
-            // }
         }
 
-        // DELETE MESSAGE => id_message
+
+        /**
+         * ******************************
+         * 
+         * 
+         *          FUNCTION : DELETE
+         * 
+         * 
+         * ******************************
+         **/
+
+
+        /**
+         * DELETE MESSAGE => id_message
+         *  
+         **/ 
         public function delete($id) 
         {
             $messageManager = new MessageManager();
