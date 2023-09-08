@@ -189,7 +189,7 @@
                 "view" => VIEW_DIR. "forum/addTopicForm.php",
                 "data" => [
                     "category" => $categoryManager->findOneById($id),
-                    "topics" => $topicManager->findTopicByCategoryId($id),
+                    // "topics" => $topicManager->findTopicByCategoryId($id),
                     "successMessage" => Session::getFlash('success'),
                     "errorMessage" => Session::getFlash('error')
                 ]
@@ -205,10 +205,10 @@
             $commentText = filter_input(INPUT_POST, "commentText", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $userId = filter_input(INPUT_POST, "userId", FILTER_SANITIZE_NUMBER_INT);
             $categoryId = filter_input(INPUT_POST, "categoryId", FILTER_SANITIZE_NUMBER_INT);
-            $topicId = filter_input(INPUT_POST, "topicId", FILTER_SANITIZE_NUMBER_INT);
+            // $topicId = filter_input(INPUT_POST, "topicId", FILTER_SANITIZE_NUMBER_INT);
 
-            $topicManager = new TopicManager();
-            $messageManager = new MessageManager();
+            // $topicManager = new TopicManager();
+            // $messageManager = new MessageManager();
 
             if($nameTopic && $categoryId && $commentText) 
             {
@@ -217,8 +217,9 @@
 
                 /**
                  * On ajoute un topic en fontion de la catégorie
+                 * $topicId -> DAO->return self::$bdd->lastInsertId() : pour pousser l'id jusquà la table Message et donc pouvoir ajouter un message ("topic_id" => $topicId)
                  */
-                $topicManager->add(["nameTopic" => $nameTopic, "user_id" => $userId, "category_id" => $categoryId]);
+                $topicId = $topicManager->add(["nameTopic" => $nameTopic, "user_id" => $userId, "category_id" => $categoryId]);
 
                 /**
                  * on ajoute le message
