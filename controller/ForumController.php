@@ -200,7 +200,7 @@
         public function addTopic($id) {
 
             // filtrer ce qui arrive en POST
-            // "nameTopic" : vient du name="nameTopic" du fichier addActorForm.php
+            // "nameTopic" : vient du name="nameTopic" du fichier addTopicForm.php
             $nameTopic = filter_input(INPUT_POST, "nameTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $commentText = filter_input(INPUT_POST, "commentText", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $userId = filter_input(INPUT_POST, "userId", FILTER_SANITIZE_NUMBER_INT);
