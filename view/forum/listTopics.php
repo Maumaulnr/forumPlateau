@@ -2,7 +2,7 @@
 
 $topics = $result["data"]['topics'];
 $category = $result["data"]['category'];
-    
+
 ?>
 
 <h1><?= $category->getNameCategory() ?></h1>

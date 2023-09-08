@@ -71,7 +71,7 @@
             $categoryManager = new CategoryManager();
 
             /**
-             * For title of the category 
+             * For title of the category
              */
             $category = $categoryManager->findOneById($id);
 
@@ -189,7 +189,6 @@
                 "view" => VIEW_DIR. "forum/addTopicForm.php",
                 "data" => [
                     "category" => $categoryManager->findOneById($id),
-                    // "topics" => $topicManager->findTopicByCategoryId($id),
                     "successMessage" => Session::getFlash('success'),
                     "errorMessage" => Session::getFlash('error')
                 ]
@@ -205,10 +204,7 @@
             $commentText = filter_input(INPUT_POST, "commentText", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $userId = filter_input(INPUT_POST, "userId", FILTER_SANITIZE_NUMBER_INT);
             $categoryId = filter_input(INPUT_POST, "categoryId", FILTER_SANITIZE_NUMBER_INT);
-            // $topicId = filter_input(INPUT_POST, "topicId", FILTER_SANITIZE_NUMBER_INT);
 
-            // $topicManager = new TopicManager();
-            // $messageManager = new MessageManager();
 
             if($nameTopic && $categoryId && $commentText) 
             {

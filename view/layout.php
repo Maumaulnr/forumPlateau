@@ -29,7 +29,7 @@
                     <div id="nav-left">
                         <a href="index.php?ctrl=home&action">Home</a>
                         <a href="./view/security/login.php">Log In</a>
-                        <a href="./view/security/register.html">Sign Up</a>
+                        <a href="./view/security/registerForm.php">Sign Up</a>
                         <?php
                         if(App\Session::isAdmin()){
                             ?>
