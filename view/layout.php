@@ -29,8 +29,8 @@
                     <div id="nav-left">
                         <ul class="nav-menu">
                             <a href="index.php?ctrl=home&action" class="nav-title">Home</a>
-                            <a href="./view/security/login.php" class="nav-title">Log In</a>
-                            <a href="./view/security/registerForm.php" class="nav-title">Sign Up</a>
+                            <a href="index.php?ctrl=security&action=loginForm" class="nav-title">Log In</a>
+                            <a href="index.php?ctrl=security&action=registerForm" class="nav-title">Sign Up</a>
                             <?php
                             if(App\Session::isAdmin()){
                                 ?>
@@ -50,8 +50,8 @@
                             
                             if(App\Session::getUser()){
                                 ?>
-                                <a href="/security/viewProfile.php" class="nav-title"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()?></a>
-                                <a href="/security/logout.php" class="nav-title">Log Out</a>
+                                <a href="index.php?ctrl=security&action=viewProfile.php" class="nav-title"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()?></a>
+                                <a href="index.php?ctrl=security&action=logout.php" class="nav-title">Log Out</a>
                                 <?php
                             }
                             else{

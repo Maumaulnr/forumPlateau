@@ -28,9 +28,11 @@
         </label>
     </div> -->
     <button type="submit">Enregistrer</button>
-    <footer>
-        <p>Déjà membre?</p>
-        <a href="login.php">Se connecter ici</a>
+    <footer class="d-flex flex-column justify-content-center gap-2">
+        <p>Déjà membre ? </p>
+        <p>
+            <a href="index.php?ctrl=security&action=loginForm">Se connecter ici</a>
+        </p>
     </footer>
 
 </form>

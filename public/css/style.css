@@ -168,6 +168,11 @@ footer {
     align-items: center;
 }
 
+        /* Footer -> registerForm */
+footer.d-flex p {
+    margin: 0;
+}
+
 /* Bootstrap CSS */
 
 body {
