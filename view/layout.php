@@ -25,36 +25,44 @@
             <h3 class="message" style="color: red"><?= App\Session::getFlash("error") ?></h3>
             <h3 class="message" style="color: green"><?= App\Session::getFlash("success") ?></h3>
             <header class="container-fluid">
-                <nav>
+                <nav class="navbar" id="myNavbar">
                     <div id="nav-left">
-                        <a href="index.php?ctrl=home&action">Home</a>
-                        <a href="./view/security/login.php">Log In</a>
-                        <a href="./view/security/registerForm.php">Sign Up</a>
-                        <?php
-                        if(App\Session::isAdmin()){
-                            ?>
-                            <a href="index.php?ctrl=home&action=users">List members</a>
+                        <ul class="nav-menu">
+                            <a href="index.php?ctrl=home&action" class="nav-title">Home</a>
+                            <a href="./view/security/login.php" class="nav-title">Log In</a>
+                            <a href="./view/security/registerForm.php" class="nav-title">Sign Up</a>
                             <?php
-                        }
-                        ?>
+                            if(App\Session::isAdmin()){
+                                ?>
+                                <a href="index.php?ctrl=home&action=users" class="nav-title">List members</a>
+                                <?php
+                            }
+                            ?>
+                        </ul>
+                    </div>
+                    <div class="hamburger">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
                     </div>
                     <div id="nav-right">
-                    <?php
-                        
-                        if(App\Session::getUser()){
-                            ?>
-                            <a href="/security/viewProfile.html"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()?></a>
-                            <a href="/security/logout.html">Log Out</a>
-                            <?php
-                        }
-                        else{
-                            ?>
-                            <!-- <a href="index.php?ctrl=forum&action=listTopics">la liste des topics</a> -->
-                            <a href="index.php?ctrl=home&action=listUsers">List Users</a>
-                            <a href="index.php?ctrl=forum&action=listCategories">List Categories</a>
                         <?php
-                        }   
-                    ?>
+                            
+                            if(App\Session::getUser()){
+                                ?>
+                                <a href="/security/viewProfile.php" class="nav-title"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()?></a>
+                                <a href="/security/logout.php" class="nav-title">Log Out</a>
+                                <?php
+                            }
+                            else{
+                                ?>
+                                <!-- <a href="index.php?ctrl=forum&action=listTopics">la liste des topics</a> -->
+                                <!-- <a href="index.php?ctrl=home&action=listUsers" class="nav-title">List Users</a>
+                                <a href="index.php?ctrl=forum&action=listCategories" class="nav-title">List Categories</a> -->
+                            <?php
+                            }   
+
+                        ?>
                     </div>
                 </nav>
             </header>
@@ -102,7 +110,6 @@
             });
         })
 
-        
 
         /*
         $("#ajaxbtn").on("click", function(){
@@ -117,5 +124,6 @@
             )
         })*/
     </script>
+    <script src="<?= PUBLIC_DIR ?>/js/burgerMenu.js"></script> 
 </body>
 </html>

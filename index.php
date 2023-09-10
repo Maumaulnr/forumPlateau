@@ -49,10 +49,10 @@
     
     /*--------CHARGEMENT PAGE--------*/
     
-    if($action == "ajax"){//si l'action était ajax
+    if($action == "ajax") { //si l'action était ajax
         echo $result;//on affiche directement le return du contrôleur (càd la réponse HTTP sera uniquement celle-ci)
     }
-    else{
+    else {
         ob_start();//démarre un buffer (tampon de sortie)
         /*la vue s'insère dans le buffer qui devra être vidé au milieu du layout*/
         include($result['view']);

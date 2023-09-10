@@ -35,21 +35,6 @@
             ];
 
         }
-
-        // public function listCategories() {
-        //     $categoryManager = new CategoryManager();
-        //     $topicManager = new TopicManager();
-
-        //     $categories = $categoryManager->findAll();
-
-        //     return [
-        //         "view" => VIEW_DIR. "home.php",
-        //         "data" => [
-        //             "categories" => $categories,
-        //             "topics" => $topicManager
-        //         ]
-        //     ];
-        // }
    
 
         public function forumRules(){
