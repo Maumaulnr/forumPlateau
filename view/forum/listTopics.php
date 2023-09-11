@@ -19,6 +19,17 @@ foreach($topics as $topic){
         </p>
         <p>De : <?= $user->getUserName() ?></p>
         <p>Le : <?= $topic->getDateCreationTopic() ?></p>
+        <!-- UPDATE -->
+        <!-- Quand on clique on récupère idTopic et categoryId pour être sûr de changer le topic dans la bonne catégorie :
+        $topic->getId() ?>&categoryId=< $category->getId() ?>
+        -->
+        <a href="index.php?ctrl=forum&action=updateTopicForm&id=<?= $topic->getId() ?>&categoryId=<?= $category->getId() ?>">
+            <i class="fa-solid fa-pencil" title="Update"></i>
+        </a>
+        <!-- DELETE -->
+        <a href="index.php?ctrl=forum&action=delete&id=<?= $topic->getId() ?>&categoryId=<?= $category->getId() ?>">
+            <i class="fa-regular fa-trash-can" title="Delete"></i>
+        </a>
     </div>
 <?php
 }

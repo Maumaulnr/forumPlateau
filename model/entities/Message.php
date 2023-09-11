@@ -18,6 +18,7 @@
         private $commentText;
         private $user; // user_id
         private $topic; // topic_id
+        private $dateCreationText;
         
 
         // hydrate vient de la class Entity
@@ -105,9 +106,30 @@
                 return $this;
         }
 
-        // A FAIRE : Method _toString
+        /**
+         * Get the value of dateCreationText
+         */ 
+        public function getDateCreationText()
+        {
+                return $this->dateCreationText;
+        }
+
+        /**
+         * Set the value of dateCreationText
+         *
+         * @return  self
+         */ 
+        public function setDateCreationText($dateCreationText)
+        {
+                $this->dateCreationText = $dateCreationText;
+
+                return $this;
+        }
+
+        // Method _toString
         public function __toString()
         {
-                return $this->getUser() . $this->getTopic() . $this->getCommentText();
+                return $this->getUser() . $this->getTopic() . $this->getCommentText() . $this->getDateCreationText();
         }
+
     }

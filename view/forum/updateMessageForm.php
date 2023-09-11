@@ -3,25 +3,24 @@ $message = $result["data"]['message'];
 // $user = $result["data"]['user'];
 $topic = $result["data"]['topic'];
 // $topicId => "topidId" => $_GET['topicId'] dans ForumController->updateMessageForm($id)
-$topicId = $result["data"]['topidId'];
+$topicId = $result["data"]['topicId'];
 // var_dump($topic);
 ?>
 
-<div class="update-message">
+<h1>Topic : <?= $topic->getNameTopic() ?></h1>
 
-    <h1>Update the message</h1>
 
-    <form method="POST" action="index.php?ctrl=forum&action=update&id=<?= $message->getId() ?>" class="form-flex-column">
+<h2>Modifier le message</h2>
 
-        <input type="text" id="idMessage" name="idMessage" value="<?= $message->getId() ?>" placeholder="idMessage">
+<form method="POST" action="index.php?ctrl=forum&action=update&id=<?= $message->getId() ?>" class="d-flex flex-column justify-content-center align-items-center gap-5">
 
-        <label for="commentText" class="">Message</label>
-        <textarea name="commentText" id="commentText" class="text-center" cols="60" rows="10"><?= $message->getCommentText() ?></textarea>
+    <input type="hidden" id="idMessage"  name="idMessage" value="<?= $message->getId() ?>" placeholder="idMessage">
 
-        <input type="text" id="topicId" name="topicId" value="<?= $topicId ?>" placeholder="topicId">
+    <label for="commentText">Message</label>
+    <textarea name="commentText" id="commentText" class="text-center" cols="60" rows="10"><?= $message->getCommentText() ?></textarea>
 
-        <button type="submit" class="button-link">↑ Update ↻</button>
+    <input type="hidden" id="topicId" name="topicId" value="<?= $topicId ?>" placeholder="topicId">
 
-    </form>
+    <button type="submit" class="btn btn-primary w-50">↑ Modifier ↻</button>
 
-</div>
+</form>

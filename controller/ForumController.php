@@ -102,15 +102,19 @@
             $messageManager = new MessageManager();
             $userManager = new UserManager();
 
+             /**
+             * For title of the topic
+             * $user = $user->getUserName()
+             */
             $topic = $topicManager->findOneById($id);
+            $user = $userManager->findOneById($id);
             
-
             return [
                 "view" => VIEW_DIR. "forum/listMessages.php",
                 "data" => [
                     "topic" => $topic,
                     "messages" => $messageManager->findMessageByTopicId($id),
-                    "userManager" => $userManager
+                    "user" => $user
                 ]
             ];
         }
@@ -324,7 +328,7 @@
 
             // filtrer ce qui arrive en POST
             // "commentText" : vient du name="commentText" du fichier updateMessageForm.php
-            $idMessage = filter_input(INPUT_POST, "idMessage", FILTER_SANITIZE_NUMBER_INT);
+            $id = filter_input(INPUT_POST, "idMessage", FILTER_SANITIZE_NUMBER_INT);
             $commentText = filter_input(INPUT_POST, "commentText", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             /** 
@@ -332,7 +336,7 @@
              * newCommentText = :newCommentText
              * donc bien écrire pareil dans la fonction update ici.
             */
-            $messageManager->update(["id" => $idMessage, "newCommentText"=> $commentText]);
+            $messageManager->update(["id" => $id, "newCommentText"=> $commentText]);
 
             // filtrer input topidId pour récupérer le bon id en fonction du topic
             $topicId = filter_input(INPUT_POST, "topicId", FILTER_SANITIZE_NUMBER_INT);
@@ -374,5 +378,25 @@
             return $this->findMessageByTopicId($topicId);
 
         }
+
+        /**
+         * DELETE MESSAGE => id_topic 
+         *  
+         **/
+        public function deleteTopic($id) 
+        {
+            $topicManager = new TopicManager();
+
+            /** 
+             * id = :id de la requête
+             * donc bien écrire pareil dans la fonction update ici.
+            */
+            $topicManager->delete(['id' => $id]);
+
+            $categoryId = $_GET['categoryId'];
+
+            // on retourne vers la liste des topics dans la bonne catégorie grâce à $categoryId
+            return $this->findTopicByCategoryId($categoryId);
+        }     
 
     }
