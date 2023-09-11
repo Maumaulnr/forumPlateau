@@ -118,11 +118,12 @@
 
             $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
+            // Il faut que le pseudo et le mot de passe correspondent à la BDD sinon il faudra indiquer qu'il y a une erreur de pseudo ou de mot de passe.
             if ($userName && $password) {
 
                 $userManager = new UserManager();
 
-                
+
             }
         }
 

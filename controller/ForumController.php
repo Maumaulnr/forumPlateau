@@ -69,17 +69,21 @@
 
             $topicManager = new TopicManager();
             $categoryManager = new CategoryManager();
+            $userManager = new UserManager();
 
             /**
              * For title of the category
+             * $user = $user->getUserName()
              */
             $category = $categoryManager->findOneById($id);
+            $user = $userManager->findOneById($id);
 
             return [
                 "view" => VIEW_DIR. "forum/listTopics.php",
                 "data" => [
                     "topics" => $topicManager->findTopicByCategoryId($id),
-                    "category" => $category
+                    "category" => $category,
+                    "user" => $user
                 ]
             ];
         }
@@ -110,6 +114,7 @@
                 ]
             ];
         }
+
 
         /**
          * ******************************
