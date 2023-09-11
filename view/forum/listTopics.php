@@ -35,6 +35,11 @@ foreach($topics as $topic){
 }
 ?>
 
+<!-- On ajoute un Topic dans le catégorie où l'on se trouve -->
+<a class="btn btn-primary btn-add" href="index.php?ctrl=forum&action=addTopicForm&id=<?= $category->getId(); ?>" class="btn btn-primary" role="button">
+    Add Topic
+</a>
+
 <!--
  * Returns a URL to the page where user was before this page
  -->

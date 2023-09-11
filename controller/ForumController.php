@@ -189,7 +189,6 @@
         public function addTopicForm($id) {
 
             $categoryManager = new CategoryManager();
-            $topicManager = new TopicManager();
 
             /**
              * App/Session::getFlash()
@@ -224,12 +223,12 @@
                  * On ajoute un topic en fontion de la catégorie
                  * $topicId -> DAO->return self::$bdd->lastInsertId() : pour pousser l'id jusquà la table Message et donc pouvoir ajouter un message ("topic_id" => $topicId)
                  */
-                $topicId = $topicManager->add(["nameTopic" => $nameTopic, "user_id" => $userId, "category_id" => $categoryId]);
+                $topicId = $topicManager->add(["nameTopic" => $nameTopic, "user_id" => 1, "category_id" => $categoryId]);
 
                 /**
                  * on ajoute le message
                  */
-                $messageManager->add(["commentText" => $commentText, "user_id" => $userId, "topic_id" => $topicId]);
+                $messageManager->add(["commentText" => $commentText, "user_id" => 1, "topic_id" => $topicId]);
 
                 Session::addFlash('success', 'Le topic a été ajouté');
 
@@ -263,7 +262,7 @@
             ];
         }
 
-        public function addMessage($id) 
+        public function addMessage($topicId) 
         {
             $topicId = filter_input(INPUT_POST, "topicId", FILTER_SANITIZE_NUMBER_INT, FILTER_VALIDATE_INT);
             $commentText = filter_input(INPUT_POST, "commentText", FILTER_SANITIZE_FULL_SPECIAL_CHARS);

@@ -42,11 +42,11 @@ $topics = $result["data"]['topics'];
 	                    <li>4</li>
 	                    <li>5</li>
 	                    <li>
-	                        <a class="badge badge-info" href="http://skatingbuzz.test/forums/topic/random-4/" title="Random 4">1 week ago</a>
+	                        <a class="badge badge-info" href="#" title="Random 4">1 week ago</a>
                             <p class="bbp-topic-meta">
 		                        <span class="bbp-topic-freshness-author">
 	                                <a 
-	                                href="http://skatingbuzz.test/forums/user/admin/" 
+	                                href="#" 
 	                                title="View admin's profile" 
 	                                class="bbp-author-name badge badge-info" 
 	                                rel="nofollow">
@@ -55,30 +55,6 @@ $topics = $result["data"]['topics'];
 	                            </span>
                             </p>
 	                    </li>
-		            </ul>
-		            <ul class="topic-item-2">
-		                <li>
-		                    <a class="badge badge-primary" href="index.php?ctrl=forum&action=addTopicForm&id=<?= $value->getId(); ?>" role="button">
-							Add Topic
-                            </a>
-	                    </li> 
-	                    <li>2</li>
-	                    <li>4</li>
-	                    <li>
-	                        
-	                        <a class="badge badge-info" href="http://skatingbuzz.test/forums/topic/random-4/" title="Random 4">1 day ago</a>
-                            <p class="bbp-topic-meta">
-		                        <span class="bbp-topic-freshness-author">
-	                                <a 
-	                                href="http://skatingbuzz.test/forums/user/admin/" 
-	                                title="View admin's profile" 
-	                                class="bbp-author-name badge badge-info" 
-	                                rel="nofollow">
-	                                    leslie
-                                    </a>
-	                            </span>
-                            </p>
-	                    </li> 
 		            </ul>
                     <?php
                     }

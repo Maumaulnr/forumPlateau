@@ -36,6 +36,8 @@
                     WHERE a.id_".$this->tableName." = :id
                     ";
             // var_dump($sql);
+
+            // quand on a besoin d'une seule ligne
             return $this->getOneOrNullResult(
                 DAO::select($sql, ['id' => $id], false), 
                 $this->className
@@ -89,6 +91,7 @@
             else return null;
         }
 
+        // quand on a besoin d'une seule ligne
         protected function getOneOrNullResult($row, $class){
 
             if($row != null){

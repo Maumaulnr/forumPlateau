@@ -9,7 +9,6 @@ $topicId = $result["data"]['topicId'];
 
 <h1>Topic : <?= $topic->getNameTopic() ?></h1>
 
-
 <h2>Modifier le message</h2>
 
 <form method="POST" action="index.php?ctrl=forum&action=update&id=<?= $message->getId() ?>" class="d-flex flex-column justify-content-center align-items-center gap-5">
