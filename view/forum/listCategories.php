@@ -1,5 +1,5 @@
 <?php
-var_dump($_SESSION['user']);
+// var_dump($_SESSION['user']);
 ?>
 
 <h1>List Categories</h1>
@@ -31,7 +31,8 @@ $topics = $result["data"]['topics'];
 		               <li>Forum</li>
 		               <li>Topics</li>
 		               <li>Posts</li>
-		               <li>Freshness</li>
+		               <li>Update</li>
+		               <li>Delete</li>
 		           </ul>
 		        </li>
 		        <li class="topics-body">
@@ -46,19 +47,20 @@ $topics = $result["data"]['topics'];
 	                    <li>4</li>
 	                    <li>5</li>
 	                    <li>
-	                        <a class="badge badge-info" href="#" title="Random 4">1 week ago</a>
-                            <p class="bbp-topic-meta">
-		                        <span class="bbp-topic-freshness-author">
-	                                <a 
-	                                href="#" 
-	                                title="View admin's profile" 
-	                                class="bbp-author-name badge badge-info" 
-	                                rel="nofollow">
-	                                    admin
-                                    </a>
-	                            </span>
-                            </p>
+	                       <!-- UPDATE -->
+							<!-- Quand on clique on récupère idMessage et topicId pour être sûr de changer le message dans le bon topic :
+							$message->getId() ?>&topicId=< $topic->getId() ?>
+							-->
+							<a href="index.php?ctrl=forum&action=updateCategoryForm&id=<?= $value->getId() ?>">
+								<i class="fa-solid fa-pencil" title="Update"></i>
+							</a>
 	                    </li>
+						<li>
+							<!-- DELETE -->
+							<a href="index.php?ctrl=forum&action=deleteCategory&id=<?= $value->getId() ?>">
+                    			<i class="fa-regular fa-trash-can" title="Delete"></i>
+               	 			</a>
+						</li>
 		            </ul>
                     <?php
                     }

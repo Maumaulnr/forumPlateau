@@ -14,6 +14,51 @@
             parent::connect();
         }
 
+        /** 
+         * $data = param
+         * 
+         * 
+         */  
+        public function update($data) 
+        {
+
+            $sql = "UPDATE ".$this->tableName."
+            SET nameCategory = :newNameCategory
+            WHERE id_".$this->tableName." = :id
+            ;";
+
+            /**
+             * on essaie la fonction du DAO
+             * on renvoie l'état du statement après exécution (true ou false)
+             */
+           try {
+
+            return DAO::update($sql, $data);
+
+           } catch (\Throwable $th) {
+
+            //throw $th;
+
+           }
+
+        }
+
+        public function delete($data){
+            $sql = "DELETE FROM ".$this->tableName."
+                    WHERE id_".$this->tableName." = :id
+                    ";
+
+            try {
+
+                return DAO::delete($sql, $data);
+    
+                } catch (\Throwable $th) {
+    
+                //throw $th;
+    
+                }
+        }
+
     }
 
 ?>

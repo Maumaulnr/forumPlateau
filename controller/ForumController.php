@@ -156,32 +156,28 @@
             // nameCategory est obligatoire
             // si nameCategory est vide
             if($nameCategory == "") {
-                $isFormValid = false;
-                $errorMessages["nameCategory"] = "Ce champ est obligatoire";
+
+                Session::addFlash('error', 'Ce champ est obligatoire');
+    
             }
 
             // label ne doit pas dépasser 30 caractères
             if(strlen($nameCategory) > 100) {
-                $isFormValid = false;
-                $errorMessages["nameCategory"] = "Ce champ est limité à 100 caractères";
+                Session::addFlash('error', 'Le nom est trop long');
             }
 
+            if($nameCategory) {
             // si les règles de validation du formulaire sont respectées
-            if ($isFormValid) {
+            $categoryManager->add(["nameCategory"=>$nameCategory]);
 
-                $categoryManager->add(["nameCategory"=>$nameCategory]);
-
-                $this->redirectTo("forum", "listCategories");
+            $this->redirectTo("forum", "listCategories");
 
             } else {
-                // le formulaire est invalide
-    
-                $globalMessage = "Le formulaire est invalide";
-    
-                $formValues = [
-                    "nameCategory" => $nameCategory
-                ];
+
+                Session::addFlash('error', 'Veuillez entrer à nouveau le nom de la catégorie');
+                return $this->addCategoryForm();
             }
+
         }
 
         // On fait en sorte de pouvoir choisir la catégorie a associé au topic que l'on pourra choisir dans le fichier addTopicForm.php en retournant le tableau categories.
@@ -387,6 +383,46 @@
             $this->redirectTo("forum", "listTopics") ;
         }
 
+        /**
+         * UPDATE CATEGORY
+         *  
+         **/
+        public function updateCategoryForm($id) {
+            // var_dump($id);
+            $categoryManager = new CategoryManager();
+
+            $category = $categoryManager->findOneById($id);
+            // var_dump($category);
+            return [
+                "view" => VIEW_DIR. "forum/updateCategoryForm.php",
+                "data" => [
+                    "category" => $category,
+                ]
+            ];
+
+        }
+
+        public function updateCategory($id) {
+
+            $categoryManager = new CategoryManager();
+
+            // filtrer ce qui arrive en POST
+            // "nameCategory" : vient du name="nameCategory" du fichier updateCategoryForm.php
+            $id = filter_input(INPUT_POST, "idCategory", FILTER_SANITIZE_NUMBER_INT);
+            $nameCategory = filter_input(INPUT_POST, "nameCategory", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            /** 
+             * id = :id de la requête
+             * newNameCategory = :newNameCategory
+             * donc bien écrire pareil dans la fonction update ici.
+            */
+            $categoryManager->update(["id" => $id, "newNameCategory"=> $nameCategory]);
+
+            // on retourne vers la liste des messages dans la liste des catégories
+            $this->redirectTo('forum', 'listCategories');
+
+        }
+
 
         /**
          * ******************************
@@ -421,23 +457,45 @@
         }
 
         /**
-         * DELETE MESSAGE => id_topic 
+         * DELETE TOPIC => id_topic 
          *  
+         * Supprimer un topic et les messages DU topic
+         * FK dans table Message => topic_id
          **/
         public function deleteTopic($id) 
         {
             $topicManager = new TopicManager();
+            $messageManager = new MessageManager();
 
             /** 
              * id = :id de la requête
              * donc bien écrire pareil dans la fonction update ici.
             */
             $topicManager->delete(['id' => $id]);
+            // $messageManager->delete(['topic_id' => $topicId]);
 
             $categoryId = $_GET['categoryId'];
 
             // on retourne vers la liste des topics dans la bonne catégorie grâce à $categoryId
             return $this->findTopicByCategoryId($categoryId);
-        }     
+        }
+        
+        /**
+         * DELETE CATEGORY => id_category
+         *  
+         **/
+        public function deleteCategory($id) 
+        {
+            $categoryManager = new CategoryManager();
+
+            /** 
+             * id = :id de la requête
+             * 
+            */
+            $categoryManager->delete(['id' => $id]);
+
+            // on retourne vers la liste des categories
+            $this->redirectTo('forum', 'listCategories');
+        }
 
     }

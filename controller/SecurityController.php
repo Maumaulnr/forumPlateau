@@ -197,6 +197,10 @@
             
         }
 
+        /**
+         * LOG OUT
+         */
+
         public function logout() {
 
             session_start();
