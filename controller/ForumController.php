@@ -262,7 +262,7 @@
             ];
         }
 
-        public function addMessage($topicId) 
+        public function addMessage($id) 
         {
             $topicId = filter_input(INPUT_POST, "topicId", FILTER_SANITIZE_NUMBER_INT, FILTER_VALIDATE_INT);
             $commentText = filter_input(INPUT_POST, "commentText", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -343,6 +343,48 @@
             // on retourne vers la liste des messages dans le bon topic grâce à $topidId
             return $this->findMessageByTopicId($topicId);
 
+        }
+
+        /**
+         * UPDATE TOPIC
+         *  
+         **/
+        public function updateTopicForm($id) 
+        {
+            $topicManager = new TopicManager();
+            $categoryManager = new CategoryManager();
+
+            $topic = $topicManager->findOneById($id);
+            $category = $categoryManager->findOneById($id);
+
+            return [
+                "view" => VIEW_DIR. "forum/updateTopicForm.php",
+                "data" => [
+                    "topic" => $topic,
+                    "category" => $category,
+                    "categoryId" => $_GET['categoryId']
+                ]
+            ];
+        }
+
+        public function updateTopic($id) 
+        {
+            $topicManager = new TopicManager();
+
+            // filtrer ce qui arrive en POST
+            // "nameTopic" : vient du name="nameTopic" du fichier updateTopicForm.php
+            $id = filter_input(INPUT_POST, "idTopic", FILTER_SANITIZE_NUMBER_INT);
+            $nameTopic = filter_input(INPUT_POST, "nameTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            /** 
+             * id = :id de la requête
+             * newNameTopic = :newNameTopic
+             * donc bien écrire pareil dans la fonction update ici.
+            */
+            $topicManager->update(["id" => $id, "newNameTopic"=> $nameTopic]);
+
+            // on retourne vers la liste des messages dans le bon topic grâce à l'id
+            $this->redirectTo("forum", "listTopics") ;
         }
 
 

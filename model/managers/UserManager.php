@@ -14,7 +14,16 @@
             parent::connect();
         }
 
-       
+       public function findOneByEmail($email) {
+            $sql = "SELECT *
+                    FROM ".$this->tableName." u
+                    WHERE u.userEmail = :email";
+
+            return $this->getOneOrNullResult(
+                DAO::select($sql, ['email' => $email], false),
+                $this->className
+            );
+       }
 
     }
 

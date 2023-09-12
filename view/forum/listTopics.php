@@ -2,7 +2,7 @@
 
 $topics = $result["data"]['topics'];
 $category = $result["data"]['category'];
-$user = $result["data"]['user'];
+// $user = $result["data"]['user'];
 
 ?>
 
@@ -17,7 +17,7 @@ foreach($topics as $topic){
         <p>
             <a href="index.php?ctrl=forum&action=findMessageByTopicId&id=<?=$topic->getId();?>"><?= $topic->getNameTopic() ?></a>
         </p>
-        <p>De : <?= $user->getUserName() ?></p>
+        <p>De : <?= $topic->getUser()->getUserName() ?></p>
         <p>Le : <?= $topic->getDateCreationTopic() ?></p>
         <!-- UPDATE -->
         <!-- Quand on clique on récupère idTopic et categoryId pour être sûr de changer le topic dans la bonne catégorie :
@@ -27,7 +27,7 @@ foreach($topics as $topic){
             <i class="fa-solid fa-pencil" title="Update"></i>
         </a>
         <!-- DELETE -->
-        <a href="index.php?ctrl=forum&action=delete&id=<?= $topic->getId() ?>&categoryId=<?= $category->getId() ?>">
+        <a href="index.php?ctrl=forum&action=deleteTopic&id=<?= $topic->getId() ?>&categoryId=<?= $category->getId() ?>">
             <i class="fa-regular fa-trash-can" title="Delete"></i>
         </a>
     </div>

@@ -58,31 +58,56 @@
             $userName = filter_input(INPUT_POST, "userName", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $userEmail = filter_input(INPUT_POST, "userEmail", FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_VALIDATE_EMAIL);
             $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $confirmPassword = filter_input(INPUT_POST, "confirmPassword", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            
             // password_hash = creates a new password hash using a strong one-way hashing algorithm.
             /**
              * PASSWORD_DEFAULT - Use the bcrypt algorithm (default as of PHP 5.5.0). Note that this constant is designed to change over time as new and stronger algorithms are added to PHP. For that reason, the length of the result from using this identifier can change over time. Therefore, it is recommended to store the result in a database column that can expand beyond 60 characters (255 characters would be a good choice).
              */
-            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-            if($userName && $userEmail && $password)
+            if($userName && $userEmail && $password && $confirmPassword)
             {
                 $userManager = new UserManager();
 
-                $userManager->add(['userName' => $userName, 'userEmail' => $userEmail, 'password' => $passwordHash]);
+                // on doit d'abord rechercher si le userEmail existe en BDD
+                if(!$userManager->findOneByEmail($userEmail)) {
+                    // si c'est false on poursuit
 
-                Session::addFlash('success', 'Vous êtes bien enregistré !');
+                    // si le password correspond au confirmPassword et que la longueur de la chaîne de caractère du password est supérieur ou égale à 12
+                    if(($password == $confirmPassword)and(strlen($password)>=12)) {
 
-                $this->redirectTo('security', 'listUsers');
+                        // On va hasher le password et enregistrer le user en BDD
+                        // un password est hashé en BDD. Le hashage est un mécanisme unidirectionnel et irréversible. ON NE DEHASHE JAMAIS UN PASSWORD!!!
 
-            } else {
+                        // la fonction password_hash va nous demander l'algorithme de hash choisi. Les algos a priviligié sont BCRYPT et ARGON2i.
+                        // Ne pas utiliser sha ou md5
+                        // DCRYPT et ARGON2i font parti des algos de hash fort
+                        // sha ou md5 font parti des algos de hash faible
 
-                Session::addFlash('error', 'Une erreur est survenue, veuillez réessayer');
+                        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+                        // password_default utilise par défault l'algo BCRYPT
+                        // BCRYPT est un algo fort comme ARGON2i
+                        // il va créé une empreinte numérique en BDD composé de l'algo utilisé, d'un cost, d'un salt et du password hashé
+                        // le salt est une chaîne de caractère aléatoire hashée qui sera concaténé à notre password hashé.
+                        // si un pirate récupère notre password hashé il aura plus de difficulté à découvrir notre MDP d'origine
 
-                return $this->registerForm();
+                        // $password_hash2 = md5($password);
+                        
 
+                        $userManager->add(['userName' => $userName, 'userEmail' => $userEmail, 'password' => $password_hash, "userRole" => json_encode(['ROLE_USER'])]);
+                    } else {
+
+                        Session::addFlash('error', 'Le mot de passe ne sont pas identiques ou pas assez long');
+                    }
+
+                } else {
+                    Session::addFlash('error', 'Email déjà utilisé');
+                }
             }
 
+            $this->redirectTo("forum", "listCategories");
         }
+
 
         /**
          * LOGIN

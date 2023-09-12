@@ -30,6 +30,35 @@
            
         }
 
+        /** 
+         * $data = param
+         * 
+         * 
+         */  
+        public function update($data) 
+        {
+
+            $sql = "UPDATE ".$this->tableName."
+            SET nameTopic = :newNameTopic
+            WHERE id_".$this->tableName." = :id
+            ;";
+
+            /**
+             * on essaie la fonction du DAO
+             * on renvoie l'état du statement après exécution (true ou false)
+             */
+           try {
+
+            return DAO::update($sql, $data);
+
+           } catch (\Throwable $th) {
+
+            //throw $th;
+
+           }
+
+        }
+
     }
 
 ?>

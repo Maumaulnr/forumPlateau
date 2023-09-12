@@ -7,7 +7,7 @@ $topicId = $result["data"]['topicId'];
 // var_dump($topic);
 ?>
 
-<h1>Topic : <?= $topic->getNameTopic() ?></h1>
+<h1>Topic : <?= $message->getTopic->getNameTopic() ?></h1>
 
 <h2>Modifier le message</h2>
 

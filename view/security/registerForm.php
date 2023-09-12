@@ -16,10 +16,10 @@
         <label for="password">Mot de passe:</label>
         <input type="password" name="password" id="password" required=true>
     </div>
-    <!-- <div>
+    <div>
         <label for="password2">Password Again:</label>
-        <input type="password" name="password2" id="password2">
-    </div> -->
+        <input type="password" name="confirmPassword" id="password2">
+    </div>
     <!-- <div>
         <label for="agree">
             <input type="checkbox" name="agree" id="agree" value="yes"/> I agree

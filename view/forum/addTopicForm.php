@@ -15,7 +15,7 @@ $category = $result["data"]['category'];
         <input type="text" name="nameTopic" id="nameTopic" class="text-center" placeholder="Name Topic" maxlength="100" />
 
         <!--  -->
-        <input type="text" id="categoryId" name="categoryId" value="<?= $category->getId() ?>" placeholder="categoryId">
+        <input type="hidden" id="categoryId" name="categoryId" value="<?= $category->getId() ?>" placeholder="categoryId">
 
         <label for="commentText">Message</label>
         <textarea name="commentText" id="commentText" class="text-center" cols="60" rows="10"></textarea>

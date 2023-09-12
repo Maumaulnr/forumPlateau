@@ -1,8 +1,7 @@
 <?php
 $topic = $result["data"]['topic'];
 $messages = $result["data"]['messages'];
-$user = $result["data"]['user'];
-// var_dump();
+// var_dump($user);
 ?>
 
 <h1><?= $topic->getNameTopic() ?></h1>
@@ -17,7 +16,8 @@ $user = $result["data"]['user'];
         ?>
             <div class="d-flex flex-row align-items-center gap-5">
                 <p><?= $message->getCommentText()?></p>
-                <p>De : <?= $user->getUserName() ?></p>
+                <!-- Faire du chaînage : $message->getUser()->getUserName() : pour récupérer le getUserName -->
+                <p>De : <?= $message->getUser()->getUserName() ?></p>
                 <p>Le : <?= $message->getDateCreationText() ?></p>
                 <!-- UPDATE -->
                 <!-- Quand on clique on récupère idMessage et topicId pour être sûr de changer le message dans le bon topic :
