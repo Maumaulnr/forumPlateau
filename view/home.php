@@ -1,7 +1,12 @@
+<?php
+
+var_dump($_SESSION['user']);
+?>
+
 <h1>BIENVENUE SUR LE FORUM</h1>
 
 <div class="btn-list">
-    <a href="index.php?ctrl=home&action=listUsers" class="btn btn-primary">List Users</a>
+    
     <a href="index.php?ctrl=forum&action=listCategories" class="btn btn-primary">List Categories</a>
 </div>
 

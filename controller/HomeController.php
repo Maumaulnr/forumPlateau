@@ -49,4 +49,12 @@
             $nb++;
             include(VIEW_DIR."ajax.php");
         }*/
+
+        public function home(){
+            
+           
+            return [
+                "view" => VIEW_DIR."home.php"
+            ];
+        }
     }

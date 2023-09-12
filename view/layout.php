@@ -35,6 +35,7 @@
                             if(App\Session::isAdmin()){
                                 ?>
                                 <a href="index.php?ctrl=home&action=users" class="nav-title">List members</a>
+                                <a href="index.php?ctrl=home&action=listUsers" class="btn btn-primary">List Users</a>
                                 <?php
                             }
                             ?>
@@ -51,7 +52,7 @@
                             if(App\Session::getUser()){
                                 ?>
                                 <a href="index.php?ctrl=security&action=viewProfile.php" class="nav-title"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()?></a>
-                                <a href="index.php?ctrl=security&action=logout.php" class="nav-title">Log Out</a>
+                                <a href="index.php?ctrl=security&action=logout" class="nav-title">Log Out</a>
                                 <?php
                             }
                             else{

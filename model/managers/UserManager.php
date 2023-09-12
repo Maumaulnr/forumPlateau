@@ -25,6 +25,18 @@
             );
        }
 
+
+       public function findOneByPseudo($pseudo) {
+            $sql = "SELECT *
+                    FROM ".$this->tableName." u
+                    WHERE u.userName = :userName";
+
+            return $this->getOneOrNullResult(
+                DAO::select($sql, ['userName' => $pseudo], false),
+                $this->className
+            );
+       }
+
     }
 
 ?>

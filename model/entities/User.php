@@ -170,24 +170,24 @@
          *
          * @return  self
          */ 
-        public function setUserRole($role)
-        {
-                // on récupère du JSON
-                $this->userRole = json_decode($role);
-                // S'il n'y a pas de rôles attitrés, on va lui attribué un rôle
+        // public function setUserRole($role)
+        // {
+        //         // on récupère du JSON
+        //         $this->userRole = json_decode($role);
+        //         // S'il n'y a pas de rôles attitrés, on va lui attribué un rôle
 
-                if(empty($this->$role)) {
-                        $this->userRole[] = "ROLE_USER";
-                }
+        //         if(empty($this->$role)) {
+        //                 $this->userRole[] = "ROLE_USER";
+        //         }
 
-                return $this;
-        }
+        //         return $this;
+        // }
 
         public function hasRole($role) 
         {
                 
                 // si dans mon tableau JSON on trouve un rôle qui correspond au rôle en paramètre alors ça va nous return le rôle
-                return in_array($role, $this->getUserRole());
+                // return in_array($role, $this->getUserRole());
                 
         }
 

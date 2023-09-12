@@ -32,9 +32,8 @@
                 * "data" : Il s'agit d'un tableau associatif qui contient des données à transmettre à la vue. Dans ce cas, il contient les données de l'utilisateur, le message de succès et le message d'erreur.
             * Cette fonction prépare les données nécessaires à l'affichage du formulaire d'inscription en récupérant l'utilisateur connecté, les messages flash de succès et d'erreur, puis les renvoie sous forme de tableau pour être utilisés lors de l'affichage de la vue.
          **/
-        public function registerForm() {
-
-            $user = Session::getUser();
+        public function registerForm() 
+        {
 
             /**
              * App/Session::getFlash()
@@ -42,7 +41,6 @@
             return [
                 "view" => VIEW_DIR. "security/registerForm.php",
                 "data" => [
-                    "user" => $user,
                     "successMessage" => Session::getFlash('success'),
                     "errorMessage" => Session::getFlash('error')
                 ]
@@ -97,11 +95,12 @@
                         $userManager->add(['userName' => $userName, 'userEmail' => $userEmail, 'password' => $password_hash, "userRole" => json_encode(['ROLE_USER'])]);
                     } else {
 
-                        Session::addFlash('error', 'Le mot de passe ne sont pas identiques ou pas assez long');
+                        Session::addFlash('error', 'Les mots de passe ne sont pas identiques ou pas assez long');
                     }
 
                 } else {
-                    Session::addFlash('error', 'Email déjà utilisé');
+
+                    Session::addFlash('error', 'Email déjà utilisé !');
                 }
             }
 
@@ -110,13 +109,12 @@
 
 
         /**
-         * LOGIN
+         * LOGIN FORM
          */
 
         public function loginForm() 
         {
 
-            $user = Session::getUser();
 
             /**
              * App/Session::getFlash()
@@ -124,7 +122,6 @@
             return [
                 "view" => VIEW_DIR. "security/loginForm.php",
                 "data" => [
-                    "user" => $user,
                     "successMessage" => Session::getFlash('success'),
                     "errorMessage" => Session::getFlash('error')
                 ]
@@ -133,23 +130,80 @@
         }
 
         /**
-         * 
+         * LOGIN 
          */
 
         public function login()
         {
+
+            // je filtre les données envoyées dans le formulaire
+
             $userName = filter_input(INPUT_POST, "userName", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+            // on va d'abord vérifié si le filtrage s'est bien passé
+            if($userName && $password) {
 
-            // Il faut que le pseudo et le mot de passe correspondent à la BDD sinon il faudra indiquer qu'il y a une erreur de pseudo ou de mot de passe.
-            if ($userName && $password) {
-
+                // on va instancier le UserManager pour vérifier que j'ai bien un user à ce nom là
                 $userManager = new UserManager();
 
+                $user = $userManager->findOneByPseudo($userName);
 
+                if($user) {
+                    $userId = $user->getPassword();
+                    // si un user existe avec ce pseudo on continue
+                    // on va vérfier que le password donné dans le formulaire de login correspond au password de l'utilisateur qui pseudo
+
+                    if(password_verify($password, $userId)) {
+
+                        // PASSWORD_VERIRFY VA COMPARER DEUX CHAINES DE CARACTERES HASHE!
+
+                        if($user->getBanUser() == 0) {
+                             // si ça fonctionne on met le user en session
+                            Session::setUser($user);
+
+                            $this->redirectTo('forum', 'listCategories');
+
+                        } else {
+
+                            $this->redirectTo('forum', 'listCategories');
+
+                            Session::addFlash('error','personne ne t aime tu est banni!!!');
+                        }
+                       
+
+                        
+                    }
+
+                }
             }
+
+            // Récupérer le mot de passe haché de l'utilisateur depuis la base de données
+            
+
+            // On vérifie que le pseudo et le mot de passe correspondent à la BDD sinon il faudra indiquer qu'il y a une erreur de pseudo ou de mot de passe.
+            // if (password_verify($password, $hash)) {
+
+            //     Session::addFlash('success', 'Le mot de passe est valide !');
+            //     $this->redirectTo('view', 'home');
+
+            // } else {
+
+            //     Session::addFlash('error', 'Nom d\'utilisateur ou mot de passe incorrect.');
+            //     $this->redirectTo('view', 'layout');
+            // }
+
+       
+            
+        }
+
+        public function logout() {
+
+            session_start();
+
+            session_destroy();
+
+            $this->redirectTo('security', 'loginForm');
         }
 
     }

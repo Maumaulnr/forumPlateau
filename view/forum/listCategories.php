@@ -1,3 +1,7 @@
+<?php
+var_dump($_SESSION['user']);
+?>
+
 <h1>List Categories</h1>
 
 <?php
