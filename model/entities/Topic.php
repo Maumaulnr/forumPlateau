@@ -139,6 +139,6 @@
         // A FAIRE : Method _toString
         public function __toString()
         {
-                return $this->getNameTopic() . $this->getUser() . $this->getDateCreationTopic() . $this->getSubjectLock();
+                return $this->getNameTopic() . $this->getUser() . $this->getCategory() . $this->getDateCreationTopic() . $this->getSubjectLock();
         }
     }

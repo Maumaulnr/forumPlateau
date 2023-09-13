@@ -179,12 +179,12 @@
         public function setUserRole($role)
         {
                 // on récupère du JSON
-                // $this->userRole = json_decode($role);
+                $this->userRole = json_decode($role);
                 // S'il n'y a pas de rôles attitrés, on va lui attribué un rôle
 
-                // if(empty($this->$role)) {
-                //         $this->userRole[] = "ROLE_USER";
-                // }
+                if(empty($this->$role)) {
+                        $this->userRole[] = "ROLE_USER";
+                }
 
                 return $this;
         }

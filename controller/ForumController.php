@@ -13,19 +13,11 @@
     use Model\Managers\MessageManager;
     use Model\Managers\UserManager;
     
-    class ForumController extends AbstractController implements ControllerInterface{
+    class ForumController extends AbstractController implements ControllerInterface {
 
-        public function index(){
+        public function index()
+        {
           
-           $topicManager = new TopicManager();
-
-            return [
-                "view" => VIEW_DIR."forum/listTopics.php",
-                "data" => [
-                    "topics" => $topicManager->findAll(["dateCreationTopic", "DESC"])
-                ]
-            ];
-        
         }
 
         /**
@@ -43,15 +35,13 @@
           */
         public function listCategories() {
             $categoryManager = new CategoryManager();
-            $topicManager = new TopicManager();
 
             $categories = $categoryManager->findAll();
 
             return [
                 "view" => VIEW_DIR. "forum/listCategories.php",
                 "data" => [
-                    "categories" => $categories,
-                    "topics" => $topicManager
+                    "categories" => $categories
                 ]
             ];
         }
@@ -69,21 +59,19 @@
 
             $topicManager = new TopicManager();
             $categoryManager = new CategoryManager();
-            $userManager = new UserManager();
 
             /**
-             * For title of the category
-             * $user = $user->getUserName()
+             * $category : For title of the category in the topic
+             * 
              */
             $category = $categoryManager->findOneById($id);
-            $user = $userManager->findOneById($id);
+            // var_dump($category);
 
             return [
                 "view" => VIEW_DIR. "forum/listTopics.php",
                 "data" => [
                     "topics" => $topicManager->findTopicByCategoryId($id),
-                    "category" => $category,
-                    "user" => $user
+                    "category" => $category
                 ]
             ];
         }
@@ -100,21 +88,18 @@
             // var_dump($id);
             $topicManager = new TopicManager();
             $messageManager = new MessageManager();
-            $userManager = new UserManager();
 
              /**
              * For title of the topic
-             * $user = $user->getUserName()
+             * 
              */
             $topic = $topicManager->findOneById($id);
-            $user = $userManager->findOneById($id);
             
             return [
                 "view" => VIEW_DIR. "forum/listMessages.php",
                 "data" => [
                     "topic" => $topic,
-                    "messages" => $messageManager->findMessageByTopicId($id),
-                    "user" => $user
+                    "messages" => $messageManager->findMessageByTopicId($id)
                 ]
             ];
         }
@@ -188,6 +173,7 @@
 
             /**
              * App/Session::getFlash()
+             * Dans addTopicForm : action="index.php?ctrl=forum&action=addTopic&id=<?= $id ?>" : on récupère l'id de la category grâce au lien pour ajouter un topic qui se trouve dans UNE category ($_GET["id"])
             */
             return [
                 "view" => VIEW_DIR. "forum/addTopicForm.php",
@@ -206,11 +192,9 @@
             // "nameTopic" : vient du name="nameTopic" du fichier addTopicForm.php
             $nameTopic = filter_input(INPUT_POST, "nameTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $commentText = filter_input(INPUT_POST, "commentText", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $userId = filter_input(INPUT_POST, "userId", FILTER_SANITIZE_NUMBER_INT);
-            $categoryId = filter_input(INPUT_POST, "categoryId", FILTER_SANITIZE_NUMBER_INT);
 
 
-            if($nameTopic && $categoryId && $commentText) 
+            if($nameTopic && $commentText) 
             {
                 $topicManager = new TopicManager();
                 $messageManager = new MessageManager();
@@ -219,7 +203,7 @@
                  * On ajoute un topic en fontion de la catégorie
                  * $topicId -> DAO->return self::$bdd->lastInsertId() : pour pousser l'id jusquà la table Message et donc pouvoir ajouter un message ("topic_id" => $topicId)
                  */
-                $topicId = $topicManager->add(["nameTopic" => $nameTopic, "user_id" => 1, "category_id" => $categoryId]);
+                $topicId = $topicManager->add(["nameTopic" => $nameTopic, "user_id" => 1, "category_id" => $id]);
 
                 /**
                  * on ajoute le message
@@ -235,7 +219,7 @@
 
             } else {
 
-                return $this->addTopicForm($categoryId);
+                return $this->addTopicForm($id);
 
             }
 
@@ -304,13 +288,11 @@
             $topicManager = new TopicManager();
 
             $message = $messageManager->findOneById($id);
-            $topic = $topicManager->findOneById($id);
             // var_dump($topic);
             return [
                 "view" => VIEW_DIR. "forum/updateMessageForm.php",
                 "data" => [
                     "message" => $message,
-                    "topic" => $topic,
                     "topicId" => $_GET['topicId']
                 ]
             ];
@@ -471,8 +453,9 @@
              * id = :id de la requête
              * donc bien écrire pareil dans la fonction update ici.
             */
-            $topicManager->delete(['id' => $id]);
-            // $messageManager->delete(['topic_id' => $topicId]);
+            var_dump($id);
+            $messageManager->delete($id);
+            $topicManager->delete($id);
 
             $categoryId = $_GET['categoryId'];
 

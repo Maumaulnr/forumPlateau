@@ -1,6 +1,6 @@
 <?php
 
-var_dump($_SESSION['user']);
+// var_dump($_SESSION['user']);
 ?>
 
 <h1>BIENVENUE SUR LE FORUM</h1>

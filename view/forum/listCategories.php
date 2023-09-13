@@ -8,7 +8,7 @@
 
 // return de la fonction listCategories() donc bien écrire dans le même ordre que dans la fonction
 $categories = $result["data"]["categories"];
-$topics = $result["data"]['topics'];
+// $topics = $result["data"]['topics'];
 
 ?>
 

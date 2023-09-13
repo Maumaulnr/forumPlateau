@@ -1,15 +1,12 @@
 <?php
 $message = $result["data"]['message'];
-// $user = $result["data"]['user'];
-$topic = $result["data"]['topic'];
 // $topicId => "topidId" => $_GET['topicId'] dans ForumController->updateMessageForm($id)
 $topicId = $result["data"]['topicId'];
 // var_dump($topic);
 ?>
 
-<h1>Topic : <?= $message->getTopic->getNameTopic() ?></h1>
 
-<h2>Modifier le message</h2>
+<h1>Modifier le message</h1>
 
 <form method="POST" action="index.php?ctrl=forum&action=update&id=<?= $message->getId() ?>" class="d-flex flex-column justify-content-center align-items-center gap-5">
 

@@ -143,7 +143,7 @@
 
             // on va d'abord vérifié si le filtrage s'est bien passé
             if($userName && $password) {
-
+                
                 // on va instancier le UserManager pour vérifier que j'ai bien un user à ce nom là
                 $userManager = new UserManager();
 
@@ -153,9 +153,9 @@
                     $userId = $user->getPassword();
                     // si un user existe avec ce pseudo on continue
                     // on va vérfier que le password donné dans le formulaire de login correspond au password de l'utilisateur qui pseudo
-
+                    
                     if(password_verify($password, $userId)) {
-
+                        
                         // PASSWORD_VERIRFY VA COMPARER DEUX CHAINES DE CARACTERES HASHE!
 
                         if($user->getBanUser() == 0) {
@@ -163,17 +163,19 @@
                             Session::setUser($user);
 
                             $this->redirectTo('forum', 'listCategories');
-
+                            
                         } else {
 
                             $this->redirectTo('forum', 'listCategories');
 
-                            Session::addFlash('error','personne ne t aime tu est banni!!!');
+                            Session::addFlash('error','personne ne t aime tu es banni!!!');
                         }
-                       
-
-                        
+                                   
                     }
+
+                } else {
+
+                    $this->redirectTo('forum', 'listCategories');
 
                 }
             }

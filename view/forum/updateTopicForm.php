@@ -10,7 +10,6 @@ $categoryId = $result["data"]['categoryId'];
 
     <input type="hidden" id="idTopic"  name="idTopic" value="<?= $topic->getId() ?>" placeholder="idTopic">
 
-    <label for="nameTopic">Message</label>
     <input name="nameTopic" id="nameTopic" class="text-center" value="<?= $topic->getNameTopic() ?>" placeholder="Nom du Topic">
 
     <input type="hidden" id="categoryId" name="categoryId" value="<?= $categoryId ?>" placeholder="categoryId">

@@ -39,7 +39,7 @@ foreach($topics as $topic){
 <?php
 if(App\Session::getUser()){
 ?>
-<a class="btn btn-primary btn-add" href="index.php?ctrl=forum&action=addTopicForm&id=<?= $category->getId(); ?>" class="btn btn-primary" role="button">
+<a class="btn btn-primary btn-add" href="index.php?ctrl=forum&action=addTopicForm&id=<?= $_GET['id'] ?>" class="btn btn-primary" role="button">
     Add Topic
 </a>
 <?php
