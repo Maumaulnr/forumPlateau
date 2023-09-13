@@ -43,22 +43,6 @@
 
         }
 
-        public function delete($data){
-            $sql = "DELETE FROM ".$this->tableName."
-                    WHERE id_".$this->tableName." = :id
-                    ";
-
-            try {
-
-                return DAO::delete($sql, $data);
-    
-                } catch (\Throwable $th) {
-    
-                //throw $th;
-    
-                }
-        }
-
     }
 
 ?>

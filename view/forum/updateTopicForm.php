@@ -8,8 +8,6 @@ $categoryId = $result["data"]['categoryId'];
 
 <form method="POST" action="index.php?ctrl=forum&action=updateTopic&id=<?= $topic->getId() ?>" class="d-flex flex-column justify-content-center align-items-center gap-5">
 
-    <input type="hidden" id="idTopic"  name="idTopic" value="<?= $topic->getId() ?>" placeholder="idTopic">
-
     <input name="nameTopic" id="nameTopic" class="text-center" value="<?= $topic->getNameTopic() ?>" placeholder="Nom du Topic">
 
     <input type="hidden" id="categoryId" name="categoryId" value="<?= $categoryId ?>" placeholder="categoryId">

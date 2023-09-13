@@ -285,7 +285,6 @@
         public function updateMessageForm($id) {
             // var_dump($id);
             $messageManager = new MessageManager();
-            $topicManager = new TopicManager();
 
             $message = $messageManager->findOneById($id);
             // var_dump($topic);
@@ -351,7 +350,8 @@
 
             // filtrer ce qui arrive en POST
             // "nameTopic" : vient du name="nameTopic" du fichier updateTopicForm.php
-            $id = filter_input(INPUT_POST, "idTopic", FILTER_SANITIZE_NUMBER_INT);
+            // $id = filter_input(INPUT_POST, "idTopic", FILTER_SANITIZE_NUMBER_INT);
+            $categoryId = filter_input(INPUT_POST, "categoryId", FILTER_SANITIZE_NUMBER_INT);
             $nameTopic = filter_input(INPUT_POST, "nameTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             /** 
@@ -361,8 +361,8 @@
             */
             $topicManager->update(["id" => $id, "newNameTopic"=> $nameTopic]);
 
-            // on retourne vers la liste des messages dans le bon topic grâce à l'id
-            $this->redirectTo("forum", "listTopics") ;
+            // on retourne vers la liste des topics dans la bonne catégorie grâce à l'id
+            $this->redirectTo("forum", "findTopicByCategoryId", $categoryId) ;
         }
 
         /**
@@ -390,7 +390,6 @@
 
             // filtrer ce qui arrive en POST
             // "nameCategory" : vient du name="nameCategory" du fichier updateCategoryForm.php
-            $id = filter_input(INPUT_POST, "idCategory", FILTER_SANITIZE_NUMBER_INT);
             $nameCategory = filter_input(INPUT_POST, "nameCategory", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             /** 
@@ -453,7 +452,7 @@
              * id = :id de la requête
              * donc bien écrire pareil dans la fonction update ici.
             */
-            var_dump($id);
+            // var_dump($id);
             $messageManager->delete($id);
             $topicManager->delete($id);
 
@@ -469,13 +468,17 @@
          **/
         public function deleteCategory($id) 
         {
+            $messageManager = new MessageManager();
+            $topicManager = new TopicManager();
             $categoryManager = new CategoryManager();
 
             /** 
              * id = :id de la requête
              * 
             */
-            $categoryManager->delete(['id' => $id]);
+            $messageManager->delete($id);
+            $topicManager->delete($id);
+            $categoryManager->delete($id);
 
             // on retourne vers la liste des categories
             $this->redirectTo('forum', 'listCategories');
