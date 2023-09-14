@@ -11,6 +11,10 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js">
+
     <link rel="stylesheet" href="<?= PUBLIC_DIR ?>/css/style.scss">
     <link rel="stylesheet" href="<?= PUBLIC_DIR ?>/css/style.css">
 
@@ -32,12 +36,12 @@
                             <a href="index.php?ctrl=security&action=loginForm" class="nav-title">Log In</a>
                             <a href="index.php?ctrl=security&action=registerForm" class="nav-title">Sign Up</a>
                             <?php
-                            // if(App\Session::isAdmin()){
+                            if(App\Session::isAdmin()){
                                 ?>
                                 <a href="index.php?ctrl=home&action=users" class="nav-title">List members</a>
                                 <a href="index.php?ctrl=home&action=listUsers" class="btn btn-primary">List Users</a>
                                 <?php
-                            //}
+                            }
                             ?>
                         </ul>
                     </div>
@@ -51,15 +55,13 @@
                             
                             if(App\Session::getUser()){
                                 ?>
-                                <a href="index.php?ctrl=security&action=viewProfile" class="nav-title"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()?></a>
+                                <a href="index.php?ctrl=security&action=viewProfile" class="nav-title"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()->getUserName() ?></a>
                                 <a href="index.php?ctrl=security&action=logout" class="nav-title">Log Out</a>
                                 <?php
                             }
                             else{
                                 ?>
-                                <!-- <a href="index.php?ctrl=forum&action=listTopics">la liste des topics</a> -->
-                                <!-- <a href="index.php?ctrl=home&action=listUsers" class="nav-title">List Users</a>
-                                <a href="index.php?ctrl=forum&action=listCategories" class="nav-title">List Categories</a> -->
+                                <a href="index.php?ctrl=home&action">Home</a>
                             <?php
                             }   
 
@@ -77,6 +79,7 @@
             <!--<button id="ajaxbtn">Surprise en Ajax !</button> -> cliqué <span id="nbajax">0</span> fois-->
         </footer>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script
         src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="

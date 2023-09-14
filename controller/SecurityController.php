@@ -13,13 +13,8 @@
 
         public function index()
         {
-            $user = Session::getUser()();
-
             return [
-                "view" => VIEW_DIR. "error404.php",
-                "data" => [
-                    "user" => $user
-                ]
+                "view" => VIEW_DIR . "security/error404.php"
             ];
         }
 

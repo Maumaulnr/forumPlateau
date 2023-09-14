@@ -178,15 +178,30 @@
          */ 
         public function setUserRole($role)
         {
-                // on récupère du JSON
-                $this->userRole = json_decode($role);
-                // S'il n'y a pas de rôles attitrés, on va lui attribué un rôle
+                // // Afficher la valeur de $role
+                // echo "Contenu de la variable \$role : ";
+                // var_dump($role);
 
-                if(empty($this->$role)) {
-                        $this->userRole[] = "ROLE_USER";
+                // Vérifier si $role est NULL ou une chaîne JSON vide
+                if ($role === null || trim($role) === '') {
+
+                        // on récupère du JSON
+                        $this->userRole = ["ROLE_USER"];
+                        // S'il n'y a pas de rôles attitrés, on va lui attribué un rôle
+
+                } else {
+
+                        // S'il contient une chaîne JSON valide, la décoder
+                        $this->userRole = json_decode($role);
+
+                        // Vérifier si la décoding a échoué (probablement en raison d'une JSON invalide)
+                        if ($this->userRole === null && json_last_error() !== JSON_ERROR_NONE) {
+                                // Gérer l'erreur de décoding JSON ici si nécessaire
+                        }
                 }
 
                 return $this;
+                
         }
 
         public function hasRole($role) 
