@@ -55,7 +55,9 @@
                             
                             if(App\Session::getUser()){
                                 ?>
-                                <a href="index.php?ctrl=security&action=viewProfile" class="nav-title"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()->getUserName() ?></a>
+                                <a href="index.php?ctrl=security&action=viewProfile" class="nav-title">
+                                    <span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()->getUserName() ?>
+                                </a>
                                 <a href="index.php?ctrl=security&action=logout" class="nav-title">Log Out</a>
                                 <?php
                             }

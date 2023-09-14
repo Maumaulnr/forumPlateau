@@ -6,6 +6,9 @@
     use App\Session;
     use App\AbstractController;
     use App\ControllerInterface;
+    use Model\Managers\MessageManager;
+    use Model\Managers\TopicManager;
+    use Model\Entities\Category;
     use Model\Managers\UserManager;
     
 
@@ -13,9 +16,12 @@
 
         public function index()
         {
-            return [
-                "view" => VIEW_DIR . "security/error404.php"
-            ];
+
+            // Gérez le cas où l'utilisateur n'a pas été trouvé (par exemple, affichez un message d'erreur)
+            // return [
+            //     "view" => VIEW_DIR . "security/error404.php"
+            // ];
+
         }
 
         /**
@@ -145,6 +151,7 @@
                 $user = $userManager->findOneByPseudo($userName);
 
                 if($user) {
+
                     $userId = $user->getPassword();
                     // si un user existe avec ce pseudo on continue
                     // on va vérfier que le password donné dans le formulaire de login correspond au password de l'utilisateur qui pseudo
@@ -161,37 +168,27 @@
                             
                         } else {
 
-                            $this->redirectTo('forum', 'listCategories');
-
                             Session::addFlash('error','personne ne t aime tu es banni!!!');
+
+                            $this->redirectTo('view', 'layout');
+
                         }
                                    
                     }
 
                 } else {
 
-                    $this->redirectTo('forum', 'listCategories');
+                    Session::addFlash('error','Le pseudo n\'est pas bon');
+
+                    $this->redirectTo('view', 'loginForm');
 
                 }
+
+            } else {
+
+                Session::addFlash('error','Il y a une erreur, veuillez recommencer');
             }
 
-            // Récupérer le mot de passe haché de l'utilisateur depuis la base de données
-            
-
-            // On vérifie que le pseudo et le mot de passe correspondent à la BDD sinon il faudra indiquer qu'il y a une erreur de pseudo ou de mot de passe.
-            // if (password_verify($password, $hash)) {
-
-            //     Session::addFlash('success', 'Le mot de passe est valide !');
-            //     $this->redirectTo('view', 'home');
-
-            // } else {
-
-            //     Session::addFlash('error', 'Nom d\'utilisateur ou mot de passe incorrect.');
-            //     $this->redirectTo('view', 'layout');
-            // }
-
-       
-            
         }
 
         /**
@@ -205,6 +202,33 @@
             session_destroy();
 
             $this->redirectTo('security', 'loginForm');
+        }
+
+        /*********
+         * 
+         * 
+         * VIEW PROFILE
+         * 
+         * 
+         ***********/
+
+        public function viewProfile($id) 
+        {
+
+            // On veut afficher les informations concernant un utilisateur 
+
+            $userManager = new UserManager();
+
+            // On veut trouver le profil d'un utilisateur en fonction de son Id
+            $user = $userManager->findOneById($id);
+            
+            return [
+                "view" => VIEW_DIR . "security/viewProfile.php",
+                "data" => [
+                    "user" => $user
+                ]
+            ];
+
         }
 
     }

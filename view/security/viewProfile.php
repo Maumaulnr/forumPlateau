@@ -1,6 +1,7 @@
 <?php
+$user = $result["data"]['user'];
 
-use App\Session;
+if($user !== NULL) {
 ?>
 
 <div class="container">
@@ -31,7 +32,7 @@ use App\Session;
                                 <h6 class="mb-0">Pseudonyme</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <p><?= Session::getUser()->getNameUser() ?></p>
+                                <p><?= $user->getUserName() ?></p>
                             </div>
                         </div>
                         <hr>
@@ -40,7 +41,7 @@ use App\Session;
                                 <h6 class="mb-0">Email</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <p><?= Session::getUser()->getUserEmail() ?></p>
+                                <p><?= $user->getUserEmail() ?></p>
                             </div>
                         </div>
                         <hr>
@@ -60,3 +61,7 @@ use App\Session;
 
     </div>
 </div>
+
+<?php
+}
+?>

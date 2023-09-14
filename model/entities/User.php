@@ -182,21 +182,28 @@
                 // echo "Contenu de la variable \$role : ";
                 // var_dump($role);
 
-                // Vérifier si $role est NULL ou une chaîne JSON vide
+                /** 
+                 * Vérifier si $role est NULL ou une chaîne JSON vide
+                 * trim($role) === '' vérifie si la variable $role est soit null, soit une chaîne vide (après avoir supprimé les espaces et les caractères invisibles de ses extrémités). Si c'est le cas, la condition est vraie, ce qui peut indiquer que la variable $role est vide ou non définie.
+                 * Vérifier si $role est NULL ou une chaîne JSON vide
+                 * */ 
                 if ($role === null || trim($role) === '') {
 
-                        // on récupère du JSON
+                        
+                        // S'il est vide, vous pouvez attribuer un rôle par défaut
                         $this->userRole = ["ROLE_USER"];
                         // S'il n'y a pas de rôles attitrés, on va lui attribué un rôle
 
                 } else {
 
+                        // on récupère du JSON
                         // S'il contient une chaîne JSON valide, la décoder
                         $this->userRole = json_decode($role);
 
                         // Vérifier si la décoding a échoué (probablement en raison d'une JSON invalide)
                         if ($this->userRole === null && json_last_error() !== JSON_ERROR_NONE) {
                                 // Gérer l'erreur de décoding JSON ici si nécessaire
+                                
                         }
                 }
 

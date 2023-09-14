@@ -225,6 +225,9 @@
 
         }
 
+        /**
+         * ADD MESSAGE
+         **/
 
         public function addMessageForm($id) 
         {
