@@ -14,7 +14,9 @@
             parent::connect();
         }
 
-       public function findOneByEmail($email) {
+        public function findOneByEmail($email) 
+        {
+
             $sql = "SELECT *
                     FROM ".$this->tableName." u
                     WHERE u.userEmail = :email";
@@ -23,10 +25,13 @@
                 DAO::select($sql, ['email' => $email], false),
                 $this->className
             );
-       }
+
+        }
 
 
-       public function findOneByPseudo($pseudo) {
+        public function findOneByPseudo($pseudo) 
+        {
+
             $sql = "SELECT *
                     FROM ".$this->tableName." u
                     WHERE u.userName = :userName";
@@ -35,7 +40,33 @@
                 DAO::select($sql, ['userName' => $pseudo], false),
                 $this->className
             );
-       }
+
+        }
+
+        public function update($data)
+        {
+
+            $sql = "UPDATE " . $this->tableName . "
+                    SET userName = :newUserName,
+                    userEmail = :newUserEmail
+                    WHERE id_" . $this->tableName . " = :id
+                    ;";
+
+            /**
+             * on essaie la fonction du DAO
+             * on renvoie l'état du statement après exécution (true ou false)
+             */
+            try {
+
+                return DAO::update($sql, $data);
+                
+            } catch (\Throwable $th) {
+
+                //throw $th;
+
+            }
+
+        }
 
     }
 

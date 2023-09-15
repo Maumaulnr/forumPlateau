@@ -14,7 +14,6 @@ $user = $result["data"]['user'];
                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
                             <div class="mt-3">
                                 <h4><?= $user->getUserName() ?></h4>
-                                <p class="text-secondary mb-1"><?= $user->getDateCreationCount() ?></p>
                                 <!-- <button class="btn btn-primary">Follow</button>
                                 <button class="btn btn-outline-primary">Message</button> -->
                             </div>
@@ -44,8 +43,17 @@ $user = $result["data"]['user'];
                         </div>
                         <hr>
                         <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Date d'inscription</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <p><?= $user->getDateCreationCount() ?></p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
                             <div class="col-sm-12">
-                                <a class="btn btn-info " target="__blank" href="index.php?ctrl=security&action=updateViewProfileForm">Modifier</a>
+                                <a class="btn btn-info " target="__blank" href="index.php?ctrl=security&action=updateViewProfileForm&id=<?= $_GET['id'] ?>">Modifier</a>
                             </div>
                         </div>
                     </div>

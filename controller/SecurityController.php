@@ -214,7 +214,7 @@
 
         public function viewProfile($id) 
         {
-            var_dump($id);
+            // var_dump($id);
             // On veut afficher les informations de l'utilisateur connecté 
 
             $userManager = new UserManager();
@@ -230,6 +230,54 @@
             ];
 
         }
+
+        /*********
+         * 
+         * 
+         * UPDATE PROFILE
+         * 
+         * 
+         ***********/
+        public function updateViewProfileForm($id) 
+        {
+            // var_dump($id);
+            $userManager = new UserManager();
+
+            $user = $userManager->findOneById($id);
+            // var_dump();
+            return [
+                "view" => VIEW_DIR. "security/updateViewProfileForm.php",
+                "data" => [
+                    "user" => $user
+                ]
+            ];
+
+        }
+
+        public function updateViewProfile($id) 
+        {
+
+            $userManager = new UserManager();
+
+            // filtrer ce qui arrive en POST
+            // "userName" : vient du name="userName" du fichier updateViewProfileForm.php
+            $id = filter_input(INPUT_POST, "idUser", FILTER_SANITIZE_NUMBER_INT);
+            $userName = filter_input(INPUT_POST, "userName", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $userEmail = filter_input(INPUT_POST, "userEmail", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            /** 
+             * id = :id de la requête
+             * newUserName = :newUserName
+             * donc bien écrire pareil dans la fonction update ici.
+            */
+            $userManager->update(["id" => $id, "newUserName" => $userName, "newUserEmail" => $userEmail]);
+
+            // on retourne vers le profil de l'utilisateur grâce à son Id
+            $this->redirectTo('security', 'viewProfile', $id);
+
+        }
+
+
 
         /*********
          * 

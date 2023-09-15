@@ -232,7 +232,7 @@
         public function addMessageForm($id) 
         {
             $topicManager = new TopicManager();
-            $messageManager = new MessageManager();
+            // $messageManager = new MessageManager();
 
             $topic = $topicManager->findOneById($id);
 
@@ -240,7 +240,7 @@
                 "view" => VIEW_DIR. "forum/addMessageForm.php",
                 "data" => [
                     "topic" => $topic,
-                    "messages" => $messageManager->findMessageByTopicId($id)
+                    // "messages" => $messageManager->findMessageByTopicId($id)
                 ]
             ];
         }
@@ -332,16 +332,16 @@
         public function updateTopicForm($id) 
         {
             $topicManager = new TopicManager();
-            $categoryManager = new CategoryManager();
+            // $categoryManager = new CategoryManager();
 
             $topic = $topicManager->findOneById($id);
-            $category = $categoryManager->findOneById($id);
+            // $category = $categoryManager->findOneById($id);
 
             return [
                 "view" => VIEW_DIR. "forum/updateTopicForm.php",
                 "data" => [
                     "topic" => $topic,
-                    "category" => $category,
+                    // "category" => $category,
                     "categoryId" => $_GET['categoryId']
                 ]
             ];
@@ -435,7 +435,7 @@
 
             $topicId = $_GET['topicId'];
 
-            // on retourne vers la liste des messages dans le bon topic grâce à $topidId
+            // on retourne vers la liste des messages dans le bon topic grâce à $topicId
             return $this->findMessageByTopicId($topicId);
 
         }

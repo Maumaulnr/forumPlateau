@@ -1,6 +1,6 @@
 <?php
 $topic = $result["data"]['topic'];
-$messages = $result["data"]['messages'];
+// $messages = $result["data"]['messages'];
 ?>
 
 
