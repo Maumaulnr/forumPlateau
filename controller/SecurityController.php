@@ -214,8 +214,8 @@
 
         public function viewProfile($id) 
         {
-
-            // On veut afficher les informations concernant un utilisateur 
+            var_dump($id);
+            // On veut afficher les informations de l'utilisateur connecté 
 
             $userManager = new UserManager();
 
@@ -230,5 +230,32 @@
             ];
 
         }
+
+        /*********
+         * 
+         * 
+         * VIEW SOMEONE ELSE'S PROFILE
+         * 
+         * 
+         ***********/
+
+         public function viewProfileSomeone($id) 
+         {
+ 
+             // On veut afficher les informations concernant un autre utilisateur 
+ 
+             $userManager = new UserManager();
+ 
+             // On veut trouver le profil d'un utilisateur en fonction de son Id
+             $user = $userManager->findOneById($id);
+             // var_dump($id);
+             return [
+                 "view" => VIEW_DIR . "security/viewProfile.php",
+                 "data" => [
+                     "user" => $user
+                 ]
+             ];
+ 
+         }
 
     }

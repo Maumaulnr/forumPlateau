@@ -15,7 +15,7 @@
         // Propriété privé accessible que au sein de la class
         // propriétés dans le même ordre que dans la BDD (lira les colonnes dans cet ordre là)
         private $id; // id_user
-        private $dateCreationUser;
+        private $dateCreationCount;
         private $userName;
         private $userEmail;
         private $password;
@@ -50,21 +50,21 @@
         }
 
         /**
-         * Get the value of dateCreationUser
+         * Get the value of dateCreationCount
          */ 
-        public function getDateCreationUser()
+        public function getDateCreationCount()
         {
-                return $this->dateCreationUser;
+                return $this->dateCreationCount;
         }
 
         /**
-         * Set the value of dateCreationUser
+         * Set the value of dateCreationCount
          *
          * @return  self
          */ 
-        public function setDateCreationUser($dateCreationUser)
+        public function setDateCreationCount($dateCreationCount)
         {
-                $this->dateCreationUser = $dateCreationUser;
+                $this->dateCreationCount = $dateCreationCount;
 
                 return $this;
         }
@@ -153,7 +153,7 @@
         // Method _toString
         public function __toString()
         {
-                return $this->getUserName() . $this->getUserEmail() . $this->getPassword() . $this->getDateCreationUser() . $this->getBanUser();
+                return $this->getUserName() . $this->getUserEmail() . $this->getPassword() . $this->getDateCreationCount() . $this->getBanUser();
         }
 
 
