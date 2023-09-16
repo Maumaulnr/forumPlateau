@@ -3,13 +3,11 @@ $user = $result["data"]['user'];
 // var_dump();
 ?>
 
-<form method="POST" action="index.php?ctrl=security&action=updateViewProfil&id=<?= $user->getId() ?>" class="container rounded bg-blue mt-5 mb-5">
+<form method="POST" action="index.php?ctrl=security&action=updateViewProfile&id=<?= $user->getId() ?>" class="container rounded bg-blue mt-5 mb-5">
     <div class="row">
         <div class="col-md-3 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                 <img class="rounded-circle mt-5" width="150px" src="https://bootdey.com/img/Content/avatar/avatar7.png">
-                <!-- <span class="font-weight-bold">Edogaru</span>
-                <span class="text-black-50">edogaru@mail.com.my</span> -->
                 <span> </span>
             </div>
         </div>

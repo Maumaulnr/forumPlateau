@@ -423,15 +423,16 @@
          * DELETE MESSAGE => id_message
          *  
          **/ 
-        public function delete($id) 
+        public function deleteMessage($id) 
         {
+
             $messageManager = new MessageManager();
 
             /** 
              * id = :id de la requête
-             * donc bien écrire pareil dans la fonction update ici.
+             * 
             */
-            $messageManager->delete(['id' => $id]);
+            $messageManager->delete([$id]);
 
             $topicId = $_GET['topicId'];
 
@@ -453,7 +454,7 @@
 
             /** 
              * id = :id de la requête
-             * donc bien écrire pareil dans la fonction update ici.
+             *
             */
             // var_dump($id);
             $messageManager->delete($id);

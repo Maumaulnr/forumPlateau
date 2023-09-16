@@ -27,7 +27,7 @@ $messages = $result["data"]['messages'];
                     <i class="fa-solid fa-pencil" title="Update"></i>
                 </a>
                 <!-- DELETE -->
-                <a href="index.php?ctrl=forum&action=delete&id=<?= $message->getId() ?>&topicId=<?= $topic->getId() ?>">
+                <a href="index.php?ctrl=forum&action=delete&id=<?= $message->getId() ?>&topicId=<?= $topic->getId() ?>" class=".delete-btn">
                     <i class="fa-regular fa-trash-can" title="Delete"></i>
                 </a>
             </div>
@@ -38,7 +38,7 @@ $messages = $result["data"]['messages'];
 </div>
 
     <!-- On ajoute un message dans le topic où l'on se trouve -->
-    <a class="btn btn-primary btn-add" href="index.php?ctrl=forum&action=addMessageForm&id=<?= $topic->getId(); ?>" role="button">
+    <a class="btn btn-primary btn-add" href="index.php?ctrl=forum&action=addMessageForm&id=<?= $_GET['id'] ?>" role="button">
         Add Message
     </a>
 

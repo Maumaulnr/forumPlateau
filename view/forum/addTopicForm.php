@@ -3,7 +3,7 @@
 ?>
 
 
-<div class="d-flex flex-column justify-content-center gap-5">
+<div class="d-flex flex-column justify-content-center align-items-center gap-5">
 
     <h2>Add Topic</h2>
 
