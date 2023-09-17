@@ -28,7 +28,7 @@ if ($topics !== NULL) {
                 <i class="fa-solid fa-pencil" title="Update"></i>
             </a>
             <!-- DELETE -->
-            <a href="index.php?ctrl=forum&action=deleteTopic&id=<?= $topic->getId() ?>&categoryId=<?= $category->getId() ?>">
+            <a href="index.php?ctrl=forum&action=deleteTopic&id=<?= $topic->getId() ?>&categoryId=<?= $category->getId() ?>" class=".delete-btn" onclick="return confirm('Etes-vous sûr de vouloir supprimer?');">
                 <i class="fa-regular fa-trash-can" title="Delete"></i>
             </a>
         </div>

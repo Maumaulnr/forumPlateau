@@ -12,7 +12,7 @@ $topic = $result["data"]['topic'];
         <label for="commentText">Message</label>
         <textarea name="commentText" id="commentText" class="text-center" cols="60" rows="10"></textarea>
         
-        <input type="text" name="topicId" value="<?= $topic->getId() ?>">
+        <input type="hidden" name="topicId" value="<?= $topic->getId() ?>">
 
         <button class="btn btn-primary" type="submit">Submit</button>
 

@@ -57,7 +57,7 @@ $categories = $result["data"]["categories"];
 	                    </li>
 						<li>
 							<!-- DELETE -->
-							<a href="index.php?ctrl=forum&action=deleteCategory&id=<?= $value->getId() ?>">
+							<a href="index.php?ctrl=forum&action=deleteCategory&id=<?= $value->getId() ?>" class=".delete-btn" onclick="return confirm('Etes-vous sûr de vouloir supprimer?');">
                     			<i class="fa-regular fa-trash-can" title="Delete"></i>
                	 			</a>
 						</li>

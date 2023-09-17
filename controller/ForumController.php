@@ -432,7 +432,7 @@
              * id = :id de la requête
              * 
             */
-            $messageManager->delete([$id]);
+            $messageManager->delete($id);
 
             $topicId = $_GET['topicId'];
 

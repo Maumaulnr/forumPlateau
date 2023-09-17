@@ -52,6 +52,19 @@ $user = $result["data"]['user'];
                         </div>
                         <hr>
                         <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Rôle dans ce forum</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <?php if(App\Session::getUser()->hasRole("ROLE_ADMIN")) { ?>
+                                    <p>Administrateur</p>
+                                <?php } else { ?>
+                                    <p>Visiteur</p>
+                                <?php } ?>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
                             <div class="col-sm-12">
                                 <a class="btn btn-info " target="__blank" href="index.php?ctrl=security&action=updateViewProfileForm&id=<?= $_GET['id'] ?>">Modifier</a>
                             </div>
