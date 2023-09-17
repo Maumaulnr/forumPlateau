@@ -165,7 +165,7 @@ footer.d-flex p {
     margin: 0;
 }
 
-/* Bootstrap CSS */
+/****************************** BOOTSTRAP **********************************/
 
 body {
     background-color: #fefefe;
@@ -357,7 +357,8 @@ ul[class^='topic-item-'] {
     opacity: 1; /* Affiche le nom lorsque vous survolez l'icône */
 }
 
-    /*  */
+/****************************** DROPDOWN **********************************/
+
 .dropdown-menu {
     max-width: 200px !important; /* Limitez la largeur du dropdown-menu selon vos besoins */
     right: 0 !important; /* Positionnez-le à droite */
@@ -369,4 +370,22 @@ ul[class^='topic-item-'] {
     /* Arrow dropdown */
 .nav-link {
     color: var(--teal-color) !important;
+}
+
+/****************************** LIST CATEGORIES **********************************/
+
+.input-group {
+    width: 30% !important;
+}
+
+.category-link {
+    text-decoration: none;
+    /* color: #000; */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.category-link:hover {
+    padding: 5px 10px;
+    background-color: var(--purple-color);
+    color: white;
 }

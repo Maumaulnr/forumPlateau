@@ -1,27 +1,22 @@
 <?php
-// var_dump($_SESSION['user']);
-?>
 
-<h1>List Categories</h1>
-
-<?php
-
-// return de la fonction listCategories() donc bien écrire dans le même ordre que dans la fonction
+// return from the listCategories() function, so write in the same order as in the function.
 $categories = $result["data"]["categories"];
-// $topics = $result["data"]['topics'];
+// var_dump($_SESSION['user']);
 
 ?>
 
+<h1>Liste des catégories</h1>
 
 <div class="container">
 	<div class="row">
 		<div class="col-12">
-		    <form class="search-form">
+		    <form class="search-form d-flex justify-content-end">
 		        <div class="input-group">
 		            <input id="input-1" class="form-control" type="text" aria-describedby="search-btn">
 		            <label for="input-1" class="sr-only">Search</label>
 		            <div class="input-group-append">
-		                <button id="search-btn" class="btn btn-primary">Search</button>
+		                <button id="search-btn" class="btn btn-primary">Recherche</button>
 		            </div>
 		        </div>
 		    </form>
@@ -39,9 +34,9 @@ $categories = $result["data"]["categories"];
                     <?php
                         foreach($categories as $value) {
                         ?>
-		            <ul class="topic-item-1">
+		            <ul class="topic-item-1 text-center">
 		                <li>
-                            <a href="index.php?ctrl=forum&action=findTopicByCategoryId&id=<?=$value->getId();?>" class="text-decoration-none"><?= $value->getNameCategory(); ?>
+                            <a href="index.php?ctrl=forum&action=findTopicByCategoryId&id=<?=$value->getId();?>" class="text-decoration-none category-link"><?= $value->getNameCategory(); ?>
                             </a>
 	                    </li>
 	                    <li>4</li>

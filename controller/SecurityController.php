@@ -287,23 +287,24 @@
          * 
          ***********/
 
-         public function viewProfileSomeone($id) 
-         {
+        public function viewProfileSomeone($id) 
+        {
  
-             // On veut afficher les informations concernant un autre utilisateur 
+            // On veut afficher les informations concernant un autre utilisateur 
  
-             $userManager = new UserManager();
+            $userManager = new UserManager();
  
-             // On veut trouver le profil d'un utilisateur en fonction de son Id
-             $user = $userManager->findOneById($id);
-             // var_dump($id);
-             return [
-                 "view" => VIEW_DIR . "security/viewProfile.php",
-                 "data" => [
-                     "user" => $user
-                 ]
-             ];
+            // On veut trouver le profil d'un utilisateur en fonction de son Id
+            $user = $userManager->findOneById($id);
+            // var_dump($id);
+            return [
+                "view" => VIEW_DIR . "security/viewProfile.php",
+                "data" => [
+                    "user" => $user
+                ]
+            ];
  
-         }
+        }
+
 
     }

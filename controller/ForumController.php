@@ -488,4 +488,38 @@
             $this->redirectTo('forum', 'listCategories');
         }
 
+        /**
+         * Cette méthode topicLock est responsable de la gestion du verrouillage d'un sujet. 
+         * Elle utilise un gestionnaire de sujets (TopicManager) pour effectuer l'opération de verrouillage dans la base de données, puis redirige l'utilisateur vers une autre page pour afficher les sujets mis à jour. 
+         * 
+         */
+
+        public function topicLock($id) 
+        {
+
+            $topicManager = new TopicManager();
+
+            $topicManager->topicLock($id);
+
+            // on retourne vers la liste des messages dans le bon topic grâce à $id
+            $this->redirectTo('forum', 'findMessageByTopicId', $id);
+        }
+ 
+        /**
+         * Cette méthode topicUnlock est responsable de la gestion du déverrouillage d'un sujet. 
+        * Elle utilise un gestionnaire de sujets (TopicManager) pour effectuer l'opération de déverrouillage dans la base de données, puis redirige l'utilisateur vers une autre page pour afficher les sujets mis à jour. 
+        * 
+        */
+
+        public function topicUnlock($id)
+        {
+
+            $topicManager = new TopicManager();
+
+            $topicManager->topicUnlock($id);
+
+            // on retourne vers la liste des messages dans le bon topic grâce à $id
+            $this->redirectTo('forum', 'findMessageByTopicId', $id);
+        }
+
     }
