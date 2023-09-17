@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,57 +21,68 @@
     <title>FORUM</title>
 
 </head>
+
 <body>
     <div id="container-fluid">
-        
+
         <div id="mainpage">
             <!-- c'est ici que les messages (erreur ou succès) s'affichent-->
             <h3 class="message" style="color: red"><?= App\Session::getFlash("error") ?></h3>
             <h3 class="message" style="color: green"><?= App\Session::getFlash("success") ?></h3>
             <header class="container-fluid">
                 <nav class="navbar" id="myNavbar">
-                    <div id="nav-left">
+                    <div class="navbar-nav" id="nav-left">
                         <ul class="nav-menu">
                             <a href="index.php?ctrl=home&action" class="nav-title">Home</a>
                             <a href="index.php?ctrl=security&action=loginForm" class="nav-title">Log In</a>
                             <a href="index.php?ctrl=security&action=registerForm" class="nav-title">Sign Up</a>
                             <?php
-                            if(App\Session::isAdmin()){
-                                ?>
+                            if (App\Session::isAdmin()) {
+                            ?>
                                 <a href="index.php?ctrl=home&action=users" class="nav-title">List members</a>
                                 <a href="index.php?ctrl=home&action=listUsers" class="btn btn-primary">List Users</a>
-                                <?php
+                            <?php
                             }
                             ?>
                         </ul>
+                        <div class="hamburger">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
                     </div>
-                    <div class="hamburger">
-                        <span class="bar"></span>
-                        <span class="bar"></span>
-                        <span class="bar"></span>
                     </div>
                     <div id="nav-right">
                         <?php
-                            
-                            if(App\Session::getUser()){
-                                ?>
-                                <a href="index.php?ctrl=security&action=viewProfile&id=<?= App\Session::getUser()->getId() ?>" class="nav-title">
-                                    <span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()->getUserName() ?>
+                        if (App\Session::getUser()) {
+                        ?>
+                            <div class="dropdown">
+                                <a class="nav-link btn-lg dropdown-toggle" href="#" id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="user-icon" data-username="<?= App\Session::getUser()->getUserName() ?>">
+                                        <span class="fas fa-user"></span>
+                                    </span>
                                 </a>
-                                <a href="index.php?ctrl=security&action=logout" class="nav-title">Log Out</a>
-                                <?php
-                            }
-                            else{
-                                ?>
-                                <a href="index.php?ctrl=home&action">Home</a>
-                            <?php
-                            }   
-
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <li>
+                                        <a class="dropdown-item" href="index.php?ctrl=security&action=viewProfile&id=<?= App\Session::getUser()->getId() ?>">View Profile</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="index.php?ctrl=security&action=logout">Log Out</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        <?php
+                        } else {
+                        ?>
+                            <a href="index.php?ctrl=home&action">Home</a>
+                        <?php
+                        }
                         ?>
                     </div>
+                    
                 </nav>
             </header>
-            
+
+
             <main id="forum">
                 <?= $page ?>
             </main>
@@ -82,22 +94,18 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js"></script>
-    <script
-        src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
     </script>
     <script>
-
-        $(document).ready(function(){
-            $(".message").each(function(){
-                if($(this).text().length > 0){
-                    $(this).slideDown(500, function(){
+        $(document).ready(function() {
+            $(".message").each(function() {
+                if ($(this).text().length > 0) {
+                    $(this).slideDown(500, function() {
                         $(this).delay(3000).slideUp(500)
                     })
                 }
             })
-            $(".delete-btn").on("click", function(){
+            $(".delete-btn").on("click", function() {
                 return confirm("Etes-vous sûr de vouloir supprimer?")
             })
             tinymce.init({
@@ -109,9 +117,9 @@
                     'insertdatetime media table paste code help wordcount'
                 ],
                 toolbar: 'undo redo | formatselect | ' +
-                'bold italic backcolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist outdent indent | ' +
-                'removeformat | help',
+                    'bold italic backcolor | alignleft aligncenter ' +
+                    'alignright alignjustify | bullist numlist outdent indent | ' +
+                    'removeformat | help',
                 content_css: '//www.tiny.cloud/css/codepen.min.css'
             });
         })
@@ -130,6 +138,7 @@
             )
         })*/
     </script>
-    <script src="<?= PUBLIC_DIR ?>/js/burgerMenu.js"></script> 
+    <script src="<?= PUBLIC_DIR ?>/js/burgerMenu.js"></script>
 </body>
+
 </html>

@@ -2,7 +2,6 @@
 
 $topics = $result["data"]['topics'];
 $category = $result["data"]['category'];
-// $user = $result["data"]['user'];
 
 ?>
 
@@ -20,13 +19,24 @@ if ($topics !== NULL) {
             </p>
             <p>De : <?= $topic->getUser()->getUserName() ?></p>
             <p>Le : <?= $topic->getDateCreationTopic() ?></p>
+
             <!-- UPDATE -->
-            <!-- Quand on clique on récupère idTopic et categoryId pour être sûr de changer le topic dans la bonne catégorie :
+            <!-- When we click, we get idTopic and categoryId to make sure we change the topic to the right category:
             $topic->getId() ?>&categoryId=< $category->getId() ?>
             -->
             <a href="index.php?ctrl=forum&action=updateTopicForm&id=<?= $topic->getId() ?>&categoryId=<?= $category->getId() ?>">
                 <i class="fa-solid fa-pencil" title="Update"></i>
             </a>
+
+            <!-- LOCK THE TOPIC -->
+            <?php if(App\Session::isAdmin()) { 
+                ?>
+                <input type="hidden" name="sujet_id" value="1"> <!-- Remplacez 1 par l'ID du sujet -->
+                <input type="submit" name="verrouiller" value="Verrouiller le sujet">
+                <?php 
+            } 
+            ?>
+
             <!-- DELETE -->
             <a href="index.php?ctrl=forum&action=deleteTopic&id=<?= $topic->getId() ?>&categoryId=<?= $category->getId() ?>" class=".delete-btn" onclick="return confirm('Etes-vous sûr de vouloir supprimer?');">
                 <i class="fa-regular fa-trash-can" title="Delete"></i>
@@ -37,17 +47,18 @@ if ($topics !== NULL) {
 }
 ?>
 
-<!-- On ajoute un Topic dans le catégorie où l'on se trouve -->
+<!-- We add a Topic in the category where we are -->
 <?php
 if(App\Session::getUser()){
-?>
-<a class="btn btn-primary btn-add" href="index.php?ctrl=forum&action=addTopicForm&id=<?= $_GET['id'] ?>" class="btn btn-primary" role="button">
-    Add Topic
-</a>
-<?php
-} else { ?>
+    ?>
+    <a class="btn btn-primary btn-add" href="index.php?ctrl=forum&action=addTopicForm&id=<?= $_GET['id'] ?>" class="btn btn-primary" role="button">
+        Add Topic
+    </a>
+    <?php
+} else { 
+    ?>
     <p>Pour créer un topic veuillez vous connecter !</p>
-<?php
+    <?php
 }
 ?>
 

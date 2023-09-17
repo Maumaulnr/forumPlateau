@@ -30,10 +30,11 @@ header {
 
 /* HAMBURGER MENU */
 .navbar {
-    display: flex;
+    /* display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
+    width: 95%;
     position: fixed;
     min-height: 0;
     order: -1;
@@ -60,8 +61,6 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* display: block;
-    padding: 10px; */
     text-decoration: none;
     color: #333; /* Couleur des liens du menu */
 }
@@ -111,14 +110,7 @@ header {
     background-color: white;
 }
 
-
 /*  */
-/* #nav-left {
-    display: flex;
-    flex-direction: row;
-    gap: 50px;
-    padding: 20px 10px;
-} */
 
 #nav-left > a {
     padding: 20px;
@@ -138,10 +130,10 @@ header {
 /* NAV RIGHT */
 #nav-right {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end; /* Aligne les éléments à droite */
     align-items: center;
-    /* position: fixed; */
 }
+
 
 /* MAIN */
 #forum {
@@ -216,30 +208,6 @@ ul[class^='topic-item-'] {
 .badge {
     font-weight: normal;
 }
-
-/* BTN RETURN */
-/* .return {
-    text-decoration: none;
-    color: white;
-}
-
-.return:hover {
-    text-decoration: none;
-    color: white;
-} */
-
-/* .btn-return {
-    display: none;
-}
-
-.btn-return:hover {
-    display: inline-block;
-} */
-
-/* Icon hidden by default */
-/* .icon-return {
-    display: none;
-} */
 
 .icon-return:hover {
     display: inline-block;
@@ -349,4 +317,56 @@ ul[class^='topic-item-'] {
     color: #fff;
     cursor: pointer;
     border: solid 1px #BA68C8
+}
+
+/* USER ICON */
+
+.user-icon {
+    display: inline-block;
+    width: 40px; /* Largeur du cercle */
+    height: 40px; /* Hauteur du cercle */
+    border-radius: 50%; /* Rend le div circulaire */
+    background-color: var(--teal-color); /* Couleur du cercle */
+    text-align: center;
+    line-height: 40px; /* Centre le contenu vertical */
+    margin-right: 10px; /* Espacement entre l'icône et le nom */
+    position: relative; /* Ajout de position relative */
+}
+
+.user-icon .fas.fa-user {
+    color: #fff; /* Couleur de l'icône à l'intérieur du cercle */
+    font-size: 24px; /* Taille de l'icône */
+}
+
+.user-icon:hover::before {
+    content: attr(data-username); /* Affiche le nom de l'utilisateur en survol */
+    position: absolute;
+    top: 40px; /* Ajustez la position verticale pour afficher en dessous de l'icône */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8); /* Couleur de fond du nom */
+    color: #fff; /* Couleur du texte du nom */
+    padding: 5px 10px; /* Espacement autour du nom */
+    border-radius: 5px; /* Bordures arrondies */
+    white-space: nowrap; /* Empêche le texte de se retourner */
+    opacity: 0; /* Le nom est initialement masqué */
+    transition: opacity 0.3s; /* Animation de transition */
+}
+
+.user-icon:hover::before {
+    opacity: 1; /* Affiche le nom lorsque vous survolez l'icône */
+}
+
+    /*  */
+.dropdown-menu {
+    max-width: 200px !important; /* Limitez la largeur du dropdown-menu selon vos besoins */
+    right: 0 !important; /* Positionnez-le à droite */
+    left: auto !important; /* Réinitialisez la position gauche */
+    background-color: var(--teal-color) !important;
+    color: white !important;
+}
+
+    /* Arrow dropdown */
+.nav-link {
+    color: var(--teal-color) !important;
 }

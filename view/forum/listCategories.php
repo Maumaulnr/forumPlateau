@@ -27,12 +27,12 @@ $categories = $result["data"]["categories"];
 		    </form>
 		    <ul class="topics-table">
 		        <li class="topics-header">
-		           <ul class="header-titles">
+		           <ul class="header-titles text-center">
 		               <li>Forum</li>
 		               <li>Topics</li>
-		               <li>Posts</li>
-		               <li>Update</li>
-		               <li>Delete</li>
+		               <li>Messages</li>
+		               <li>Modifier</li>
+		               <li>Supprimer</li>
 		           </ul>
 		        </li>
 		        <li class="topics-body">
@@ -41,7 +41,7 @@ $categories = $result["data"]["categories"];
                         ?>
 		            <ul class="topic-item-1">
 		                <li>
-                            <a href="index.php?ctrl=forum&action=findTopicByCategoryId&id=<?=$value->getId();?>"><?= $value->getNameCategory(); ?>
+                            <a href="index.php?ctrl=forum&action=findTopicByCategoryId&id=<?=$value->getId();?>" class="text-decoration-none"><?= $value->getNameCategory(); ?>
                             </a>
 	                    </li>
 	                    <li>4</li>
