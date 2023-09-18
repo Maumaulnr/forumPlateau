@@ -517,12 +517,18 @@
         public function topicLock($id) 
         {
 
-            $topicManager = new TopicManager();
+            if (Session::isAdmin()) 
+            {
 
-            $topicManager->topicLock($id);
+                $topicManager = new TopicManager();
+
+                $topicManager->topicLock($id);
+
+            }
 
             // on retourne vers la liste des messages dans le bon topic grâce à $id
-            $this->redirectTo('forum', 'findMessageByTopicId', $id);
+            $this->redirectTo("forum", "findMessageByTopicId", $id);
+
         }
  
         /**
@@ -533,13 +539,19 @@
 
         public function topicUnlock($id)
         {
+            
+            if (Session::isAdmin()) 
+            {
 
-            $topicManager = new TopicManager();
+                $topicManager = new TopicManager();
 
-            $topicManager->topicUnlock($id);
+                $topicManager->topicUnlock($id);
+
+            }
 
             // on retourne vers la liste des messages dans le bon topic grâce à $id
-            $this->redirectTo('forum', 'findMessageByTopicId', $id);
+            $this->redirectTo("forum", "findMessageByTopicId", $id);
+
         }
 
     }

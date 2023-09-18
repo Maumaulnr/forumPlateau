@@ -14,18 +14,20 @@ $description = $result["data"]['description'];
 <!-- LOCK OR UNLOCK TOPIC -->
 <!-- L'admin peut choisir de clore un topic ou non -->
 <?php 
-if (App\Session::isAdmin()) { 
+if (App\Session::isAdmin()) {
+    if ($topic->getSubjectLock()) {
     ?>
-    <a href="index.php?ctrl=security&action=topicUnlock&id=<?= $topic->getId() ?>">
-        <i class="fa-solid fa-lock-open"></i>
+    <a href="index.php?ctrl=forum&action=topicUnlock&id=<?= $topic->getId() ?>">
+        <i class="fa-solid fa-lock-open fs-2"></i>
     </a>
     <?php 
-} else {
+    } else {
     ?>
-    <a href="index.php?ctrl=security&action=topicLock&id=<?= $topic->getId() ?>">
-        <i class="fa-solid fa-lock"></i>
+    <a href="index.php?ctrl=forum&action=topicLock&id=<?= $topic->getId() ?>">
+        <i class="fa-solid fa-lock fs-2"></i>
     </a>
     <?php 
+    }
 } 
 ?>
 
@@ -37,24 +39,48 @@ if (App\Session::isAdmin()) {
     if ($messages !== NULL) {
         foreach ($messages as $message) {
         ?>
-            <div class="d-flex flex-row align-items-center gap-5">
-                <p><?= $message->getCommentText()?></p>
-                <!-- Faire du chaînage : $message->getUser()->getUserName() : pour récupérer le getUserName -->
-                <p>De : <?= $message->getUser()->getUserName() ?></p>
-                <p>Le : <?= $message->getDateCreationText() ?></p>
+            <div class="d-flex flex-row align-items-center gap-5 border border-primary p-2 mb-3 rounded">
+                <div class="message-author flex-grow-0">
+                    <!-- Faire du chaînage : $message->getUser()->getUserName() : pour récupérer le getUserName -->
+                    <p>De : <?= $message->getUser()->getUserName() ?></p>
+
+                    <?php if(App\Session::getUser()->hasRole("ROLE_ADMIN")) { 
+                        ?>
+                        <p>Administrateur</p>
+                        <?php 
+                    } else { 
+                        ?>
+                        <p>Visiteur</p>
+                        <?php 
+                    } 
+                    ?>
+                </div>
+                <div class="message-published">
+                    <div class="date text-end">
+                        <p>Le : <?= $message->getDateCreationText() ?></p>
+                    </div>
+                    <div class="text border border-primary rounded p-2">
+                        <p><?= $message->getCommentText()?></p>
+                    </div>
+                </div>
 
                 <!-- UPDATE -->
                 <!-- Quand on clique on récupère idMessage et topicId pour être sûr de changer le message dans le bon topic :
                 $message->getId() ?>&topicId=< $topic->getId() ?>
                 -->
-                <a href="index.php?ctrl=forum&action=updateMessageForm&id=<?= $message->getId() ?>&topicId=<?= $topic->getId() ?>">
-                    <i class="fa-solid fa-pencil" title="Update"></i>
-                </a>
+                <?php if (App\Session::getUser()) { 
+                    ?>
+                    <a href="index.php?ctrl=forum&action=updateMessageForm&id=<?= $message->getId() ?>&topicId=<?= $topic->getId() ?>">
+                        <i class="fa-solid fa-pencil fs-5" title="Update"></i>
+                    </a>
 
-                <!-- DELETE -->
-                <a href="index.php?ctrl=forum&action=deleteMessage&id=<?= $message->getId() ?>&topicId=<?= $topic->getId() ?>" class=".delete-btn" onclick="return confirm('Etes-vous sûr de vouloir supprimer?');">
-                    <i class="fa-regular fa-trash-can" title="Delete"></i>
-                </a>
+                    <!-- DELETE -->
+                    <a href="index.php?ctrl=forum&action=deleteMessage&id=<?= $message->getId() ?>&topicId=<?= $topic->getId() ?>" class=".delete-btn" onclick="return confirm('Etes-vous sûr de vouloir supprimer?');">
+                        <i class="fa-regular fa-trash-can fs-5" title="Delete"></i>
+                    </a>
+                <?php 
+                } 
+                ?>
             </div>
         <?php
         }
@@ -67,7 +93,7 @@ if (App\Session::isAdmin()) {
  if (App\Session::getUser() && !$topic->getSubjectLock()) {
 ?>
     <!-- On ajoute un message dans le topic où l'on se trouve -->
-    <a class="btn btn-primary btn-add" href="index.php?ctrl=forum&action=addMessageForm&id=<?= $_GET['id'] ?>" role="button">
+    <a class="btn btn-primary btn-add fs-5" href="index.php?ctrl=forum&action=addMessageForm&id=<?= $_GET['id'] ?>" role="button">
         Add Message
     </a>
 <?php
@@ -84,5 +110,5 @@ if (App\Session::isAdmin()) {
 <?php 
 $go_back = htmlspecialchars($_SERVER['HTTP_REFERER']);
 ?>
-<a href='<?= $go_back ?>' class="btn btn-primary">Retour</a>
+<a href='<?= $go_back ?>' class="btn btn-primary fs-5">Retour</a>
 

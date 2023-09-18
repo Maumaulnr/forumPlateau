@@ -400,3 +400,9 @@ footer {
 footer.d-flex p {
     margin: 0;
 }
+
+/*************  **************/
+.message-published {
+    flex: 1 1 0%;
+    min-width: 0;
+}

@@ -78,7 +78,7 @@ $description = $result["data"]['description'];
 		<?php
 	} else { 
     	?>
-    	<p>Pour créer un topic veuillez vous connecter !</p>
+    	<p>Pour créer une catégorie veuillez vous connecter !</p>
     	<?php
 	}
 	?>
