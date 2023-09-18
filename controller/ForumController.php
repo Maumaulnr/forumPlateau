@@ -311,7 +311,9 @@
                 "view" => VIEW_DIR. "forum/updateMessageForm.php",
                 "data" => [
                     "message" => $message,
-                    "topicId" => $_GET['topicId']
+                    "topicId" => $_GET['topicId'],
+                    "title" => "Formulaire de modification d'un message",
+                    "description" => "Formulaire pour modifier un message en fonction du topic"
                 ]
             ];
 
@@ -348,17 +350,16 @@
         public function updateTopicForm($id) 
         {
             $topicManager = new TopicManager();
-            // $categoryManager = new CategoryManager();
 
             $topic = $topicManager->findOneById($id);
-            // $category = $categoryManager->findOneById($id);
 
             return [
                 "view" => VIEW_DIR. "forum/updateTopicForm.php",
                 "data" => [
                     "topic" => $topic,
-                    // "category" => $category,
-                    "categoryId" => $_GET['categoryId']
+                    "categoryId" => $_GET['categoryId'],
+                    "title" => "Formulaire de modification d'un topic",
+                    "description" => "Formulaire pour modifier un topic en fonction de la catégorie"
                 ]
             ];
         }
@@ -389,15 +390,17 @@
          *  
          **/
         public function updateCategoryForm($id) {
-            // var_dump($id);
+            
             $categoryManager = new CategoryManager();
 
             $category = $categoryManager->findOneById($id);
-            // var_dump($category);
+            
             return [
                 "view" => VIEW_DIR. "forum/updateCategoryForm.php",
                 "data" => [
                     "category" => $category,
+                    "title" => "Formulaire de modification d'une catégorie",
+                    "description" => "Formulaire pour modifier une catégorie"
                 ]
             ];
 
