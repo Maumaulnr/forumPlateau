@@ -1,12 +1,16 @@
 <?php
 $topic = $result["data"]['topic'];
 $messages = $result["data"]['messages'];
-// var_dump($user);
+
+$title = $result["data"]['title'];
+$description = $result["data"]['description'];
+
 ?>
 
 <h1><?= $topic->getNameTopic() ?></h1>
 
 <!-- LOCK OR UNLOCK TOPIC -->
+<!-- L'admin peut choisir de clore un topic ou non -->
 <?php 
 if (App\Session::isAdmin()) { 
     ?>

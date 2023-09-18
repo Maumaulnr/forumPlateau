@@ -2,7 +2,11 @@
 
 // return from the listCategories() function, so write in the same order as in the function.
 $categories = $result["data"]["categories"];
-// var_dump($_SESSION['user']);
+
+// On affiche le titre pour la balise <title> et la description dans la balise <meta name="description" ...>
+// On récupère les informations via le ForumController via le return où l'on a écrit le titre et la description unique
+$title = $result["data"]['title'];
+$description = $result["data"]['description'];
 
 ?>
 
@@ -65,7 +69,19 @@ $categories = $result["data"]["categories"];
 		</div>
 	</div>
 
-    <a class="btn btn-primary btn-add" href="index.php?ctrl=forum&action=addCategoryForm" role="button">
+	<?php
+	if(App\Session::getUser()){
+    	?>
+		<a class="btn btn-primary btn-add" href="index.php?ctrl=forum&action=addCategoryForm" role="button">
         Add Category
-    </a>
+    	</a>
+		<?php
+	} else { 
+    	?>
+    	<p>Pour créer un topic veuillez vous connecter !</p>
+    	<?php
+	}
+	?>
+    
+
 </div>

@@ -6,8 +6,6 @@
     use App\Session;
     use App\AbstractController;
     use App\ControllerInterface;
-    use Model\Entities\Message;
-    use Model\Entities\Topic;
     use Model\Managers\CategoryManager;
     use Model\Managers\TopicManager;
     use Model\Managers\MessageManager;
@@ -41,7 +39,9 @@
             return [
                 "view" => VIEW_DIR. "forum/listCategories.php",
                 "data" => [
-                    "categories" => $categories
+                    "categories" => $categories,
+                    "title" => "Liste des catégories",
+                    "description" => "Liste des catégories du forum des métiers"
                 ]
             ];
         }
@@ -71,7 +71,9 @@
                 "view" => VIEW_DIR. "forum/listTopics.php",
                 "data" => [
                     "topics" => $topicManager->findTopicByCategoryId($id),
-                    "category" => $category
+                    "category" => $category,
+                    "title" => "Liste des topics",
+                    "description" => "Liste des topics par catégorie"
                 ]
             ];
         }
@@ -99,7 +101,9 @@
                 "view" => VIEW_DIR. "forum/listMessages.php",
                 "data" => [
                     "topic" => $topic,
-                    "messages" => $messageManager->findMessageByTopicId($id)
+                    "messages" => $messageManager->findMessageByTopicId($id),
+                    "title" => "Liste des messages",
+                    "description" => "Liste des messages par topic"
                 ]
             ];
         }
@@ -123,7 +127,11 @@
         public function addCategoryForm() {
 
             return [
-                "view" => VIEW_DIR. "forum/addCategoryForm.php"
+                "view" => VIEW_DIR. "forum/addCategoryForm.php",
+                "data" => [
+                    "title" => "Formulaire de la catégorie",
+                    "description" => "Formulaire pour ajouter une catégorie"
+                ]
             ];
         }
 
@@ -180,7 +188,9 @@
                 "data" => [
                     "category" => $categoryManager->findOneById($id),
                     "successMessage" => Session::getFlash('success'),
-                    "errorMessage" => Session::getFlash('error')
+                    "errorMessage" => Session::getFlash('error'),
+                    "title" => "Formulaire d'ajout d'un topic",
+                    "description" => "Formulaire pour ajouter un topic en fonction de la catégorie"
                 ]
             ];
         }
@@ -240,28 +250,34 @@
                 "view" => VIEW_DIR. "forum/addMessageForm.php",
                 "data" => [
                     "topic" => $topic,
-                    // "messages" => $messageManager->findMessageByTopicId($id)
+                    "title" => "Formulaire d'ajout d'un message",
+                    "description" => "Formulaire pour ajouter un message en fonction du topic dans lequel on se trouve"
                 ]
             ];
         }
 
         public function addMessage($id) 
         {
-            $topicId = filter_input(INPUT_POST, "topicId", FILTER_SANITIZE_NUMBER_INT, FILTER_VALIDATE_INT);
-            $commentText = filter_input(INPUT_POST, "commentText", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            if ($topicId && $commentText) {
+            $commentText = filter_input(INPUT_POST, "commentText", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $topicId = filter_input(INPUT_POST, "topicId", FILTER_SANITIZE_NUMBER_INT, FILTER_VALIDATE_INT);
+
+            // On récupère l'id de l'utilisateur qui est connecté
+            $userId = Session::getUser()->getId();
+
+            if ($commentText && $topicId) {
 
                 $messageManager = new MessageManager();
 
                 // "commentText" = commentText de la BDD
-                $messageManager->add(["commentText" => $commentText, "user_id" => 1, "topic_id" => $topicId]);
+                $messageManager->add(["commentText" => $commentText, "user_id" => $userId, "topic_id" => $topicId]);
 
-                $this->redirectTo("forum", "listCategories");
+                $this->redirectTo("forum", "findMessageByTopicId", $topicId);
 
             } else {
 
                 return $this->findTopicByCategoryId($topicId);
+
             }
 
         }
@@ -464,6 +480,7 @@
 
             // on retourne vers la liste des topics dans la bonne catégorie grâce à $categoryId
             return $this->findTopicByCategoryId($categoryId);
+
         }
         
         /**

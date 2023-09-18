@@ -20,28 +20,26 @@ header {
     /* justify-content: center;
     align-items: start; */
     background-color: #ffffff;
-    background-image: url("../image/metiers.png");
-    background-position: center;
+    /* background-image: url("../image/metiers.png"); */
+    /* background-position: center;
     background-attachment: fixed;
     background-repeat: no-repeat;
-    background-size: contain;
-    min-height: 86vh;
+    background-size: contain; */
+    /* min-height: 86vh; */
+}
+
+.img-fluid {
+    margin-top: 70px;
 }
 
 /* HAMBURGER MENU */
 .navbar {
-    /* display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center; */
     width: 95%;
     position: fixed;
     min-height: 0;
     order: -1;
     z-index: 2;
     padding-right: 10px;
-    border-radius: 7px;
-    /* background-color: var(--teal-color); */
 }
 
 .nav-menu {
@@ -61,18 +59,21 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 10px;
     text-decoration: none;
-    color: #333; /* Couleur des liens du menu */
+    color: #ffffff; /* Couleur des liens du menu */
+    transition: background-color 0.3s;
 }
 
-.nav-title {
-    padding: 10px;
+.nav-menu a:hover {
+    background-color: var(--purple-color);
 }
 
 .hamburger {
     display: block;
+    z-index: 1;
     padding: 3px;
-    border: 1px solid black;
+    border: 1px solid rgb(255, 255, 255);
     border-radius: 3px;
     cursor: pointer;
 }
@@ -91,7 +92,7 @@ header {
 .nav-menu.active {
     display: block;
     left: 0;
-    opacity: 80%;
+    /* opacity: 80%; */
 }
 
         /* animation : bar rotation = trnasform in cross (X) when we click on */
@@ -137,7 +138,7 @@ header {
 
 /* MAIN */
 #forum {
-    padding: 20px 0;
+    padding: 90px 0 150px 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -152,18 +153,6 @@ header {
     background-color: var(--teal-color);
 }
 
-/* FOOTER */
-footer {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-        /* Footer -> registerForm */
-footer.d-flex p {
-    margin: 0;
-}
 
 /****************************** BOOTSTRAP **********************************/
 
@@ -359,6 +348,11 @@ ul[class^='topic-item-'] {
 
 /****************************** DROPDOWN **********************************/
 
+/* Arrow dropdown */
+.nav-link {
+color: var(--teal-color) !important;
+}
+
 .dropdown-menu {
     max-width: 200px !important; /* Limitez la largeur du dropdown-menu selon vos besoins */
     right: 0 !important; /* Positionnez-le à droite */
@@ -367,9 +361,8 @@ ul[class^='topic-item-'] {
     color: white !important;
 }
 
-    /* Arrow dropdown */
-.nav-link {
-    color: var(--teal-color) !important;
+.dropdown-item:hover {
+    background-color: var(--purple-color) !important;
 }
 
 /****************************** LIST CATEGORIES **********************************/
@@ -388,4 +381,22 @@ ul[class^='topic-item-'] {
     padding: 5px 10px;
     background-color: var(--purple-color);
     color: white;
+}
+
+/****************************** FOOTER **********************************/
+
+/* FOOTER */
+footer {
+    background-color: var(--teal-color);
+    margin-bottom: 10px;
+}
+
+        /* Social icons */
+.fa-facebook .fa-instagram .fa-linkedin {
+    font-size: 2.3em !important;
+}
+
+        /* Footer -> registerForm */
+footer.d-flex p {
+    margin: 0;
 }

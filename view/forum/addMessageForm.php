@@ -1,6 +1,12 @@
 <?php
+
 $topic = $result["data"]['topic'];
-// $messages = $result["data"]['messages'];
+
+// On affiche le titre pour la balise <title> et la description dans la balise <meta name="description" ...>
+// On récupère les informations via le ForumController via le return où l'on a écrit le titre et la description unique
+$title = $result["data"]['title'];
+$description = $result["data"]['description'];
+
 ?>
 
 
