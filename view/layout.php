@@ -35,7 +35,7 @@
             <h3 class="message" style="color: red"><?= App\Session::getFlash("error") ?></h3>
             <h3 class="message" style="color: green"><?= App\Session::getFlash("success") ?></h3>
             <header class="container-fluid">
-                <img class="img-fluid" src="<?= PUBLIC_DIR ?>/image/metiers.png" alt="Bannière des métiers : personnages représentant divers métiers avec le sourire" width="1600" height="547">
+                <img class="img-fluid" src="<?= PUBLIC_DIR ?>/image/metiers.png" alt="Bannière des métiers : personnages représentant divers métiers avec le sourire" width="1900" height="547">
                 <nav class="navbar" id="myNavbar">
                     <div class="navbar-nav" id="nav-left">
                         <ul class="nav-menu">

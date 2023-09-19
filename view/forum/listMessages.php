@@ -20,6 +20,7 @@ if (App\Session::isAdmin()) {
     <a href="index.php?ctrl=forum&action=topicUnlock&id=<?= $topic->getId() ?>">
         <i class="fa-solid fa-lock-open fs-2"></i>
     </a>
+    
     <?php 
     } else {
     ?>
