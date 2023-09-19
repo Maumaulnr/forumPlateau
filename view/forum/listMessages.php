@@ -18,14 +18,14 @@ if (App\Session::isAdmin()) {
     if ($topic->getSubjectLock()) {
     ?>
     <a href="index.php?ctrl=forum&action=topicUnlock&id=<?= $topic->getId() ?>">
-        <i class="fa-solid fa-lock-open fs-2"></i>
+        <i class="fa-solid fa-lock fs-2"></i>
     </a>
     
     <?php 
     } else {
     ?>
     <a href="index.php?ctrl=forum&action=topicLock&id=<?= $topic->getId() ?>">
-        <i class="fa-solid fa-lock fs-2"></i>
+        <i class="fa-solid fa-lock-open fs-2"></i>
     </a>
     <?php 
     }

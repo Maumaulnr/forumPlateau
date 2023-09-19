@@ -18,9 +18,30 @@
         {
 
             // Gérez le cas où l'utilisateur n'a pas été trouvé (par exemple, affichez un message d'erreur)
-            // return [
-            //     "view" => VIEW_DIR . "security/error404.php"
-            // ];
+            return [
+                "view" => VIEW_DIR . "security/error404.php"
+            ];
+
+        }
+
+        /**
+         * Liste des utilisateurs
+         */
+        public function listUsers() {
+            
+            $userManager = new UserManager();
+
+            // findAll(['dateCreationUser', 'DESC']) -> on peut cibler ce que l'on veut afficher
+            $users = $userManager->findAll();
+
+            return [
+                "view" =>  VIEW_DIR."security/listUsers.php",
+                "data" => [
+                    "users" => $users,
+                    "title" => "Liste des utilisateurs",
+                    "description" => "Liste des utilisateurs du forum"
+                ]
+            ];
 
         }
 
@@ -43,7 +64,9 @@
                 "view" => VIEW_DIR. "security/registerForm.php",
                 "data" => [
                     "successMessage" => Session::getFlash('success'),
-                    "errorMessage" => Session::getFlash('error')
+                    "errorMessage" => Session::getFlash('error'),
+                    "title" => "S'enregistrer",
+                    "description" => "Page d'enregistrement pour pouvoir participer au forum"
                 ]
             ];
 
@@ -124,7 +147,9 @@
                 "view" => VIEW_DIR. "security/loginForm.php",
                 "data" => [
                     "successMessage" => Session::getFlash('success'),
-                    "errorMessage" => Session::getFlash('error')
+                    "errorMessage" => Session::getFlash('error'),
+                    "title" => "Connexion",
+                    "description" => "Page de connexion pour participer au forum"
                 ]
             ];
 
@@ -248,7 +273,9 @@
             return [
                 "view" => VIEW_DIR. "security/updateViewProfileForm.php",
                 "data" => [
-                    "user" => $user
+                    "user" => $user,
+                    "title" => "Modifier son profil",
+                    "description" => "Modifier son profil"
                 ]
             ];
 
@@ -300,7 +327,9 @@
             return [
                 "view" => VIEW_DIR . "security/viewProfile.php",
                 "data" => [
-                    "user" => $user
+                    "user" => $user,
+                    "title" => "Profil d'un autre utilisateur",
+                    "description" => "Voir le profil d'un autre utilisateur"
                 ]
             ];
  

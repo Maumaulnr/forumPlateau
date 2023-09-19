@@ -23,22 +23,6 @@
                     ]
                 ];
             }
-            
-        public function listUsers() {
-            
-            $userManager = new UserManager();
-
-            // findAll(['dateCreationUser', 'DESC']) -> on peut cibler ce que l'on veut afficher
-            $users = $userManager->findAll();
-
-            return [
-                "view" =>  VIEW_DIR."security/listUsers.php",
-                "data" => [
-                    "users" => $users
-                ]
-            ];
-
-        }
    
 
         public function forumRules(){
