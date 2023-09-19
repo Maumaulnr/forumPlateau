@@ -146,6 +146,7 @@
 
             $categoryManager = new CategoryManager();
 
+
             // nameCategory est obligatoire
             // si nameCategory est vide
             if($nameCategory == "") {
@@ -209,16 +210,19 @@
                 $topicManager = new TopicManager();
                 $messageManager = new MessageManager();
 
+                // On récupère l'id de l'utilisateur qui est connecté
+                $userId = Session::getUser()->getId();
+
                 /**
                  * On ajoute un topic en fontion de la catégorie
                  * $topicId -> DAO->return self::$bdd->lastInsertId() : pour pousser l'id jusquà la table Message et donc pouvoir ajouter un message ("topic_id" => $topicId)
                  */
-                $topicId = $topicManager->add(["nameTopic" => $nameTopic, "user_id" => 1, "category_id" => $id]);
+                $topicId = $topicManager->add(["nameTopic" => $nameTopic, "user_id" => $userId, "category_id" => $id]);
 
                 /**
                  * on ajoute le message
                  */
-                $messageManager->add(["commentText" => $commentText, "user_id" => 1, "topic_id" => $topicId]);
+                $messageManager->add(["commentText" => $commentText, "user_id" => $userId, "topic_id" => $topicId]);
 
                 Session::addFlash('success', 'Le topic a été ajouté');
 
