@@ -22,10 +22,24 @@ foreach ($users as $user) {
         <a href="index.php?ctrl=security&action=deleteUser&id=<?= $user->getId() ?>" class=".delete-btn" onclick="return confirm('Etes-vous sûr de vouloir supprimer?');">
             <i class="fa-regular fa-trash-can fs-5" title="Delete"></i>
         </a>
-        <?php
+        <!-- BAN OR UNBAN -->
+        <?php 
+        if ($user->getBanUser() == 0) { 
+            ?>
+            <a href="index.php?ctrl=security&action=isBan&id=<?= $user->getId() ?>" class=".ban-btn">
+                <i class="fa-solid fa-ban fs-5" title="Bannir"></i>
+            </a>
+            <?php 
+        } else { 
+            ?>
+            <a href="index.php?ctrl=security&action=isUnBan&id=<?= $user->getId() ?>" class=".ban-btn">
+                <i class="fa-solid fa-unlock fs-5" title="Débannir"></i>
+            </a>
+            <?php 
+        } 
     } else {
         ?>
-        <p>Il faut être administrateur pour supprimer un utilisateur</p>
+        <p>Il faut être administrateur pour supprimer un utilisateur ou gérer le bannissement.</p>
         <?php
     }
 }

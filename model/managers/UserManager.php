@@ -43,6 +43,7 @@
 
         }
 
+
         public function update($data)
         {
 
@@ -92,6 +93,43 @@
 
            }
 
+        }
+
+        /**
+         * If user is ban = 1
+         * $id : user_id
+         */
+        public function isBan($id) {
+
+            $sql = "UPDATE ". $this->tableName. "
+            SET banUser = 1
+            WHERE id_".$this->tableName." = :id 
+            ;";
+
+            /**
+             * La méthode DAO::update() est appelée pour exécuter la requête SQL
+             * La méthode retourne le résultat de la mise à jour, qui peut être true si la mise à jour a réussi ou false en cas d'échec.
+             */
+            return DAO::update($sql, ['id' => $id], false);
+
+        }
+
+        /**
+         * If user is no longer ban = 0
+         * $id : user_id
+         */
+        public function isUnBan($id) {
+
+            $sql = "UPDATE ". $this->tableName. "
+            SET banUser = 0
+            WHERE id_".$this->tableName." = :id
+            ;";
+
+            /**
+             * La méthode DAO::update() est appelée pour exécuter la requête SQL
+             * La méthode retourne le résultat de la mise à jour, qui peut être true si la mise à jour a réussi ou false en cas d'échec.
+             */
+            return DAO::update($sql, ['id' => $id], false);
         }
 
     }

@@ -345,19 +345,72 @@
             $topicManager = new TopicManager();
             $userManager = new UserManager();
 
-            // uniqid() : Génère un identifiant unique, préfixé, basé sur la date et heure courante en microsecondes.
-            $userEmail = uniqid();
+            $user = $userManager->findOneById($id);
 
-            /** 
-             * id = :id de la requête
-             * user_id = :NULL
-             * 
-            */
-            $messageManager->updateIsAnonymous(["id" => $id, "newUserId" => "NULL"]);
-            $topicManager->updateIsAnonymous(["id" => $id, "newUserId" => "NULL"]);
-            $userManager->updateIsAnonymous(["id" => $id, "newUserName" => "profil supprimé", "newUserEmail" => $userEmail]);
+            if ($user) {
+
+                $messageManager->delete($id);
+                $topicManager->delete($id);
+                $userManager->delete($id);
+
+            }
 
             $this->redirectTo('security', 'listUsers');
+
+        }
+        
+        /**
+         * BAN USER
+         * 
+         * Cette méthode prend l'identifiant d'un utilisateur en paramètre, tente de le bannir en utilisant la méthode isBan($id) de UserManager, et redirige ensuite l'utilisateur vers la page d'accueil avec un message de succès ou d'erreur en fonction du résultat de l'opération de bannissement.
+         * 
+         **/
+        public function isBan($id) {
+
+            $userManager = new UserManager();
+
+            if ($id) {
+
+                $userManager->isBan($id);
+
+                Session::addFlash('success', 'L\'utilisateur a bien été banni du forum');
+
+                $this->redirectTo('view', 'layout');
+
+            } else {
+
+                Session::addFlash('error', 'L\'utilisateur n\'a pas pu être banni du forum');
+
+                $this->redirectTo('view', 'layout');
+
+            }
+        }
+
+        /**
+         * 
+         * cette méthode prend l'identifiant d'un utilisateur en paramètre, tente de l'admettre en utilisant la méthode isUnBan($id) de UserManager, et redirige ensuite l'utilisateur vers la page d'accueil avec un message de succès ou d'erreur en fonction du résultat de l'opération d'admission.
+         * 
+         **/
+        public function isUnBan($id) {
+
+            $userManager = new UserManager();
+
+            if ($id) {
+
+                $userManager->isUnBan($id);
+
+                Session::addFlash('success', 'L\'utilisateur est de nouveau admis dans le forum');
+
+                $this->redirectTo('view', 'layout');
+
+            } else {
+
+                Session::addFlash('error', 'L\'utilisateur n\'a pas pu être admis suite à une erreur');
+
+                $this->redirectTo('view', 'layout');
+
+            }
+
         }
 
     }

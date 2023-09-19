@@ -36,7 +36,8 @@ $description = $result["data"]['description'];
                             <li>
                                 <a href="index.php?ctrl=forum&action=findMessageByTopicId&id=<?=$topic->getId();?>"><?= $topic->getNameTopic() ?></a>
                             </li>
-                            <li>De : <?= $topic->getUser()->getUserName() ?></li>
+                            <!-- On affiche le nom d'utilisateur de l'utilisateur associé au sujet s'il existe, sinon on affiche "Profil supprimé" pour indiquer que l'utilisateur a été supprimé ou n'existe pas. -->
+                            <li>De : <?= $topic->getUser() !== false ? $topic->getUser()->getUserName() : 'Profil supprimé' ?></li>
                             <li>Le : <?= $topic->getDateCreationTopic() ?></li>
                             <li>
                                 <!-- UPDATE -->
@@ -56,6 +57,10 @@ $description = $result["data"]['description'];
                         </ul>
                     <?php
                         }
+                    } else {
+                        ?>
+                        <p>Pas de topic pour le moment</p>
+                        <?php
                     }
                     ?>
                 </li>
