@@ -479,10 +479,11 @@
              * id = :id de la requête
              *
             */
-            // var_dump($id);
+            
             $messageManager->delete($id);
             $topicManager->delete($id);
 
+            // on récupère category_id pour la redirection
             $categoryId = $_GET['categoryId'];
 
             // on retourne vers la liste des topics dans la bonne catégorie grâce à $categoryId

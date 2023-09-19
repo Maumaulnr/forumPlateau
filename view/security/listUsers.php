@@ -15,10 +15,23 @@ foreach ($users as $user) {
     ?>
     <p><?= $user->getUserName(). " ". $user->getUserEmail(); ?></p>
 
-    <!-- DELETE -->
-    <a href="index.php?ctrl=forum&action=deleteMessage&id=<?= $user->getId() ?>" class=".delete-btn" onclick="return confirm('Etes-vous sûr de vouloir supprimer?');">
-        <i class="fa-regular fa-trash-can fs-5" title="Delete"></i>
-    </a>
-    <?php
+    <?php 
+    if (App\Session::isAdmin()) { 
+        ?>
+        <!-- DELETE -->
+        <a href="index.php?ctrl=security&action=deleteUser&id=<?= $user->getId() ?>" class=".delete-btn" onclick="return confirm('Etes-vous sûr de vouloir supprimer?');">
+            <i class="fa-regular fa-trash-can fs-5" title="Delete"></i>
+        </a>
+        <?php
+    } else {
+        ?>
+        <p>Il faut être administrateur pour supprimer un utilisateur</p>
+        <?php
+    }
 }
+?>
+
+<?php
+// echo hash('sha1', $user->getUserName());
+echo uniqid($user->getId());
 ?>

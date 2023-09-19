@@ -121,6 +121,33 @@
 
         }
 
+        // UPDATE message
+        // SET user_id = NULL
+        // WHERE user_id = 1;
+        public function updateIsAnonymous($data) 
+        {
+
+            $sql = "UPDATE ". $this->tableName. "
+            SET user_id = newUserId
+            WHERE id_".$this->tableName. " = :id 
+            ;";
+
+            /**
+             * on essaie la fonction du DAO
+             * on renvoie l'état du statement après exécution (true ou false)
+             */
+           try {
+
+            return DAO::update($sql, $data);
+
+           } catch (\Throwable $th) {
+
+            //throw $th;
+
+           }
+
+        }
+
 
     }
 

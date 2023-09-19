@@ -336,4 +336,28 @@
         }
 
 
+        /**
+         * DELETE USER
+         */
+        public function deleteUser($id) {
+            
+            $messageManager = new MessageManager();
+            $topicManager = new TopicManager();
+            $userManager = new UserManager();
+
+            // uniqid() : Génère un identifiant unique, préfixé, basé sur la date et heure courante en microsecondes.
+            $userEmail = uniqid();
+
+            /** 
+             * id = :id de la requête
+             * user_id = :NULL
+             * 
+            */
+            $messageManager->updateIsAnonymous(["id" => $id, "newUserId" => "NULL"]);
+            $topicManager->updateIsAnonymous(["id" => $id, "newUserId" => "NULL"]);
+            $userManager->updateIsAnonymous(["id" => $id, "newUserName" => "profil supprimé", "newUserEmail" => $userEmail]);
+
+            $this->redirectTo('security', 'listUsers');
+        }
+
     }
