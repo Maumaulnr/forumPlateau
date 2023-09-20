@@ -16,6 +16,6 @@ $description = $result["data"]['description'];
 
     <input type="hidden" id="categoryId" name="categoryId" value="<?= $categoryId ?>" placeholder="categoryId">
 
-    <button type="submit" class="btn btn-primary w-50">↑ Modifier ↻</button>
+    <button type="submit" class="btn btn-primary w-50">Modifier</button>
 
 </form>

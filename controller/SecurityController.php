@@ -276,7 +276,7 @@
 
         public function viewProfile($id) 
         {
-            // var_dump($id);
+            
             // On veut afficher les informations de l'utilisateur connecté 
 
             $userManager = new UserManager();

@@ -27,11 +27,11 @@ $description = $result["data"]['description'];
 		    <ul class="topics-table">
 		        <li class="topics-header">
 		           <ul class="header-titles text-center">
-		               <li>Forum</li>
-		               <li>Topics</li>
-		               <li>Messages</li>
-		               <li>Modifier</li>
-		               <li>Supprimer</li>
+		               <li class="fs-5">Forum</li>
+		               <li class="fs-5">Topics</li>
+		               <li class="fs-5">Messages</li>
+		               <li class="fs-5">Modifier</li>
+		               <li class="fs-5">Supprimer</li>
 		           </ul>
 		        </li>
 		        <li class="topics-body">
@@ -40,7 +40,7 @@ $description = $result["data"]['description'];
                         ?>
 		            <ul class="topic-item-1 text-center">
 		                <li>
-                            <a href="index.php?ctrl=forum&action=findTopicByCategoryId&id=<?=$value->getId();?>" class="text-decoration-none category-link"><?= $value->getNameCategory(); ?>
+                            <a href="index.php?ctrl=forum&action=findTopicByCategoryId&id=<?=$value->getId();?>" class="text-decoration-none category-link fs-5"><?= $value->getNameCategory(); ?>
                             </a>
 	                    </li>
 	                    <li>4</li>
@@ -50,13 +50,13 @@ $description = $result["data"]['description'];
 							<!-- Quand on clique on récupère idMessage et topicId pour être sûr de changer le message dans le bon topic :
 							$message->getId() ?>&topicId=< $topic->getId() ?>
 							-->
-							<a href="index.php?ctrl=forum&action=updateCategoryForm&id=<?= $value->getId() ?>">
+							<a href="index.php?ctrl=forum&action=updateCategoryForm&id=<?= $value->getId() ?>" class="fs-5">
 								<i class="fa-solid fa-pencil" title="Update"></i>
 							</a>
 	                    </li>
 						<li>
 							<!-- DELETE -->
-							<a href="index.php?ctrl=forum&action=deleteCategory&id=<?= $value->getId() ?>" class=".delete-btn" onclick="return confirm('Etes-vous sûr de vouloir supprimer?');">
+							<a href="index.php?ctrl=forum&action=deleteCategory&id=<?= $value->getId() ?>" class=".delete-btn fs-5" onclick="return confirm('Etes-vous sûr de vouloir supprimer?');">
                     			<i class="fa-regular fa-trash-can" title="Delete"></i>
                	 			</a>
 						</li>
@@ -72,7 +72,7 @@ $description = $result["data"]['description'];
 	<?php
 	if(App\Session::getUser()){
     	?>
-		<a class="btn btn-primary btn-add" href="index.php?ctrl=forum&action=addCategoryForm" role="button">
+		<a class="btn btn-primary btn-add fs-5" href="index.php?ctrl=forum&action=addCategoryForm" role="button">
         Add Category
     	</a>
 		<?php

@@ -12,9 +12,9 @@ $description = $result["data"]['description'];
 
 <form method="POST" action="index.php?ctrl=forum&action=updateCategory&id=<?= $category->getId() ?>" class="d-flex flex-column justify-content-center align-items-center gap-5">
 
-    <label for="nameCategory">Message</label>
-    <input type="text" id="nameCategory"  name="nameCategory" value="<?= $category->getNameCategory() ?>" placeholder="Nom de la catégorie">
+    <label for="nameCategory" class="fs-4">Nom de la catégorie à modifier</label>
+    <input type="text" id="nameCategory"  name="nameCategory" value="<?= $category->getNameCategory() ?>" placeholder="Nom de la catégorie" class="text-center fs-5">
 
-    <button type="submit" class="btn btn-primary w-50">↑ Modifier ↻</button>
+    <button type="submit" class="btn btn-primary w-50 fs-5">Modifier</button>
 
 </form>
