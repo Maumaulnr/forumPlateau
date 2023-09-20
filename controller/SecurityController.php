@@ -287,7 +287,9 @@
             return [
                 "view" => VIEW_DIR . "security/viewProfile.php",
                 "data" => [
-                    "user" => $user
+                    "user" => $user,
+                    "title" => "Voir son profil",
+                    "description" => "Voir son profil"
                 ]
             ];
 
@@ -302,11 +304,11 @@
          ***********/
         public function updateViewProfileForm($id) 
         {
-            // var_dump($id);
+            
             $userManager = new UserManager();
 
             $user = $userManager->findOneById($id);
-            // var_dump();
+            
             return [
                 "view" => VIEW_DIR. "security/updateViewProfileForm.php",
                 "data" => [
@@ -341,6 +343,104 @@
 
         }
 
+        /*********
+         * 
+         * 
+         * UPDATE PASSWORD
+         * 
+         * 
+         ***********/
+
+        public function updatePasswordForm($id) 
+        {
+
+            $userManager = new UserManager();
+
+            $user = $userManager->findOneById($id);
+
+            return [
+                "view" => VIEW_DIR. "security/updatePasswordForm.php",
+                "data" => [
+                    "user" => $user,
+                    "title" => "Modifier le mot de passe",
+                    "description" => "Modifier son mot de passe"
+                ]
+            ];
+
+        }
+
+        public function updatePassword($id) 
+        {
+
+            // filtrer ce qui arrive en POST
+            // "userName" : vient du name="userName" du fichier register.php
+            $honeypot = filter_input(INPUT_POST, "firstname", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $currentPassword = filter_input(INPUT_POST, "currentPassword", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $confirmPassword = filter_input(INPUT_POST, "confirmPassword", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            
+            // password_hash = creates a new password hash using a strong one-way hashing algorithm.
+            /**
+             * PASSWORD_DEFAULT - Use the bcrypt algorithm (default as of PHP 5.5.0). Note that this constant is designed to change over time as new and stronger algorithms are added to PHP. For that reason, the length of the result from using this identifier can change over time. Therefore, it is recommended to store the result in a database column that can expand beyond 60 characters (255 characters would be a good choice).
+             */
+
+            
+            if (empty($honeypot)) 
+            {
+                /**
+                 * si le honeypot est vide on passe à la suite sinon on le redirige vers une page d'erreur
+                 **/
+
+                if($currentPassword && $password && $confirmPassword)
+                {
+                    $userManager = new UserManager();
+
+                        // si le password correspond au confirmPassword et que la longueur de la chaîne de caractère du password est supérieur ou égale à 12 et si le mot de passe vérifier n'est pas le même que le mot de passe actuel
+                        if(($password == $confirmPassword)and(strlen($password)>=12)and(!password_verify($password, $currentPassword))) 
+                        {
+
+                            // On va hasher le password et enregistrer le user en BDD
+                            // un password est hashé en BDD. Le hashage est un mécanisme unidirectionnel et irréversible. ON NE DEHASHE JAMAIS UN PASSWORD!!!
+
+                            // la fonction password_hash va nous demander l'algorithme de hash choisi. Les algos a priviligié sont BCRYPT et ARGON2i.
+                            // Ne pas utiliser sha ou md5
+                            // DCRYPT et ARGON2i font parti des algos de hash fort
+                            // sha ou md5 font parti des algos de hash faible
+
+                            $password_hash = password_hash($password, PASSWORD_DEFAULT);
+                            // password_default utilise par défault l'algo BCRYPT
+                            // BCRYPT est un algo fort comme ARGON2i
+                            // il va créé une empreinte numérique en BDD composé de l'algo utilisé, d'un cost, d'un salt et du password hashé
+                            // le salt est une chaîne de caractère aléatoire hashée qui sera concaténé à notre password hashé.
+                            // si un pirate récupère notre password hashé il aura plus de difficulté à découvrir notre MDP d'origine
+
+                            // $password_hash2 = md5($password);
+                            
+
+                            $userManager->updatePasswword(['id' => $id,'newPassword' => $password_hash]);
+
+                        } else {
+
+                            Session::addFlash('error', 'Les mots de passe ne sont pas identiques ou pas assez long');
+                        }
+
+                } else {
+
+                    /**
+                     * Erreur pour le honeypot
+                     */
+                    Session::addFlash('error', 'Dommage!');
+
+                    $this->redirectTo('security', 'error404');
+                    
+                }
+
+            }
+
+            $this->redirectTo('view', 'home');
+
+        }
+
 
 
         /*********
@@ -360,7 +460,7 @@
  
             // On veut trouver le profil d'un utilisateur en fonction de son Id
             $user = $userManager->findOneById($id);
-            // var_dump($id);
+            
             return [
                 "view" => VIEW_DIR . "security/viewProfile.php",
                 "data" => [

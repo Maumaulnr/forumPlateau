@@ -1,6 +1,10 @@
 <?php
 $user = $result["data"]['user'];
-// var_dump();
+
+// On affiche le titre pour la balise <title> et la description dans la balise <meta name="description" ...>
+// On récupère les informations via le ForumController via le return où l'on a écrit le titre et la description unique
+$title = $result["data"]['title'];
+$description = $result["data"]['description'];
 ?>
 
 <form method="POST" action="index.php?ctrl=security&action=updateViewProfile&id=<?= $user->getId() ?>" class="container rounded bg-blue mt-5 mb-5">

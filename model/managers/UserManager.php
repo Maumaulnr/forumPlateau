@@ -43,6 +43,20 @@
 
         }
 
+        public function findOneByPassword($currentPassword) 
+        {
+
+            $sql = "SELECT *
+                    FROM ".$this->tableName." u
+                    WHERE u.password = :password";
+
+            return $this->getOneOrNullResult(
+                DAO::select($sql, ['password' => $currentPassword], false),
+                $this->className
+            );
+
+        }
+
 
         public function update($data)
         {
@@ -130,6 +144,24 @@
              * La méthode retourne le résultat de la mise à jour, qui peut être true si la mise à jour a réussi ou false en cas d'échec.
              */
             return DAO::update($sql, ['id' => $id], false);
+        }
+
+        /**
+         * UPDATE PASSWORD
+         */
+        public function updatePasswword($id) {
+
+            $sql = "UPDATE ". $this->tableName. "
+            SET password = :newpassword
+            WHERE id_".$this->tableName." = :id
+            ;";
+
+            /**
+             * La méthode DAO::update() est appelée pour exécuter la requête SQL
+             * La méthode retourne le résultat de la mise à jour, qui peut être true si la mise à jour a réussi ou false en cas d'échec.
+             */
+            return DAO::update($sql, ['id' => $id], false);
+            
         }
 
     }

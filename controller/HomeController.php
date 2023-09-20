@@ -42,7 +42,11 @@
             
            
             return [
-                "view" => VIEW_DIR."home.php"
+                "view" => VIEW_DIR."home.php",
+                "data" => [
+                    "title" => "Page d'accueil",
+                    "description" => "Forum des métiers"
+                ]
             ];
         }
     }

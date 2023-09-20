@@ -17,10 +17,10 @@ $description = $result["data"]['description'];
     <input type="hidden" id="idMessage"  name="idMessage" value="<?= $message->getId() ?>" placeholder="idMessage">
 
     <label for="commentText">Message</label>
-    <textarea name="commentText" id="commentText" class="text-center" cols="60" rows="10"><?= $message->getCommentText() ?></textarea>
+    <textarea name="commentText" id="commentText" class="post" cols="60" rows="10"><?= $message->getCommentText() ?></textarea>
 
     <input type="hidden" id="topicId" name="topicId" value="<?= $topicId ?>" placeholder="topicId">
 
-    <button type="submit" class="btn btn-primary w-50">Modifier</button>
+    <button type="submit" class="btn btn-primary w-50 fs-5">Modifier</button>
 
 </form>

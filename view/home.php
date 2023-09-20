@@ -1,7 +1,6 @@
 <?php
 $title = $result["data"]['title'];
 $description = $result["data"]['description'];
-
 ?>
 
 <h1>Bienvenue sur le Forum de Recherche de Métiers !</h1>
