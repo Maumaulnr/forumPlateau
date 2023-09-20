@@ -46,7 +46,6 @@
                             <?php
                             if (App\Session::isAdmin()) {
                             ?>
-                                <a href="index.php?ctrl=home&action=users" class="nav-title">List members</a>
                                 <a href="index.php?ctrl=security&action=listUsers" class="btn btn-primary" rel="nofollow">List Users</a>
                             <?php
                             }

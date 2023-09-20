@@ -57,7 +57,7 @@
 
         }
 
-
+        // Update a user
         public function update($data)
         {
 
@@ -149,18 +149,26 @@
         /**
          * UPDATE PASSWORD
          */
-        public function updatePasswword($id) {
+        public function updatePassword($data) {
 
             $sql = "UPDATE ". $this->tableName. "
-            SET password = :newpassword
+            SET password = :newPassword
             WHERE id_".$this->tableName." = :id
             ;";
 
             /**
-             * La méthode DAO::update() est appelée pour exécuter la requête SQL
-             * La méthode retourne le résultat de la mise à jour, qui peut être true si la mise à jour a réussi ou false en cas d'échec.
+             * on essaie la fonction du DAO
+             * on renvoie l'état du statement après exécution (true ou false)
              */
-            return DAO::update($sql, ['id' => $id], false);
+            try {
+
+                return DAO::update($sql, $data);
+                
+            } catch (\Throwable $th) {
+
+                //throw $th;
+
+            }
             
         }
 

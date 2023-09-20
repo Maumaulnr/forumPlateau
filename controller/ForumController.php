@@ -372,7 +372,6 @@
 
             // filtrer ce qui arrive en POST
             // "nameTopic" : vient du name="nameTopic" du fichier updateTopicForm.php
-            // $id = filter_input(INPUT_POST, "idTopic", FILTER_SANITIZE_NUMBER_INT);
             $categoryId = filter_input(INPUT_POST, "categoryId", FILTER_SANITIZE_NUMBER_INT);
             $nameTopic = filter_input(INPUT_POST, "nameTopic", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 

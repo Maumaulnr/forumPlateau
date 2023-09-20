@@ -97,6 +97,7 @@
 
                 if($userName && $userEmail && $password && $confirmPassword)
                 {
+
                     $userManager = new UserManager();
 
                     // on doit d'abord rechercher si le userEmail existe en BDD
@@ -127,6 +128,7 @@
                             
 
                             $userManager->add(['userName' => $userName, 'userEmail' => $userEmail, 'password' => $password_hash, "userRole" => json_encode(['ROLE_USER'])]);
+
                         } else {
 
                             Session::addFlash('error', 'Les mots de passe ne sont pas identiques ou pas assez long');
@@ -144,8 +146,7 @@
                      */
                     Session::addFlash('error', 'Dommage!');
 
-                    $this->redirectTo('security', 'error404');
-                    
+                    $this->redirectTo('security', 'error404');    
 
                 }
 
@@ -212,7 +213,7 @@
                         
                         if(password_verify($password, $userId)) {
                             
-                            // PASSWORD_VERIRFY VA COMPARER DEUX CHAINES DE CARACTERES HASHE!
+                            // PASSWORD_VERIFY VA COMPARER DEUX CHAINES DE CARACTERES HASHE!
 
                             if($user->getBanUser() == 0) {
                                 // si ça fonctionne on met le user en session
@@ -353,7 +354,7 @@
 
         public function updatePasswordForm($id) 
         {
-
+            
             $userManager = new UserManager();
 
             $user = $userManager->findOneById($id);
@@ -371,7 +372,7 @@
 
         public function updatePassword($id) 
         {
-
+            
             // filtrer ce qui arrive en POST
             // "userName" : vient du name="userName" du fichier register.php
             $honeypot = filter_input(INPUT_POST, "firstname", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -387,90 +388,88 @@
             
             if (empty($honeypot)) 
             {
+                
                 /**
                  * si le honeypot est vide on passe à la suite sinon on le redirige vers une page d'erreur
                  **/
 
+
                 if($currentPassword && $password && $confirmPassword)
                 {
+                    
                     $userManager = new UserManager();
 
-                        // si le password correspond au confirmPassword et que la longueur de la chaîne de caractère du password est supérieur ou égale à 12 et si le mot de passe vérifier n'est pas le même que le mot de passe actuel
-                        if(($password == $confirmPassword)and(strlen($password)>=12)and(!password_verify($password, $currentPassword))) 
-                        {
+                    $user = Session::getUser();
 
-                            // On va hasher le password et enregistrer le user en BDD
-                            // un password est hashé en BDD. Le hashage est un mécanisme unidirectionnel et irréversible. ON NE DEHASHE JAMAIS UN PASSWORD!!!
+                    if($user) {
+                        
+                        $userId = $user->getPassword();
+                        // on va vérfier que le password donné dans le formulaire du updatePassword correspond au password de l'utilisateur qui a ce pseudo
 
-                            // la fonction password_hash va nous demander l'algorithme de hash choisi. Les algos a priviligié sont BCRYPT et ARGON2i.
-                            // Ne pas utiliser sha ou md5
-                            // DCRYPT et ARGON2i font parti des algos de hash fort
-                            // sha ou md5 font parti des algos de hash faible
-
-                            $password_hash = password_hash($password, PASSWORD_DEFAULT);
-                            // password_default utilise par défault l'algo BCRYPT
-                            // BCRYPT est un algo fort comme ARGON2i
-                            // il va créé une empreinte numérique en BDD composé de l'algo utilisé, d'un cost, d'un salt et du password hashé
-                            // le salt est une chaîne de caractère aléatoire hashée qui sera concaténé à notre password hashé.
-                            // si un pirate récupère notre password hashé il aura plus de difficulté à découvrir notre MDP d'origine
-
-                            // $password_hash2 = md5($password);
+                        if (!password_verify($password, $userId)) {
                             
+                            // PASSWORD_VERIFY VA COMPARER DEUX CHAINES DE CARACTERES HASHE!
 
-                            $userManager->updatePasswword(['id' => $id,'newPassword' => $password_hash]);
+                            // si le password correspond au confirmPassword et que la longueur de la chaîne de caractère du password est supérieur ou égale à 12 et si le mot de passe vérifier n'est pas le même que le mot de passe actuel
+                            if(($password == $confirmPassword)and(strlen($password)>=12)) 
+                            {
+                                
+                                // On va hasher le password et enregistrer le user en BDD
+                                // un password est hashé en BDD. Le hashage est un mécanisme unidirectionnel et irréversible. ON NE DEHASHE JAMAIS UN PASSWORD!!!
+
+                                // la fonction password_hash va nous demander l'algorithme de hash choisi. Les algos a priviligié sont BCRYPT et ARGON2i.
+                                // Ne pas utiliser sha ou md5
+                                // DCRYPT et ARGON2i font parti des algos de hash fort
+                                // sha ou md5 font parti des algos de hash faible
+
+                                $password_hash = password_hash($password, PASSWORD_DEFAULT);
+                                // password_default utilise par défault l'algo BCRYPT
+                                // BCRYPT est un algo fort comme ARGON2i
+                                // il va créé une empreinte numérique en BDD composé de l'algo utilisé, d'un cost, d'un salt et du password hashé
+                                // le salt est une chaîne de caractère aléatoire hashée qui sera concaténé à notre password hashé.
+                                // si un pirate récupère notre password hashé il aura plus de difficulté à découvrir notre MDP d'origine
+
+                                // $password_hash2 = md5($password);
+
+                                $userManager->updatePassword(['id' => $id, 'newPassword' => $password_hash]);
+
+                                $this->redirectTo('view', 'home');
+
+                            } else {
+
+                                Session::addFlash('error', 'Les mots de passe ne sont pas identiques ou pas assez long');
+
+                            }
 
                         } else {
 
-                            Session::addFlash('error', 'Les mots de passe ne sont pas identiques ou pas assez long');
+                            Session::addFlash('error','personne ne t aime tu es banni!!!');
+                
+                            $this->redirectTo('view', 'layout');
+                
                         }
 
-                } else {
+                    } else {
 
-                    /**
-                     * Erreur pour le honeypot
-                     */
-                    Session::addFlash('error', 'Dommage!');
+                        $this->redirectTo('view', 'home');
 
-                    $this->redirectTo('security', 'error404');
-                    
+                    }
+
                 }
 
+            } else {
+
+                /**
+                 * Erreur pour le honeypot
+                 */
+                Session::addFlash('error', 'Dommage!');
+
+                $this->redirectTo('security', 'error404');
+                
             }
 
-            $this->redirectTo('view', 'home');
-
         }
 
-
-
-        /*********
-         * 
-         * 
-         * VIEW SOMEONE ELSE'S PROFILE
-         * 
-         * 
-         ***********/
-
-        public function viewProfileSomeone($id) 
-        {
- 
-            // On veut afficher les informations concernant un autre utilisateur 
- 
-            $userManager = new UserManager();
- 
-            // On veut trouver le profil d'un utilisateur en fonction de son Id
-            $user = $userManager->findOneById($id);
-            
-            return [
-                "view" => VIEW_DIR . "security/viewProfile.php",
-                "data" => [
-                    "user" => $user,
-                    "title" => "Profil d'un autre utilisateur",
-                    "description" => "Voir le profil d'un autre utilisateur"
-                ]
-            ];
- 
-        }
 
 
         /**

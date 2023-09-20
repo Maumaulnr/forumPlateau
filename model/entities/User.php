@@ -205,6 +205,7 @@
                                 // Gérer l'erreur de décoding JSON ici si nécessaire
                                 
                         }
+                        
                 }
 
                 return $this;
