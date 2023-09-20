@@ -4,14 +4,14 @@
 
 <form action="index.php?ctrl=security&action=login" method="post">
 
+    <!-- Create fields for the honeypot -->
+    <input name="firstname" type="text" id="firstname" class="myBlank">
+    <!-- honeypot fields end -->
+
     <div>
         <label for="userName">Pseudonyme:</label>
         <input type="text" name="userName" id="userName" required=true>
     </div>
-    <!-- <div>
-        <label for="userEmail">Email:</label>
-        <input type="email" name="userEmail" id="userEmail" required=true>
-    </div> -->
     <div>
         <label for="password">Mot de passe:</label>
         <input type="password" name="password" id="password" required=true>

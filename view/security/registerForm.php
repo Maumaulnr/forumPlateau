@@ -4,6 +4,10 @@
 
 <form action="index.php?ctrl=security&action=register" method="post">
 
+    <!-- Create fields for the honeypot -->
+    <input name="firstname" type="text" id="firstname" class="myBlank">
+    <!-- honeypot fields end -->
+
     <div>
         <label for="userName">Pseudonyme:</label>
         <input type="text" name="userName" id="userName" required=true>
@@ -20,14 +24,17 @@
         <label for="password2">Password Again:</label>
         <input type="password" name="confirmPassword" id="password2">
     </div>
-    <!-- <div>
+
+
+    <div>
         <label for="agree">
             <input type="checkbox" name="agree" id="agree" value="yes"/> I agree
             with the
             <a href="#" title="term of services">term of services</a>
         </label>
-    </div> -->
+    </div>
     <button type="submit">Enregistrer</button>
+    
     <footer class="d-flex flex-column justify-content-center gap-2">
         <p>Déjà membre ? </p>
         <p>

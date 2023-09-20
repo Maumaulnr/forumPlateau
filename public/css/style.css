@@ -406,3 +406,14 @@ footer.d-flex p {
     flex: 1 1 0%;
     min-width: 0;
 }
+
+/* robot */
+.myBlank {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0;
+    width: 0;
+    z-index: -1;
+}

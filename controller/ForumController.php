@@ -65,7 +65,6 @@
              * 
              */
             $category = $categoryManager->findOneById($id);
-            // var_dump($category);
 
             return [
                 "view" => VIEW_DIR. "forum/listTopics.php",
@@ -87,7 +86,7 @@
          * request in MessageManager.php
         */
         public function findMessageByTopicId($id) {
-            // var_dump($id);
+            
             $topicManager = new TopicManager();
             $messageManager = new MessageManager();
 
@@ -246,7 +245,6 @@
         public function addMessageForm($id) 
         {
             $topicManager = new TopicManager();
-            // $messageManager = new MessageManager();
 
             $topic = $topicManager->findOneById($id);
 
@@ -306,11 +304,11 @@
          * "topidId" => $_GET['topicId'] => permet de récupérer topicId quand on veut changer un message (commentText) précis
          */
         public function updateMessageForm($id) {
-            // var_dump($id);
+            
             $messageManager = new MessageManager();
 
             $message = $messageManager->findOneById($id);
-            // var_dump($topic);
+            
             return [
                 "view" => VIEW_DIR. "forum/updateMessageForm.php",
                 "data" => [
