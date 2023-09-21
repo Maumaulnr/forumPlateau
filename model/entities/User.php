@@ -21,6 +21,7 @@
         private $password;
         private $banUser;
         private $userRole;
+        private $pictureProfile;
 
         
 
@@ -149,11 +150,31 @@
                 return $this;
         }
 
+        /**
+         * Get the value of pictureProfile
+         */ 
+        public function getPictureProfile()
+        {
+                return $this->pictureProfile;
+        }
+
+        /**
+         * Set the value of pictureProfile
+         *
+         * @return  self
+         */ 
+        public function setPictureProfile($pictureProfile)
+        {
+                $this->pictureProfile = $pictureProfile;
+
+                return $this;
+        }
+
         
         // Method _toString
         public function __toString()
         {
-                return $this->getUserName() . $this->getUserEmail() . $this->getPassword() . $this->getDateCreationCount() . $this->getBanUser();
+                return $this->getUserName() . $this->getUserEmail() . $this->getPassword() . $this->getDateCreationCount() . $this->getBanUser() . $this->getPictureProfile();
         }
 
 

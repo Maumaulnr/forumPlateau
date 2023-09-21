@@ -260,11 +260,11 @@
 
         public function logout() {
 
-            session_start();
+            unset($_SESSION['user']);
 
-            session_destroy();
+            Session::addFlash('success', 'Vous êtes déconnecté, à bientôt !');
 
-            $this->redirectTo('security', 'loginForm');
+            $this->redirectTo('view', 'home');
         }
 
         /*********
